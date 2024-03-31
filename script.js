@@ -4,3 +4,5 @@ function toggleMenu() {
   var burger = document.querySelector(".burger");
   burger.classList.toggle("active");
 }
+
+// next js
