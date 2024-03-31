@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Muhamad Fadlan Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=Poppins:wght@500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="stylesheet" href="script.js">
+  </head>
+  <script></script>
+  <body>
+    <header>
+      <h1>PORTOFOLIO</h1>
+      <nav>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about" >About Me</a></li>
+          <li><a href="#certificate">Certificate</a></li>
+          <li><a href="#skill" >Skill</a></li>
+          <li><a href="#works" >Works</a></li>
+          <li><a href="#contact" >Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="burger" onclick="toggleMenu()">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    
+
+    </header>
+    <!-- section 1 -->
+    <section id="home" class="home">
+      <div>
+        <h2>Hello, I'am</h2>
+        <h1>Muhamad Fadlan</h1>
+        <div class="typing">
+          <p>Check out my works and learn more about me.</p>
+        </div>
+        <div class="buttons">
+          <button class="button1" onclick="window.location.href='#works'">Let's Go!</button>
+  <button class="button2" onclick="window.open('/sertifikat/CV_MUHAMAD FADLAN.pdf', '_blank')">&#128195; My CV</button>
+        </div>
+      </div>
+
+      <div class="pic-me">
+        <img class="me" src="/gambar/Me-1.jpg" alt="Muhamad Fadlan" onclick="window.open('https://www.youtube.com/watch?v=xvFZjo5PgG0&pp=ygUJcmljayByb2xs')" style="cursor: pointer;"/>
+      </div>
+    </section>
+
+    <!-- end section 1 -->
+
+    <!-- section 2 -->
+    <section id="about" class="about">
+      <div class="pic-me">
+        <img class="me" src="/gambar/me-2.jpg" alt="Muhamad Fadlan" />
+      </div>
+
+      <div>
+        <h1><span class="about-text">About</span> <span class="me-text">Me</span></h1>
+        <p>
+          Hi, Nama saya Muhamad Fadlan, biasa dikenal sebagai Fadlan. Saya adalah anak terakhir dari 4 bersaudara dan lahir di Jakarta. Saat ini, saya tinggal di Cakung. Saya merupakan mahasiswa Universitas Gunadarma Bekasi dari jurusan
+          Sistem Informasi. Selain itu, saya juga mengikuti kegiatan kampus merdeka (studi independen) dengan mengambil program dari Celerates, yaitu UI/UX dan Web Development. Tujuannya adalah untuk mendalami bidang ini hingga saya mampu
+          menciptakan jalur karier saya sendiri.
+        </p>
+      </div>
+    </section>
+    <!-- end section 2 -->
+
+    <!-- section certificate -->
+
+<section class="certificate" id="certificate">
+  <h1>CERTIFICATE</h1>
+  <div class="cards-container">
+    <div class="uiux"><a href="/sertifikat/UIUX.pdf" target="_blank">
+      <h2>sertifikat UI/UX</h2>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M11 8h-7v-1h7v1zm0 2h-7v1h7v-1zm8.692-.939c-.628-.436-.544-.327-.782-1.034-.099-.295-.384-.496-.705-.496h-.003c-.773.003-.64.044-1.265-.394-.129-.092-.283-.137-.437-.137-.154 0-.308.045-.438.137-.629.442-.492.398-1.265.394h-.003c-.321 0-.606.201-.705.496-.238.71-.156.6-.781 1.034-.198.137-.308.353-.308.578l.037.222c.242.708.242.572 0 1.278l-.037.222c0 .224.11.441.309.578.625.434.545.325.781 1.033.099.296.384.495.705.495h.003c.773-.003.64-.045 1.265.394.129.093.283.139.437.139.154 0 .308-.046.437-.138.625-.439.49-.397 1.265-.394h.003c.321 0 .606-.199.705-.495.238-.708.154-.599.782-1.033.198-.137.308-.355.308-.579l-.037-.222c-.242-.71-.24-.573 0-1.278l.037-.222c0-.225-.11-.443-.308-.578zm-3.192 2.939c-.828 0-1.5-.672-1.5-1.5 0-.829.672-1.5 1.5-1.5s1.5.671 1.5 1.5c0 .828-.672 1.5-1.5 1.5zm1.241 3.008l.021-.008h1.238v7l-2.479-1.499-2.521 1.499v-7h1.231c.415.291.69.5 1.269.5.484 0 .931-.203 1.241-.492zm-17.741-13.008v17h12v-2h-10v-13h20v13h-1v2h3v-17h-24zm8 11h-4v1h4v-1z"/></svg></a></div>
+    <div class="javascript"><a href="/sertifikat/javascript.pdf" target="_blank">
+      <h2>sertifikat Javascript</h2><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M17.736 9.767c-.538-.374-.467-.28-.67-.886-.085-.253-.33-.425-.605-.425h-.002c-.663.003-.549.038-1.084-.338-.111-.079-.243-.118-.375-.118s-.264.039-.375.118c-.539.379-.422.341-1.084.338h-.002c-.275 0-.521.172-.605.425-.203.608-.133.514-.67.886-.169.117-.264.302-.264.495l.031.19c.208.607.208.49 0 1.095l-.031.191c0 .192.095.378.264.496.537.372.468.278.67.886.085.253.33.424.605.424h.002c.663-.002.549-.038 1.084.338.111.078.243.118.375.118s.264-.04.375-.118c.535-.376.42-.34 1.084-.338h.002c.275 0 .521-.171.605-.424.203-.607.132-.513.67-.886.169-.117.264-.304.264-.496l-.031-.19c-.208-.608-.207-.491 0-1.095l.031-.191c0-.193-.095-.379-.264-.495zm-2.736 2.733c-.828 0-1.5-.671-1.5-1.5s.672-1.5 1.5-1.5 1.5.671 1.5 1.5-.672 1.5-1.5 1.5zm1.065 2.507l.018-.007h.917v7l-1.981-1.285-2.019 1.285v-7h.913c.356.25.592.429 1.087.429.406 0 .799-.174 1.065-.422zm7.935-13.007v18h-5c.099-1.131.387-3.435 3-4.578v-8.844c-1.151-.504-2.074-1.427-2.578-2.578h-14.844c-.504 1.151-1.427 2.074-2.578 2.578v8.844c1.151.504 2.074 1.427 2.578 2.578h6.422v2h-11v-18h24zm-14 9h-5v-1h5v1zm0 1h-5v1h5v-1zm-2 2h-3v1h3v-1zm2-5h-5v-1h5v1z"/></svg></a></div>
+    </div>
+</section>
+
+    <!--  end section certificate -->
+
+    <!-- section 3 -->
+    <section id="skill" class="skill">
+      <h1>SKILL</h1>
+      <div class="cards-container">
+        <div class="card">
+          <img src="/gambar/htmcss.png" alt="Html/Css" />
+          <div class="text">
+            <h3>HTML/CSS</h3>
+            <p>
+              Saya memiliki keahlian dalam pembuatan struktur dan tata letak halaman web menggunakan HTML. Mahir dalam berbagai elemen HTML seperti tag, atribut, dan formulir untuk menciptakan halaman web yang fungsional dan interaktif. Saya juga memiliki pemahaman yang kuat tentang konsep dasar CSS, memungkinkan saya mengatur tampilan halaman web secara efektif. Keahlian ini telah saya kembangkan melalui pengalaman dan pembelajaran yang berkelanjutan, dan siap untuk diaplikasikan dalam proyek-proyek web selanjutnya.
+            </p>
+          </div>
+        </div>
+    
+        <div class="card">
+          <img src="/gambar/sql.png" alt="MySql" />
+          <div class="text">
+            <h3>MySQL</h3>
+            <p>
+              Saya memiliki keahlian kuat dalam MySQL, terutama dalam penambahan, pengubahan, pembaruan, dan pengambilan data menggunakan kueri SQL. Saya sangat menyukai bahasa pemrograman MySQL dan memiliki kecintaan yang mendalam terhadap database. Dengan pengalaman dalam merancang dan mengelola basis data menggunakan MySQL, termasuk pembuatan tabel, relasi, dan optimasi kinerja dengan indeks, saya siap untuk memberikan kontribusi yang berarti dalam proyek-proyek yang membutuhkan pemahaman mendalam tentang MySQL dan database.
+            </p>
+          </div>
+        </div>
+    
+        <div class="card">
+          <img src="/gambar/tanda-tanya.jpg" alt="??" />
+          <div class="text">
+            <h3>Coming Soon</h3>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt voluptates recusandae nostrum. Inventore cum dolore aliquam nostrum amet quod cupiditate.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- end section 3 -->
+
+    <!-- section 4 -->
+    <section id="works" class="works">
+      <h1>WORKS</h1>
+      <div class="container">
+        <div class="img-works">
+          <a href="https://www.figma.com/file/2xZ1sxEIwS6Fmw1bD79vDt/Kelompok-1_IMK?type=design&node-id=0%3A1&mode=design&t=2MVpr5M3MUjklkrz-1" target="_blank"><img src="/gambar/Projek 1.png" alt="My Projek" /></a>
+        </div>
+        <div class="img-works">
+          <a href="https://dnatechsolutions.000webhostapp.com/#hero"><img src="/gambar/Projek2.png" alt="My Projek" /></a>
+        </div>
+
+    </section>
+    <!--  end section 4 -->
+
+    <!--  section 5 -->
+    <section id="contact" class="contact">
+      <div class="contact-container">
+        <h1>Contact</h1>
+        <div class="contact-form">
+          <p>Want to get in touch? Here's how you can reach me:</p>
+          <ul>
+            <li><strong>Email:</strong> <a href="mailto:muhamadfadlan.fa@gmail.com">muhamadfadlan.fa@gmail.com</a></li>
+            <li><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/muhamad-fadlan-85b79716a/" target="_blank">linkedin.com/in/muhamadfadlan</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!--  end section 5 -->
+  </body>
+  <script src="script.js"></script>
+</html>

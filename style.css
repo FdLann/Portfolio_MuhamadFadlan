@@ -1,0 +1,676 @@
+body {
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  position: absolute;
+  top: 0%;
+  width: 100%;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+  background-color: white;
+  color: #000000;
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  border-bottom: solid #000000;
+  z-index: 100;
+}
+
+header h1 {
+  flex-basis: 200px;
+  margin: 0;
+}
+
+nav {
+  margin-top: 15px;
+}
+
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li {
+  display: inline;
+  padding-right: 3em;
+  margin: 0px 20px;
+}
+
+nav a {
+  color: #000000;
+  text-decoration: none;
+}
+
+nav ul li a {
+  font-weight: bold;
+  position: relative;
+}
+
+nav ul li a::before {
+  content: "";
+  position: absolute;
+  bottom: -2px; /* Atur jarak underline dari teks */
+  left: 0;
+  width: 0; /* Awalnya panjang underline 0 */
+  height: 2px; /* Atur ketebalan underline */
+  background-color: #000000; /* Atur warna underline */
+  transition: width 0.3s ease; /* Atur transisi untuk lebar underline */
+}
+
+nav ul li a:hover::before {
+  width: 100%; /* Saat hover, ubah panjang underline menjadi 100% */
+}
+
+/* CSS for burger icon */
+.burger {
+  display: none; /* Sembunyikan burger di tampilan desktop */
+  cursor: pointer;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 101;
+}
+
+.burger div {
+  width: 25px;
+  height: 3px;
+  background-color: #000;
+  margin: 5px;
+  transition: transform 0.3s ease;
+}
+
+/* responsive */
+/* CSS for mobile devices */
+@media only screen and (max-width: 600px) {
+  header {
+    height: 5em;
+    padding: 0.5em;
+  }
+
+  nav ul {
+    display: none; /* Sembunyikan daftar menu */
+    flex-direction: column; /* Ubah tata letak menjadi vertikal */
+    position: absolute;
+    top: 60px; /* Atur posisi daftar menu */
+    left: 0;
+    width: 100%;
+    background-color: white;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    z-index: 99;
+  }
+
+  nav ul.active {
+    display: flex; /* Tampilkan daftar menu saat aktif */
+  }
+
+  nav ul li {
+    display: block;
+    padding: 10px;
+  }
+
+  .burger {
+    display: block; /* Tampilkan ikon burger */
+  }
+
+  .home {
+    margin-top: 5em; /* Atur margin atas untuk bagian rumah */
+  }
+
+  .home h1,
+  .home h2 {
+    font-size: 2em;
+  }
+
+  .home .me {
+    width: 15em;
+    height: 20em;
+    margin-right: 0;
+  }
+
+  .cards-container {
+    flex-direction: column; /* Atur tata letak kartu ke vertikal */
+  }
+
+  .card {
+    margin-left: 0; /* Atur margin kiri menjadi 0 */
+  }
+
+  .container {
+    flex-direction: column; /* Atur tata letak kontainer ke vertikal */
+  }
+
+  .img-works img {
+    width: 100%; /* Atur lebar gambar agar sesuai dengan kotak */
+    height: auto; /* Atur tinggi gambar agar proporsional */
+  }
+}
+
+/* end */
+
+/* Rotate first and third lines to create the X shape */
+.burger.active div:first-child {
+  transform: rotate(-45deg) translate(-5px, 6px);
+}
+
+.burger.active div:nth-child(2) {
+  opacity: 0;
+}
+
+.burger.active div:last-child {
+  transform: rotate(45deg) translate(-5px, -6px);
+}
+/* end navbar */
+
+.home {
+  padding: 20px;
+  margin-top: 10em;
+  padding-bottom: 10em;
+  border-bottom: solid 2px #000;
+  display: flex;
+  justify-content: space-between;
+}
+
+.home h2 {
+  font-size: 2em;
+  margin: 0;
+}
+
+.home h1 {
+  font-size: 4em;
+  margin: 0;
+}
+
+.home p {
+  margin: 0;
+}
+
+.home ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.typing {
+  display: inline-block;
+}
+
+.typing p {
+  font-size: 1em;
+  letter-spacing: 5px;
+  border-right: 5px solid;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  animation: typing 2s steps(18), cursor 0.4s step-end infinite alternate;
+}
+
+@keyframes cursor {
+  50% {
+    border-color: transparent;
+  }
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+}
+
+.home .buttons {
+  display: flex; /* Mengatur tombol menjadi horizontal */
+  flex-direction: column; /* Menjadikan tata letak tombol menjadi vertikal */
+}
+
+.home .buttons button {
+  background-color: white;
+  color: black;
+  font-weight: bold;
+  padding: 10px 15px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border: solid 3px #000;
+  border-radius: 5px;
+  transition-duration: 0.5s;
+}
+
+.home .buttons button:hover {
+  background-color: yellow;
+  color: black;
+}
+
+.home .buttons button:active {
+  background-color: #e6da4e;
+}
+
+.me {
+  border: solid 3px #000;
+  border-radius: 120px 1px / 120px;
+  margin-right: 30px;
+  width: 20em;
+  height: 25em;
+  object-fit: cover;
+}
+
+.me img {
+  border-radius: 120px 1px / 120px;
+}
+/* end Home */
+
+/* About css */
+.about {
+  background-color: #87dcff;
+  border-bottom: solid 2px hsl(0, 0%, 0%);
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  padding-top: 5em;
+  padding-bottom: 7em;
+}
+
+.about h1 {
+  font-size: 4em;
+  margin: 0;
+}
+
+.about-text {
+  color: black; /* Warna untuk kata "About" */
+}
+
+.me-text {
+  color: white; /* Warna untuk kata "Me" */
+}
+
+.about p {
+  font-weight: bold;
+  text-align: justify;
+}
+
+/* certificate */
+.certificate {
+  text-align: center; /* Pusatkan teks */
+  padding: 3rem 15rem 10rem; /* Berikan padding untuk memberi ruang di sekitar konten */
+  border-bottom: #000 solid 2px;
+}
+
+.certificate h1 {
+  margin-bottom: 20px; /* Berikan ruang di bawah judul */
+}
+
+.cards-container {
+  cursor: pointer;
+  display: flex; /* Gunakan flexbox untuk tata letak konten */
+  justify-content: center; /* Pusatkan konten horizontal */
+  gap: 20px; /* Berikan jarak antara kartu */
+}
+
+.cards-container .uiux,
+.cards-container .javascript {
+  width: 200px; /* Atur lebar kartu */
+  padding: 20px; /* Berikan padding di dalam kartu */
+  border: 2px solid #000; /* Berikan border pada kartu */
+  border-radius: 10px; /* Atur radius sudut kartu */
+}
+
+.cards-container .uiux svg,
+.cards-container .javascript svg {
+  width: 50px; /* Atur lebar ikon */
+  height: 50px; /* Atur tinggi ikon */
+  margin-bottom: 10px; /* Berikan ruang di bawah ikon */
+}
+
+.cards-container .uiux a,
+.cards-container .javascript a {
+  text-decoration: none; /* Hapus dekorasi tautan */
+  color: #000; /* Atur warna teks */
+}
+
+.cards-container .uiux:hover,
+.cards-container .javascript:hover {
+  background-color: #f0f0f0; /* Ganti warna latar belakang saat hover */
+  z-index: 0; /* Tetapkan z-index yang lebih rendah agar tetap di bawah navbar */
+}
+
+/* end certificate */
+
+/* skill */
+.skill {
+  text-align: center; /* Pusatkan teks judul */
+  padding-bottom: 5em; /* Ubah padding-bottom menjadi 5em */
+  border-bottom: solid 2px #000;
+}
+
+.cards-container {
+  display: flex;
+  justify-content: space-around; /* Menata kartu-kartu ke kanan */
+  gap: 20px; /* Tambahkan gap antara kartu */
+}
+
+.card {
+  background-color: #87dcff;
+  max-width: 300px; /* Atur lebar maksimum kartu */
+  border: 1px solid #ccc; /* Atur border untuk kartu */
+  border-radius: 8px; /* Atur border-radius untuk ujung-ujung kartu */
+  margin-left: 10px; /* Atur margin kiri agar ada jarak antar kartu */
+}
+
+.card img {
+  border-radius: 50%;
+  border: solid 2px #000;
+  width: 8em; /* Atur lebar gambar */
+  height: 8em; /* Atur tinggi gambar */
+  object-fit: cover; /* Atur agar gambar memenuhi border */
+}
+
+.card .text {
+  padding: 10px; /* Atur padding untuk ruang di sekitar teks */
+}
+
+.card h3 {
+  margin-top: 0; /* Hilangkan margin atas pada elemen h3 */
+  font-size: 1.5em; /* Ubah ukuran font h3 menjadi 1.5em */
+  margin-bottom: 10px; /* Tambahkan margin bawah pada elemen h3 */
+}
+
+.card p {
+  margin-bottom: 0; /* Hilangkan margin bawah pada elemen p */
+}
+
+/* end skill */
+
+/* works */
+.works {
+  padding-top: 1em;
+  padding-bottom: 5em;
+  background-color: #87dcff;
+  text-align: center; /* Memusatkan teks di dalam section */
+  border-bottom: 2px solid #000;
+}
+
+.container {
+  margin: 10px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center; /* Memastikan foto-foto berada di tengah secara vertikal */
+  gap: 5px; /* Atur jarak antara foto-foto */
+}
+
+.img-works {
+  overflow: hidden; /* Sembunyikan overflow */
+}
+
+.img-works a {
+  display: block; /* Untuk memastikan link memiliki dimensi */
+  overflow: hidden; /* Sembunyikan overflow */
+  transition: transform 0.3s ease; /* Animasi perubahan ukuran */
+}
+
+.img-works img {
+  width: 25em; /* Agar gambar mengisi seluruh lebar kotak */
+  height: 20em; /* Atur tinggi gambar agar proporsional */
+  object-fit: fill;
+}
+
+.img-works a:hover {
+  transform: scale(1.1); /* Membuat elemen menjadi sedikit lebih besar saat dihover */
+}
+
+/* end works */
+/* contact */
+.contact {
+  display: flex; /* Menggunakan flexbox */
+  align-items: center; /* Menyelaraskan konten secara vertikal */
+  justify-content: center; /* Menyelaraskan konten secara horizontal ke tengah */
+  text-align: center; /* Menyelaraskan teks ke tengah */
+  padding: 50px 0; /* Padding atas dan bawah sebesar 50px */
+}
+
+.contact-container {
+  max-width: 800px; /* Lebar maksimum kontainer */
+  width: 100%; /* Lebar kontainer */
+  margin: 0 auto; /* Posisi kontainer ke tengah */
+}
+
+.contact h1 {
+  font-family: "Pixelify Sans", sans-serif;
+  font-size: 2.5em; /* Ukuran font 2.5em */
+  border-bottom: 3px solid yellow; /* Garis bawah dengan ketebalan 3px dan warna kuning */
+  padding-bottom: 10px; /* Ruang bawah sebesar 10px */
+  margin-top: 0px;
+}
+
+.contact-form {
+  margin-top: 20px; /* Jarak atas sebesar 20px */
+}
+
+.contact-form p {
+  margin-bottom: 20px; /* Jarak bawah sebesar 20px */
+}
+
+.contact-form ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.contact-form ul li {
+  margin-bottom: 10px; /* Jarak antara setiap item */
+}
+
+.contact-form ul li a {
+  color: #333; /* Warna teks */
+  text-decoration: none; /* Tanpa dekorasi tautan */
+  font-weight: bold; /* Tebal teks */
+}
+
+.contact-form ul li a:hover {
+  color: #000; /* Warna teks saat dihover */
+}
+
+/* end contact */
+/* Untuk perangkat dengan lebar maksimum 600px */
+@media only screen and (max-width: 600px) {
+  header {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  nav ul li {
+    padding-right: 20em;
+    margin: 0px 3px;
+  }
+
+  .home {
+    flex-direction: column;
+    align-items: center;
+    margin-top: 5em;
+    padding-bottom: 5em;
+  }
+
+  .home .buttons {
+    flex-direction: row;
+    margin-top: 1em;
+  }
+
+  .home .buttons button {
+    margin: 0 5px;
+  }
+
+  .me {
+    margin-right: 0;
+  }
+
+  .about {
+    flex-direction: column;
+    align-items: center;
+    padding-top: 3em;
+    padding-bottom: 3em;
+  }
+
+  .about-text,
+  .me-text {
+    color: black;
+  }
+
+  .certificate {
+    padding: 3rem 2rem 5rem;
+  }
+
+  .cards-container {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .cards-container .uiux,
+  .cards-container .javascript {
+    width: auto;
+  }
+
+  .skill {
+    padding-bottom: 3em;
+  }
+
+  .cards-container {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .card {
+    margin-left: 0;
+  }
+
+  .works {
+    padding-top: 1em;
+    padding-bottom: 3em;
+  }
+
+  .container {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .img-works img {
+    width: 100%;
+    height: auto;
+  }
+
+  .contact {
+    padding: 30px 0;
+  }
+}
+
+/* responsive */
+/* Untuk perangkat dengan lebar maksimum 600px */
+/* Untuk perangkat dengan lebar maksimum 600px */
+@media only screen and (max-width: 600px) {
+  header {
+    top: 0%;
+    position: fixed;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  nav ul li {
+    padding-right: 0; /* Menghapus padding kanan pada item menu */
+    margin: 0px 3px;
+  }
+
+  .home {
+    padding: 5em 5em; /* Adding padding on left and right sides */
+    text-align: center; /* Center aligning the content */
+  }
+
+  .home h1 {
+    font-size: 2em;
+    margin: 0; /* Remove any default margins */
+  }
+
+  .home p {
+    font-weight: bold;
+    font-size: 0.5em;
+    margin-left: 0; /* Remove any default margins */
+    margin-right: 0;
+  }
+
+  .buttons {
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 5px;
+  }
+
+  .buttons button {
+    margin: 5px 0;
+  }
+
+  .home .pic-me {
+    margin-top: 2em;
+    margin-right: 0; /* Reset margin for the image container */
+  }
+  .about {
+    flex-direction: column;
+    align-items: center;
+    padding-top: 3em;
+    padding-bottom: 3em;
+  }
+
+  .about-text,
+  .me-text {
+    color: black;
+  }
+
+  .certificate {
+    padding: 3rem 2rem 5rem;
+  }
+
+  .cards-container {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .cards-container .uiux,
+  .cards-container .javascript {
+    width: auto;
+  }
+
+  .skill {
+    padding-bottom: 3em;
+  }
+
+  .cards-container {
+    flex-direction: column; /* Mengatur tata letak menjadi vertikal */
+    align-items: center; /* Mengatur kartu menjadi di tengah secara horizontal */
+    gap: 20px; /* Memberikan jarak antara kartu */
+  }
+
+  .card {
+    margin-left: 0; /* Menghapus margin kiri */
+    width: 80%; /* Mengatur lebar kartu agar lebih sesuai dengan lebar layar */
+    max-width: 300px; /* Maksimum lebar kartu untuk menjaga responsivitas */
+  }
+
+  .works {
+    padding-top: 1em;
+    padding-bottom: 3em;
+  }
+
+  .container {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .img-works img {
+    width: 100%;
+    height: auto;
+  }
+
+  .contact {
+    padding: 30px 0;
+  }
+}
