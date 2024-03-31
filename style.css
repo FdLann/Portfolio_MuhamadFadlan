@@ -84,69 +84,6 @@ nav ul li a:hover::before {
 
 /* responsive */
 /* CSS for mobile devices */
-@media only screen and (max-width: 600px) {
-  header {
-    height: 5em;
-    padding: 0.5em;
-  }
-
-  nav ul {
-    display: none; /* Sembunyikan daftar menu */
-    flex-direction: column; /* Ubah tata letak menjadi vertikal */
-    position: absolute;
-    top: 60px; /* Atur posisi daftar menu */
-    left: 0;
-    width: 100%;
-    background-color: white;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
-    z-index: 99;
-  }
-
-  nav ul.active {
-    display: flex; /* Tampilkan daftar menu saat aktif */
-  }
-
-  nav ul li {
-    display: block;
-    padding: 10px;
-  }
-
-  .burger {
-    display: block; /* Tampilkan ikon burger */
-  }
-
-  .home {
-    margin-top: 5em; /* Atur margin atas untuk bagian rumah */
-  }
-
-  .home h1,
-  .home h2 {
-    font-size: 2em;
-  }
-
-  .home .me {
-    width: 15em;
-    height: 20em;
-    margin-right: 0;
-  }
-
-  .cards-container {
-    flex-direction: column; /* Atur tata letak kartu ke vertikal */
-  }
-
-  .card {
-    margin-left: 0; /* Atur margin kiri menjadi 0 */
-  }
-
-  .container {
-    flex-direction: column; /* Atur tata letak kontainer ke vertikal */
-  }
-
-  .img-works img {
-    width: 100%; /* Atur lebar gambar agar sesuai dengan kotak */
-    height: auto; /* Atur tinggi gambar agar proporsional */
-  }
-}
 
 /* end */
 
@@ -474,7 +411,7 @@ nav ul li a:hover::before {
 
 /* end contact */
 /* Untuk perangkat dengan lebar maksimum 600px */
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 400px) {
   header {
     flex-direction: column;
     align-items: center;
@@ -566,35 +503,59 @@ nav ul li a:hover::before {
 }
 
 /* responsive */
-/* Untuk perangkat dengan lebar maksimum 600px */
-/* Untuk perangkat dengan lebar maksimum 600px */
-@media only screen and (max-width: 600px) {
+@media screen and (max-width: 600px) {
   header {
     top: 0%;
+    height: 5em;
     position: fixed;
     flex-direction: column;
     align-items: center;
+    padding: 0.5em;
+  }
+
+  nav ul {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    z-index: 99;
+  }
+
+  nav ul.active {
+    display: flex;
   }
 
   nav ul li {
-    padding-right: 0; /* Menghapus padding kanan pada item menu */
+    display: block;
+    padding: 10px;
+    padding-right: 0;
     margin: 0px 3px;
   }
 
-  .home {
-    padding: 5em 5em; /* Adding padding on left and right sides */
-    text-align: center; /* Center aligning the content */
+  .burger {
+    display: block;
   }
 
-  .home h1 {
+  .home {
+    margin-top: 5em;
+    padding: 5em 5em;
+    text-align: center;
+  }
+
+  .home h1,
+  .home h2 {
     font-size: 2em;
-    margin: 0; /* Remove any default margins */
+    margin: 0;
   }
 
   .home p {
     font-weight: bold;
     font-size: 0.5em;
-    margin-left: 0; /* Remove any default margins */
+    margin-left: 0;
     margin-right: 0;
   }
 
@@ -610,8 +571,9 @@ nav ul li a:hover::before {
 
   .home .pic-me {
     margin-top: 2em;
-    margin-right: 0; /* Reset margin for the image container */
+    margin-right: 0;
   }
+
   .about {
     flex-direction: column;
     align-items: center;
@@ -630,7 +592,8 @@ nav ul li a:hover::before {
 
   .cards-container {
     flex-direction: column;
-    gap: 10px;
+    align-items: center;
+    gap: 20px;
   }
 
   .cards-container .uiux,
@@ -642,16 +605,124 @@ nav ul li a:hover::before {
     padding-bottom: 3em;
   }
 
-  .cards-container {
-    flex-direction: column; /* Mengatur tata letak menjadi vertikal */
-    align-items: center; /* Mengatur kartu menjadi di tengah secara horizontal */
-    gap: 20px; /* Memberikan jarak antara kartu */
+  .works {
+    padding-top: 1em;
+    padding-bottom: 3em;
   }
 
-  .card {
-    margin-left: 0; /* Menghapus margin kiri */
-    width: 80%; /* Mengatur lebar kartu agar lebih sesuai dengan lebar layar */
-    max-width: 300px; /* Maksimum lebar kartu untuk menjaga responsivitas */
+  .container {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .img-works img {
+    width: 100%;
+    height: auto;
+  }
+
+  .contact {
+    padding: 30px 0;
+  }
+}
+
+/* responsive 780 */
+/* Untuk perangkat dengan lebar maksimum 768px dan tinggi maksimum 1280px */
+@media screen and (max-width: 768px) and (max-height: 1280px) {
+  header {
+    padding: 10px;
+  }
+
+  nav ul {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    z-index: 99;
+  }
+
+  nav ul.active {
+    display: flex;
+  }
+
+  nav ul li {
+    display: block;
+    padding: 10px;
+    padding-right: 0;
+    margin: 0px 3px;
+  }
+
+  .burger {
+    display: block;
+  }
+
+  .home {
+    margin-top: 5em;
+    padding: 5em 5em;
+    text-align: center;
+  }
+
+  .home h1,
+  .home h2 {
+    font-size: 2em;
+    margin: 0;
+  }
+
+  .home p {
+    font-weight: bold;
+    font-size: 0.5em;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .buttons {
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 5px;
+  }
+
+  .buttons button {
+    margin: 5px 0;
+  }
+
+  .home .pic-me {
+    margin-top: 2em;
+    margin-right: 0;
+  }
+
+  .about {
+    flex-direction: column;
+    align-items: center;
+    padding-top: 3em;
+    padding-bottom: 3em;
+  }
+
+  .about-text,
+  .me-text {
+    color: black;
+  }
+
+  .certificate {
+    padding: 3rem 2rem 5rem;
+  }
+
+  .cards-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .cards-container .uiux,
+  .cards-container .javascript {
+    width: auto;
+  }
+
+  .skill {
+    padding-bottom: 3em;
   }
 
   .works {
