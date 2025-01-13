@@ -244,30 +244,101 @@
     </div>
   </section>
 
-  <!-- Certificate Section -->
-  <section id="certificate">
-    <div class="container">
-      <h2 class="section-title text-center" data-aos="fade-down">Certificates</h2>
-      <div class="row justify-content-center">
-        <div class="col-md-4 mb-4" data-aos="zoom-in" data-aos-delay="100">
-          <div class="card certificate-card">
-            <div class="card-body text-center">
-              <h5 class="card-title mb-3">UI/UX Certificate</h5>
-              <a href="sertifikat/UIUX.pdf" target="_blank" class="btn btn-primary">View Certificate</a>
-            </div>
+<!-- Certificate Section -->
+<section id="certificate">
+  <div class="container">
+    <h2 class="section-title text-center" data-aos="fade-down">Certificates</h2>
+    <div class="row justify-content-center">
+      <div class="col-md-4 mb-4" data-aos="zoom-in" data-aos-delay="100">
+        <div class="card certificate-card">
+          <div class="card-body text-center">
+            <h5 class="card-title mb-3">UI/UX Certificate</h5>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#pdfModal" data-pdf="sertifikat/UIUX.pdf">
+              View Certificate
+            </button>
           </div>
         </div>
-        <div class="col-md-4 mb-4" data-aos="zoom-in" data-aos-delay="200">
-          <div class="card certificate-card">
-            <div class="card-body text-center">
-              <h5 class="card-title mb-3">Javascript Certificate</h5>
-              <a href="sertifikat/javascript.pdf" target="_blank" class="btn btn-primary">View Certificate</a>
-            </div>
+      </div>
+      <div class="col-md-4 mb-4" data-aos="zoom-in" data-aos-delay="200">
+        <div class="card certificate-card">
+          <div class="card-body text-center">
+            <h5 class="card-title mb-3">Javascript Certificate</h5>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#pdfModal" data-pdf="sertifikat/javascript.pdf">
+              View Certificate
+            </button>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+
+  <!-- PDF Modal -->
+  <div class="modal fade" id="pdfModal" tabindex="-1" aria-labelledby="pdfModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="pdfModalLabel">Certificate Preview</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-0">
+          <iframe id="pdfFrame" src="" style="width: 100%; height: 80vh; border: none;"></iframe>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <a id="downloadBtn" href="" target="_blank" class="btn btn-primary">
+            Download Certificate
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- Add these styles to your existing CSS -->
+<style>
+.modal-content {
+  border: none;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.modal-header {
+  background-color: var(--primary-blue);
+  color: white;
+  border-bottom: none;
+}
+
+.modal-header .btn-close {
+  color: white;
+  opacity: 1;
+}
+
+.modal-footer {
+  border-top: none;
+  padding: 1rem;
+}
+
+.certificate-card {
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.certificate-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary {
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(37, 99, 235, 0.2);
+}
+</style>
 
   <!-- Skills Section -->
   <section id="skill" class="bg-light">
@@ -447,6 +518,31 @@
         }
       });
     });
-  </script>
+<!-- Add this JavaScript code just before the closing </body> tag -->
+
+// PDF Modal Handler
+const pdfModal = document.getElementById('pdfModal');
+const pdfFrame = document.getElementById('pdfFrame');
+const downloadBtn = document.getElementById('downloadBtn');
+
+pdfModal.addEventListener('show.bs.modal', function (event) {
+  // Button that triggered the modal
+  const button = event.relatedTarget;
+  
+  // Get the PDF path from data-pdf attribute
+  const pdfPath = button.getAttribute('data-pdf');
+  
+  // Update the iframe source
+  pdfFrame.src = pdfPath;
+  
+  // Update the download button href
+  downloadBtn.href = pdfPath;
+});
+
+// Clear iframe source when modal is closed to stop PDF loading
+pdfModal.addEventListener('hidden.bs.modal', function () {
+  pdfFrame.src = '';
+});
+</script>
 </body>
 </html>
