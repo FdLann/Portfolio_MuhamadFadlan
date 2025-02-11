@@ -354,51 +354,72 @@
     </div>
   </section>
 
-  <!-- About Section -->
 <!-- About Section -->
-<section id="about" class="py-20 bg-gradient-to-b from-gray-50 to-white">
-  <div class="container mx-auto px-4">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-      <!-- Image Column -->
-      <div class="relative" data-aos="fade-right">
-        <div class="relative overflow-hidden rounded-2xl shadow-xl">
-          <img 
-            src="gambar/me-2.jpg" 
-            alt="Muhamad Fadlan" 
-            class="w-full h-auto object-cover transform hover:scale-105 transition-transform duration-500"
-          >
-          <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+<section id="about" class="py-16 bg-gradient-to-br from-gray-50 via-white to-gray-50">
+  <div class="container mx-auto px-6 max-w-6xl">
+    <div class="flex flex-col md:flex-row items-center gap-12">
+      <!-- Image Column with controlled size -->
+      <div class="md:w-1/3" data-aos="fade-right">
+        <div class="relative max-w-sm mx-auto">
+          <div class="rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <img 
+              src="gambar/me-2.jpg" 
+              alt="Muhamad Fadlan" 
+              class="w-full h-[400px] object-cover object-center"
+            >
+            <!-- Subtle overlay -->
+            <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black/10"></div>
+          </div>
+          <!-- Decorative element -->
+          <div class="absolute -z-10 -bottom-4 -right-4 w-full h-full bg-blue-50 rounded-lg"></div>
         </div>
       </div>
       
       <!-- Content Column -->
-      <div class="space-y-6" data-aos="fade-left">
-        <div class="space-y-4">
-          <h2 class="text-3xl font-bold text-gray-800 mb-6">Tentang Saya</h2>
+      <div class="md:w-2/3 space-y-6" data-aos="fade-left">
+        <div class="space-y-6">
+          <div class="border-l-4 border-blue-500 pl-4">
+            <h2 class="text-3xl font-bold text-gray-800">Tentang Saya</h2>
+            <p class="text-blue-600 font-medium">Mahasiswa Sistem Informasi</p>
+          </div>
           
           <div class="space-y-4 text-gray-600 leading-relaxed">
-            <p>
-              Selamat datang! Saya Muhamad Fadlan, seorang mahasiswa semester 7 jurusan Sistem Informasi di Universitas Gunadarma. Sebagai putra bungsu dari empat bersaudara yang lahir dan besar di Jakarta, saya memiliki semangat yang kuat untuk terus berkembang dalam dunia teknologi.
+            <p class="font-medium">
+              Selamat datang! Saya Muhamad Fadlan, mahasiswa semester 7 Sistem Informasi di Universitas Gunadarma.
             </p>
             
             <p>
-              Dengan dedikasi tinggi di bidang teknologi informasi, saya aktif mengembangkan keterampilan dalam berbagai bahasa pemrograman dan teknologi terkini. Fokus utama saya adalah membangun fondasi yang kuat untuk karier di industri IT, sambil terus mengeksplorasi inovasi-inovasi baru dalam dunia digital.
+              Sebagai putra bungsu dari empat bersaudara yang tumbuh di Jakarta, saya memiliki passion yang kuat dalam teknologi dan pengembangan diri. Saya percaya bahwa kombinasi antara pendidikan formal dan pembelajaran mandiri adalah kunci untuk mencapai potensi maksimal dalam karier.
             </p>
             
             <p>
-              Di luar dunia akademis dan teknologi, saya adalah penggemar setia sepak bola dan pendukung FC Barcelona. Hobi ini mengajarkan saya nilai-nilai penting seperti kerja tim, dedikasi, dan semangat pantang menyerah yang saya terapkan dalam pengembangan karier.
+              Dengan fokus pada pengembangan skill di bidang IT, saya terus memperdalam pengetahuan dalam berbagai bahasa pemrograman dan teknologi terkini. Visi saya adalah menjadi profesional IT yang kompeten dan dapat memberikan kontribusi positif bagi industri teknologi Indonesia.
             </p>
           </div>
           
-          <!-- Quick Facts -->
-          <div class="grid grid-cols-2 gap-4 mt-8">
-            <div class="p-4 bg-white rounded-lg shadow-sm">
-              <h3 class="font-semibold text-gray-800">Pendidikan</h3>
-              <p class="text-gray-600">Sistem Informasi, Universitas Gunadarma</p>
+          <!-- Skills & Interests -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
+            <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
+              <h3 class="font-semibold text-gray-800 mb-2 flex items-center">
+                <span class="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
+                Fokus Pengembangan
+              </h3>
+              <ul class="text-gray-600 space-y-1">
+                <li>• Pengembangan Web</li>
+                <li>• Sistem Informasi</li>
+                <li>• Bahasa Pemrograman</li>
+              </ul>
             </div>
-            <div class="p-4 bg-white rounded-lg shadow-sm">
-              <h3 class="font-semibold text-gray-800">Fokus</h3>
-              <p class="text-gray-600">Pengembangan Web & Teknologi Informasi</p>
+            <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
+              <h3 class="font-semibold text-gray-800 mb-2 flex items-center">
+                <span class="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
+                Minat & Hobi
+              </h3>
+              <ul class="text-gray-600 space-y-1">
+                <li>• Teknologi Informasi</li>
+                <li>• Sepak Bola</li>
+                <li>• Pengembangan Diri</li>
+              </ul>
             </div>
           </div>
         </div>
