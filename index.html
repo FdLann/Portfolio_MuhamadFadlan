@@ -954,76 +954,100 @@
             
             <div class="mt-5">
               <h4 class="mb-4">Let's Work Together!</h4>
-              <p class="text-muted mb-4">I'm currently looking for new opportunities. Whether you have a project</p>
-    </div>
+              <p class="text-muted mb-4">I'm currently looking for new opportunities. Whether you have a project to discuss or just want to say hi, I'll get back to you as soon as possible!</p>
+              <a href="mailto:muhamadfadlan.fa@gmail.com" class="btn btn-primary">
+                <i class="fas fa-paper-plane"></i> Send Me a Message
+              </a>
+            </div>
           </div>
-        </div></div></div></section>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- Footer -->
-  <footer class="text-center">
-    <div class="container">
-      <p class="mb-0">&copy; 2024 <strong>Muhamad Fadlan</strong>. All rights reserved.</p>
+  <footer>
+    <div class="container text-center">
+      <div class="footer-logo">FADLAN</div>
+      <div class="social-links">
+        <a href="https://www.linkedin.com/in/muhamad-fadlan-85b79716a/" target="_blank" class="social-link">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+        <a href="mailto:muhamadfadlan.fa@gmail.com" class="social-link">
+          <i class="fas fa-envelope"></i>
+        </a>
+        <a href="sertifikat/CV_MUHAMAD FADLAN.pdf" target="_blank" class="social-link">
+          <i class="fas fa-file-alt"></i>
+        </a>
+      </div>
+      <p class="copyright">&copy; 2024 Muhamad Fadlan. All rights reserved.</p>
     </div>
   </footer>
+
+  <!-- Back to Top Button -->
+  <a href="#" class="back-to-top">
+    <i class="fas fa-arrow-up"></i>
+  </a>
+
+  <!-- PDF Modal -->
+  <div class="modal fade" id="pdfModal" tabindex="-1" aria-labelledby="pdfModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Certificate Preview</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-0">
+          <iframe id="pdfFrame" src="" style="width: 100%; height: 80vh; border: none;"></iframe>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <a id="downloadBtn" href="" target="_blank" class="btn btn-primary">
+            <i class="fas fa-download"></i> Download
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
   <script>
-  // Enhanced scroll animations
-  AOS.init({
-    duration: 1000,
-    once: true,
-    offset: 100,
-    easing: 'ease-out-cubic'
-  });
+    // Initialize AOS animations
+    AOS.init({
+      duration: 800,
+      once: true,
+      easing: 'ease-out-cubic'
+    });
 
-// Enhanced navbar scroll effect
-  const navbar = document.querySelector('.navbar');
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
-      navbar.classList.add('scrolled');
-    } else {
-      navbar.classList.remove('scrolled');
-    }
-  });
-
-  // Smooth scroll with enhanced easing
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-      e.preventDefault();
-      const target = document.querySelector(this.getAttribute('href'));
-      if (target) {
-        const headerOffset = 80;
-        const elementPosition = target.getBoundingClientRect().top;
-        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: 'smooth'
-        });
+    // Navbar scroll effect
+    const navbar = document.querySelector('.navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
       }
     });
-  });
 
-  // Enhanced intersection observer for animations
-  const observerOptions = {
-    root: null,
-    threshold: 0.1,
-    rootMargin: '-50px'
-  };
- const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('animate__animated');
-        entry.target.classList.add('animate__fadeInUp');
-      }
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          const headerOffset = 80;
+          const elementPosition = target.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }
+      });
     });
-  }, observerOptions);
-
-  document.querySelectorAll('section').forEach((section) => {
-    observer.observe(section);
-  });
 
     // Active link highlighting
     const sections = document.querySelectorAll('section');
@@ -1033,7 +1057,8 @@
       let current = '';
       sections.forEach(section => {
         const sectionTop = section.offsetTop;
-        if (window.pageYOffset >= sectionTop - 100) {
+        const sectionHeight = section.clientHeight;
+        if (window.pageYOffset >= sectionTop - sectionHeight / 3) {
           current = section.getAttribute('id');
         }
       });
@@ -1045,31 +1070,56 @@
         }
       });
     });
-<!-- Add this JavaScript code just before the closing </body> tag -->
 
-// PDF Modal Handler
-const pdfModal = document.getElementById('pdfModal');
-const pdfFrame = document.getElementById('pdfFrame');
-const downloadBtn = document.getElementById('downloadBtn');
+    // Back to top button
+    const backToTopButton = document.querySelector('.back-to-top');
+    window.addEventListener('scroll', () => {
+      if (window.pageYOffset > 300) {
+        backToTopButton.classList.add('active');
+      } else {
+        backToTopButton.classList.remove('active');
+      }
+    });
 
-pdfModal.addEventListener('show.bs.modal', function (event) {
-  // Button that triggered the modal
-  const button = event.relatedTarget;
-  
-  // Get the PDF path from data-pdf attribute
-  const pdfPath = button.getAttribute('data-pdf');
-  
-  // Update the iframe source
-  pdfFrame.src = pdfPath;
-  
-  // Update the download button href
-  downloadBtn.href = pdfPath;
-});
+    // PDF Modal Handler
+    const pdfModal = document.getElementById('pdfModal');
+    const pdfFrame = document.getElementById('pdfFrame');
+    const downloadBtn = document.getElementById('downloadBtn');
 
-// Clear iframe source when modal is closed to stop PDF loading
-pdfModal.addEventListener('hidden.bs.modal', function () {
-  pdfFrame.src = '';
-});
-</script>
+    pdfModal.addEventListener('show.bs.modal', function (event) {
+      const button = event.relatedTarget;
+      const pdfPath = button.getAttribute('data-pdf');
+      pdfFrame.src = pdfPath;
+      downloadBtn.href = pdfPath;
+    });
+
+    pdfModal.addEventListener('hidden.bs.modal', function () {
+      pdfFrame.src = '';
+    });
+
+    // Animate progress bars when scrolled into view
+    const animateProgressBars = () => {
+      const progressBars = document.querySelectorAll('.progress-bar');
+      progressBars.forEach(bar => {
+        const width = bar.getAttribute('aria-valuenow');
+        bar.style.width = '0';
+        setTimeout(() => {
+          bar.style.width = width + '%';
+        }, 100);
+      });
+    };
+
+    const progressSection = document.getElementById('skill');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateProgressBars();
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    observer.observe(progressSection);
+  </script>
 </body>
 </html>
