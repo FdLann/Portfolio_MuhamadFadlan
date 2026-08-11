@@ -7,10 +7,10 @@ window.addEventListener("scroll", () => {
   const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
   const progress = (window.scrollY / totalHeight) * 100;
   if (scrollProgress) scrollProgress.style.width = `${progress}%`;
-  
+
   if (navbar) navbar.classList.toggle("scrolled", window.scrollY > 50);
   if (btt) btt.classList.toggle("show", window.scrollY > 300);
-  
+
   updateActiveNavLink();
 });
 
@@ -23,7 +23,7 @@ let glowX = 0, glowY = 0;
 document.addEventListener("mousemove", (e) => {
   mouseX = e.clientX;
   mouseY = e.clientY;
-  
+
   if (cursorDot) {
     cursorDot.style.left = `${mouseX}px`;
     cursorDot.style.top = `${mouseY}px`;
@@ -33,7 +33,7 @@ document.addEventListener("mousemove", (e) => {
 function animateGlow() {
   glowX += (mouseX - glowX) * 0.1;
   glowY += (mouseY - glowY) * 0.1;
-  
+
   if (cursorGlow) {
     cursorGlow.style.left = `${glowX}px`;
     cursorGlow.style.top = `${glowY}px`;
@@ -47,14 +47,14 @@ const canvas = document.getElementById("particle-canvas");
 if (canvas) {
   const ctx = canvas.getContext("2d");
   let particles = [];
-  
+
   function resizeCanvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
   }
   resizeCanvas();
   window.addEventListener("resize", resizeCanvas);
-  
+
   class Particle {
     constructor() {
       this.reset();
@@ -70,7 +70,7 @@ if (canvas) {
     update() {
       this.x += this.vx;
       this.y += this.vy;
-      
+
       if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
       if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
     }
@@ -81,26 +81,26 @@ if (canvas) {
       ctx.fill();
     }
   }
-  
+
   const particleCount = Math.min(Math.floor(window.innerWidth / 20), 60);
   for (let i = 0; i < particleCount; i++) {
     particles.push(new Particle());
   }
-  
+
   function animateParticles() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
+
     particles.forEach((p, index) => {
       p.update();
       p.draw();
-      
+
       // Draw distance lines between close particles
       for (let j = index + 1; j < particles.length; j++) {
         const p2 = particles[j];
         const dx = p.x - p2.x;
         const dy = p.y - p2.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
-        
+
         if (dist < 120) {
           ctx.beginPath();
           ctx.moveTo(p.x, p.y);
@@ -111,7 +111,7 @@ if (canvas) {
         }
       }
     });
-    
+
     requestAnimationFrame(animateParticles);
   }
   animateParticles();
@@ -128,7 +128,7 @@ if (typewriterElement) {
 
   function typeEffect() {
     const currentWord = words[wordIndex];
-    
+
     if (isDeleting) {
       typewriterElement.textContent = currentWord.substring(0, charIndex - 1);
       charIndex--;
@@ -198,7 +198,7 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
     const targetId = this.getAttribute("href");
     if (targetId === "#") return;
     const targetElement = document.querySelector(targetId);
-    
+
     if (targetElement) {
       e.preventDefault();
       targetElement.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -246,7 +246,7 @@ skillTabs.forEach((tab) => {
   tab.addEventListener("click", () => {
     skillTabs.forEach((t) => t.classList.remove("active"));
     tab.classList.add("active");
-    
+
     const category = tab.dataset.category;
     skillCards.forEach((card) => {
       if (category === "all" || card.dataset.category === category) {
@@ -266,14 +266,14 @@ let statsAnimated = false;
 
 function animateStats() {
   if (statsAnimated) return;
-  
+
   statElements.forEach((stat) => {
     const target = parseInt(stat.getAttribute("data-target"));
     const suffix = stat.getAttribute("data-suffix") || "";
     let count = 0;
     const duration = 1500;
     const stepTime = Math.abs(Math.floor(duration / target));
-    
+
     const timer = setInterval(() => {
       count += 1;
       stat.textContent = count + suffix;
@@ -283,7 +283,7 @@ function animateStats() {
       }
     }, Math.max(stepTime, 20));
   });
-  
+
   statsAnimated = true;
 }
 
@@ -307,16 +307,16 @@ tiltCards.forEach((card) => {
     const rect = card.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
-    
+
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
-    
+
     const rotateX = (y - centerY) / 12;
     const rotateY = (centerX - x) / 12;
-    
+
     card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
   });
-  
+
   card.addEventListener("mouseleave", () => {
     card.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)";
   });
@@ -326,15 +326,15 @@ tiltCards.forEach((card) => {
 function showToast(message, icon = "fas fa-check-circle") {
   const container = document.getElementById("toastContainer");
   if (!container) return;
-  
+
   const toast = document.createElement("div");
   toast.className = "toast";
   toast.innerHTML = `<i class="${icon}"></i> <span>${message}</span>`;
-  
+
   container.appendChild(toast);
-  
+
   setTimeout(() => toast.classList.add("show"), 50);
-  
+
   setTimeout(() => {
     toast.classList.remove("show");
     setTimeout(() => toast.remove(), 400);
@@ -357,9 +357,9 @@ function handleContactSubmit(event) {
   const name = document.getElementById("senderName").value;
   const subject = document.getElementById("senderSubject").value;
   const message = document.getElementById("senderMessage").value;
-  
+
   const mailtoUrl = `mailto:muhamadfadlan.fa@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent("Name: " + name + "\n\nMessage:\n" + message)}`;
-  
+
   showToast("Opening default mail application...", "fas fa-paper-plane");
   setTimeout(() => {
     window.location.href = mailtoUrl;
@@ -408,11 +408,11 @@ async function loadGithubProjects() {
 
   try {
     const response = await fetch(
-      `https://api.github.com/users/${githubUsername}/repos?sort=updated&per_page=15`
+      `https://api.github.com/users/${githubUsername}/repos?sort=updated&per_page=5`
     );
-    
+
     if (!response.ok) throw new Error("GitHub API response not ok");
-    
+
     const repos = await response.json();
 
     if (!Array.isArray(repos) || repos.length === 0) {
@@ -557,7 +557,7 @@ async function fetchMusicPlaylist() {
     const response = await fetch(SHEET_CSV_URL);
     if (!response.ok) throw new Error("Spreadsheet response not ok");
     const csvData = await response.text();
-    
+
     const parsedTracks = parseMusicCSV(csvData);
     if (parsedTracks.length > 0) {
       playlist = parsedTracks;
@@ -568,7 +568,7 @@ async function fetchMusicPlaylist() {
     console.warn("Using fallback music playlist due to sheet fetch issue:", error);
     loadFallbackPlaylist();
   }
-  
+
   if (playlist.length > 0) {
     loadTrack(0);
     enableAutoplayOnInteraction();
@@ -586,7 +586,7 @@ function enableAutoplayOnInteraction() {
     document.removeEventListener("touchstart", startPlay);
     document.removeEventListener("keydown", startPlay);
   };
-  
+
   document.addEventListener("click", startPlay);
   document.addEventListener("touchstart", startPlay, { passive: true });
   document.addEventListener("keydown", startPlay);
@@ -596,29 +596,29 @@ function enableAutoplayOnInteraction() {
 function parseMusicCSV(csvText) {
   const lines = csvText.split(/\r?\n/);
   if (lines.length < 2) return [];
-  
+
   // Headers title,artist,audio_url,cover_url
   const headers = lines[0].split(",").map(h => h.trim().toLowerCase());
   const titleIdx = headers.indexOf("title");
   const artistIdx = headers.indexOf("artist");
   const audioIdx = headers.indexOf("audio_url");
   const coverIdx = headers.indexOf("cover_url");
-  
+
   const tracks = [];
   for (let i = 1; i < lines.length; i++) {
     const line = lines[i].trim();
     if (!line) continue;
-    
+
     const cells = splitCSVLine(line);
     if (cells.length < 3) continue;
-    
+
     const track = {
       title: cells[titleIdx]?.trim() || "Untitled",
       artist: cells[artistIdx]?.trim() || "Unknown Artist",
       audio: cells[audioIdx]?.trim() || "",
       cover: cells[coverIdx]?.trim() || "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=120"
     };
-    
+
     if (track.audio) {
       tracks.push(track);
     }
@@ -631,7 +631,7 @@ function splitCSVLine(line) {
   const result = [];
   let current = "";
   let insideQuotes = false;
-  
+
   for (let i = 0; i < line.length; i++) {
     const char = line[i];
     if (char === '"') {
@@ -663,7 +663,7 @@ function loadFallbackPlaylist() {
 function loadTrack(index) {
   currentTrackIndex = index;
   const track = playlist[currentTrackIndex];
-  
+
   if (playerTitle) playerTitle.textContent = track.title;
   if (playerArtist) playerArtist.textContent = track.artist;
   if (playerCover) playerCover.src = track.cover;
@@ -684,7 +684,7 @@ function playTrack() {
     if (playIcon) {
       playIcon.className = "fas fa-play";
     }
-    
+
     // Distinguish between browser autoplay block and broken audio links
     if (err.name === "NotAllowedError") {
       showToast("Click anywhere on the page first to enable audio.", "fas fa-volume-mute");
@@ -753,7 +753,7 @@ audio.addEventListener("timeupdate", () => {
   if (audio.duration) {
     const pct = (audio.currentTime / audio.duration) * 100;
     if (progressBarFill) progressBarFill.style.width = `${pct}%`;
-    
+
     if (currentTimeEl) currentTimeEl.textContent = formatTime(audio.currentTime);
     if (totalTimeEl) totalTimeEl.textContent = formatTime(audio.duration);
   }
@@ -765,7 +765,7 @@ if (progressBarBg) {
     const width = progressBarBg.clientWidth;
     const clickX = e.offsetX;
     const duration = audio.duration;
-    
+
     if (duration) {
       audio.currentTime = (clickX / width) * duration;
     }
