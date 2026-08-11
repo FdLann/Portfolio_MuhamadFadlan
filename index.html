@@ -3,81 +3,140 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Muhamad Fadlan — Web Developer & UI/UX Designer</title>
+    <title>Muhamad Fadlan — Web Developer & System Analyst</title>
+    <meta name="description" content="Portfolio Muhamad Fadlan - Fresh Graduate Sistem Informasi, Web Developer, System Analyst, dan UI/UX Designer." />
+    
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&family=JetBrains+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
+    
+    <!-- FontAwesome Icons -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
-    <link rel="stylesheet" href="style.css">
-
+    
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <!-- SCROLL PROGRESS BAR -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- CUSTOM CURSOR -->
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-glow" id="cursorGlow"></div>
+
+    <!-- INTERACTIVE BACKGROUND CANVAS -->
+    <canvas id="particle-canvas"></canvas>
+
     <!-- NAVBAR -->
     <nav id="navbar">
       <div class="nav-inner">
-        <a href="#home" class="nav-logo">FADLAN</a>
+        <a href="#home" class="nav-logo">
+          <span class="logo-mark">&lt;/&gt;</span> FADLAN
+        </a>
         <ul class="nav-links" id="navLinks">
-          <a href="#home" class="active">Home</a>
-          <a href="#about">About</a>
-          <a href="#certificate">Certificates</a>
-          <a href="#skill">Skills</a>
-          <a href="#experience">Experience</a>
-          <a href="#works">Works</a>
-          <a href="#contact">Contact</a>
+          <li><a href="#home" class="active"><i class="fas fa-home nav-icon"></i> Home</a></li>
+          <li><a href="#about"><i class="fas fa-user nav-icon"></i> About</a></li>
+          <li><a href="#certificate"><i class="fas fa-award nav-icon"></i> Certificates</a></li>
+          <li><a href="#skill"><i class="fas fa-code nav-icon"></i> Skills</a></li>
+          <li><a href="#experience"><i class="fas fa-briefcase nav-icon"></i> Experience</a></li>
+          <li><a href="#works"><i class="fas fa-folder-open nav-icon"></i> Works</a></li>
+          <li><a href="#contact"><i class="fas fa-paper-plane nav-icon"></i> Contact</a></li>
         </ul>
-        <button class="nav-hamburger" id="hamburger" aria-label="Menu">
-          <span></span><span></span><span></span>
-        </button>
+        <div class="nav-actions">
+          <button class="nav-copy-btn" onclick="copyEmail()" title="Copy Email">
+            <i class="fas fa-envelope"></i>
+            <span class="btn-text">Copy Email</span>
+          </button>
+          <button class="nav-hamburger" id="hamburger" aria-label="Toggle Menu">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
       </div>
     </nav>
 
-    <!-- HERO -->
+    <!-- HERO SECTION -->
     <section id="home">
       <div class="hero-orb hero-orb-1"></div>
       <div class="hero-orb hero-orb-2"></div>
       <div class="container">
         <div class="hero-grid">
           <div class="hero-content">
-            <p class="hero-eyebrow">Hello, I'm</p>
+            <div class="hero-eyebrow">
+              <span class="status-badge"><span class="dot-pulse"></span> Open for Opportunities</span>
+            </div>
             <h1 class="hero-name">
-              Muhamad<br /><span class="gold">Fadlan</span>
+              Muhamad<br /><span class="gold-gradient">Fadlan</span>
             </h1>
-            <p class="hero-role">Web Developer with System & Data Focus</p>
+            <div class="hero-role-wrapper">
+              <span class="hero-role-static">I am a</span>
+              <span class="typewriter" id="typewriter" data-words='["Web Developer", "Information Systems Graduate", "System & Data Specialist", "UI/UX Enthusiast"]'></span>
+              <span class="cursor-blink">|</span>
+            </div>
             <p class="hero-desc">
               Fresh graduate in Information Systems with experience in building
-              web-based systems, managing data, and understanding business
-              processes. I focus on creating efficient, end-to-end solutions
-              from database to user interface.
+              end-to-end web applications, designing database architectures, and analyzing business processes into scalable digital solutions.
             </p>
+            
             <div class="hero-actions">
-              <a href="#works" class="btn btn-gold">
+              <a href="#works" class="btn btn-gold btn-magnetic">
                 <i class="fas fa-eye"></i> View My Works
               </a>
               <a
                 href="sertifikat/CV_Muhamad Fadlan.pdf"
                 target="_blank"
-                class="btn btn-ghost"
+                class="btn btn-ghost btn-magnetic"
               >
                 <i class="fas fa-download"></i> Download CV
               </a>
+              <button onclick="copyEmail()" class="btn btn-outline-gold btn-magnetic">
+                <i class="fas fa-copy"></i> Copy Email
+              </button>
+            </div>
+
+            <!-- HERO QUICK STATS COUNTER -->
+            <div class="hero-stats">
+              <div class="stat-card" data-tilt>
+                <div class="stat-num" data-target="4">0</div>
+                <div class="stat-label">Certifications</div>
+              </div>
+              <div class="stat-card" data-tilt>
+                <div class="stat-num" data-target="10">0</div>
+                <div class="stat-label">GitHub Repos</div>
+              </div>
+              <div class="stat-card" data-tilt>
+                <div class="stat-num" data-target="100" data-suffix="%">0</div>
+                <div class="stat-label">Dedication</div>
+              </div>
             </div>
           </div>
-          <div class="hero-img-wrap">
+
+          <div class="hero-img-wrap" data-tilt>
             <div class="hero-img-frame">
-              <img src="gambar/Me-1.jpg" alt="Muhamad Fadlan" />
+              <img src="gambar/Me-1.jpg" alt="Muhamad Fadlan" id="heroPhoto" />
+              <div class="img-glow-overlay"></div>
             </div>
-            <div class="hero-img-badge">
-              <div class="badge-num">👨‍🎓</div>
-              <div class="badge-label">Fresh<br />Graduate</div>
+            <div class="hero-img-badge float-anim-1">
+              <div class="badge-icon"><i class="fas fa-graduation-cap"></i></div>
+              <div class="badge-text">
+                <strong>Gunadarma Univ</strong>
+                <span>Information Systems</span>
+              </div>
             </div>
-            <div class="hero-img-badge2">
+            <div class="hero-img-badge2 float-anim-2">
               <span class="dot-pulse"></span>
-              Available for work
+              <span>Available for Hire</span>
+            </div>
+            <div class="hero-tech-pills">
+              <span class="tech-pill"><i class="fab fa-js"></i> JS / TS</span>
+              <span class="tech-pill"><i class="fab fa-node-js"></i> Node.js</span>
+              <span class="tech-pill"><i class="fab fa-php"></i> PHP & SQL</span>
             </div>
           </div>
         </div>
@@ -86,55 +145,63 @@
 
     <div class="divider"></div>
 
-    <!-- ABOUT -->
+    <!-- ABOUT SECTION -->
     <section id="about">
       <div class="container">
         <div class="about-grid">
-          <div class="about-img-wrap fade-in">
-            <img src="gambar/me-2.jpg" alt="Muhamad Fadlan" />
+          <div class="about-img-wrap fade-in" data-tilt>
+            <div class="about-img-frame">
+              <img src="gambar/me-2.jpg" alt="Muhamad Fadlan About" />
+            </div>
             <div class="about-img-deco"></div>
+            <div class="about-experience-card">
+              <i class="fas fa-laptop-code"></i>
+              <div>
+                <strong>Web & System</strong>
+                <span>Development Focus</span>
+              </div>
+            </div>
           </div>
           <div class="about-text fade-in">
-            <p class="section-label">Get To Know Me</p>
-            <h2 class="section-heading">About <span class="gold">Me</span></h2>
+            <p class="section-label"><i class="fas fa-user-tag"></i> Get To Know Me</p>
+            <h2 class="section-heading">About <span class="gold-gradient">Me</span></h2>
             <p>
-              Hi, I'm <strong>Muhamad Fadlan</strong>. A fresh graduate in
-              Information Systems from Gunadarma University with a strong
-              interest in web-based system development, data management, and
-              business process analysis.
+              Hi, I'm <strong>Muhamad Fadlan</strong> — a passionate Information Systems graduate from <strong>Gunadarma University</strong> with a focus on web development, database management, and business process automation.
             </p>
 
             <p>
-              I have experience building end-to-end systems — from designing
-              database structures, developing backend logic, to creating
-              user-friendly interfaces. I am also familiar with understanding
-              operational workflows and translating them into efficient digital
-              solutions.
+              I specialize in bridging business needs with technical solutions: designing relational database models, developing robust backend logic, and engineering clean, user-centric web interfaces.
             </p>
 
-            <p>
-  I aim to build systems that are not only functional, but also aligned with real business needs and efficiency.
-</p>
-
-            <div class="about-highlight-box">
-              <p>
-                <strong>Focus —</strong> Web Development, System Analysis, and
-                Data Processing
-              </p>
-              <p>
-                <strong>Goal —</strong> Contribute to building efficient and
-                scalable systems that improve business operations through
-                technology.
-              </p>
+            <div class="about-highlight-grid">
+              <div class="highlight-item">
+                <div class="hl-icon"><i class="fas fa-layer-group"></i></div>
+                <div>
+                  <h4>Full-Stack Foundation</h4>
+                  <p>HTML, CSS, JavaScript, PHP, MySQL & React ecosystem</p>
+                </div>
+              </div>
+              <div class="highlight-item">
+                <div class="hl-icon"><i class="fas fa-sitemap"></i></div>
+                <div>
+                  <h4>System & Data Focus</h4>
+                  <p>Database design, workflow optimization & data structuring</p>
+                </div>
+              </div>
             </div>
 
-            <a
-              href="sertifikat/CV_MUHAMAD FADLAN.pdf"
-              target="_blank"
-              class="btn btn-outline-gold"
-            >
-              <i class="fas fa-file-alt"></i> View Full CV
-            </a>
+            <div class="about-cta">
+              <a
+                href="sertifikat/CV_Muhamad Fadlan.pdf"
+                target="_blank"
+                class="btn btn-outline-gold btn-magnetic"
+              >
+                <i class="fas fa-file-pdf"></i> View Full CV (PDF)
+              </a>
+              <button onclick="copyEmail()" class="btn btn-ghost btn-magnetic">
+                <i class="fas fa-envelope"></i> Quick Contact
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -142,63 +209,96 @@
 
     <div class="divider"></div>
 
-    <!-- CERTIFICATES -->
+    <!-- CERTIFICATES SECTION -->
     <section id="certificate">
       <div class="container">
-        <div class="fade-in">
-          <p class="section-label">My Achievements</p>
-          <h2 class="section-heading">Certificates</h2>
+        <div class="fade-in section-header text-center">
+          <p class="section-label"><i class="fas fa-award"></i> Verified Credentials</p>
+          <h2 class="section-heading">Professional <span class="gold-gradient">Certificates</span></h2>
           <p class="section-sub">
-            Professional certifications I've earned through dedicated training
-            programs.
+            Certifications earned through rigorous training in Web Programming, UI/UX Design, JavaScript, and DBMS.
           </p>
         </div>
+
         <div class="certs-grid">
-          <div class="cert-card fade-in">
-            <i class="fas fa-pen-nib cert-icon"></i>
+          <!-- UI/UX CERT -->
+          <div class="cert-card fade-in" data-tilt>
+            <div class="cert-header">
+              <div class="cert-icon-box"><i class="fas fa-pen-nib"></i></div>
+              <span class="cert-tag">UI/UX</span>
+            </div>
             <h3 class="cert-title">UI/UX Design Certificate</h3>
             <p class="cert-desc">
-              Completed a professional UI/UX design training program covering
-              user research, prototyping, and visual design principles.
+              Professional training program in user research, wireframing, interactive prototyping, and visual design principles.
             </p>
-            <button onclick="openModal('sertifikat/UIUX.pdf', 'UI/UX Design Certificate')" class="btn btn-outline-gold">
-              <i class="fas fa-eye"></i> View Certificate
-            </button>
+            <div class="cert-footer">
+              <button onclick="openModal('sertifikat/UIUX.pdf', 'UI/UX Design Certificate')" class="btn btn-outline-gold btn-sm">
+                <i class="fas fa-expand"></i> Preview PDF
+              </button>
+              <a href="sertifikat/UIUX.pdf" download class="cert-dl-btn" title="Direct Download">
+                <i class="fas fa-download"></i>
+              </a>
+            </div>
           </div>
-          <div class="cert-card fade-in">
-            <i class="fab fa-js cert-icon"></i>
+
+          <!-- JAVASCRIPT CERT -->
+          <div class="cert-card fade-in" data-tilt>
+            <div class="cert-header">
+              <div class="cert-icon-box js-color"><i class="fab fa-js"></i></div>
+              <span class="cert-tag">Programming</span>
+            </div>
             <h3 class="cert-title">JavaScript Certificate</h3>
             <p class="cert-desc">
-              Completed a comprehensive JavaScript programming course covering
-              core fundamentals, DOM manipulation, and modern ES6+ features.
+              Comprehensive JavaScript course covering core logic, asynchronous JS, DOM manipulation, and modern ES6+ standards.
             </p>
-            <button onclick="openModal('sertifikat/javascript.pdf', 'JavaScript Certificate')" class="btn btn-outline-gold">
-              <i class="fas fa-eye"></i> View Certificate
-            </button>
+            <div class="cert-footer">
+              <button onclick="openModal('sertifikat/javascript.pdf', 'JavaScript Certificate')" class="btn btn-outline-gold btn-sm">
+                <i class="fas fa-expand"></i> Preview PDF
+              </button>
+              <a href="sertifikat/javascript.pdf" download class="cert-dl-btn" title="Direct Download">
+                <i class="fas fa-download"></i>
+              </a>
+            </div>
           </div>
 
-          <div class="cert-card fade-in">
-            <i class="fas fa-database cert-icon"></i>
+          <!-- BNSP CERT -->
+          <div class="cert-card fade-in" data-tilt>
+            <div class="cert-header">
+              <div class="cert-icon-box bnsp-color"><i class="fas fa-certificate"></i></div>
+              <span class="cert-tag">National Cert</span>
+            </div>
             <h3 class="cert-title">BNSP – Junior Web Programmer</h3>
             <p class="cert-desc">
-              Certified in web programming covering structured programming, UI
-              implementation, debugging, and code documentation.
+              National certification standard for web programming: structured code implementation, security basics, and software testing.
             </p>
-            <button onclick="openModal('sertifikat/BNSP.pdf', 'BNSP – Junior Web Programmer')" class="btn btn-outline-gold">
-              <i class="fas fa-eye"></i> View Certificate
-            </button>
+            <div class="cert-footer">
+              <button onclick="openModal('sertifikat/BNSP.pdf', 'BNSP – Junior Web Programmer')" class="btn btn-outline-gold btn-sm">
+                <i class="fas fa-expand"></i> Preview PDF
+              </button>
+              <a href="sertifikat/BNSP.pdf" download class="cert-dl-btn" title="Direct Download">
+                <i class="fas fa-download"></i>
+              </a>
+            </div>
           </div>
 
-          <div class="cert-card fade-in">
-            <i class="fas fa-database cert-icon"></i>
-            <h3 class="cert-title">DBMS & Oracle</h3>
+          <!-- ORACLE DBMS CERT -->
+          <div class="cert-card fade-in" data-tilt>
+            <div class="cert-header">
+              <div class="cert-icon-box db-color"><i class="fas fa-database"></i></div>
+              <span class="cert-tag">Database</span>
+            </div>
+            <h3 class="cert-title">DBMS & Oracle Database</h3>
             <p class="cert-desc">
-              Learned database management, SQL fundamentals, and Oracle database
-              concepts.
+              Database management fundamentals, relational design, complex SQL query structures, and Oracle database architecture.
             </p>
-            <button onclick="openModal('sertifikat/Oracle.pdf', 'DBMS & Oracle Certificate')" class="btn btn-outline-gold" >
-              <i class="fas fa-eye"></i> View Certificate
-            </button>
+            <div class="cert-footer">
+              <button onclick="openModal('sertifikat/Oracle.pdf', 'DBMS & Oracle Certificate')" class="btn btn-outline-gold btn-sm">
+                <i class="fas fa-expand"></i> Preview PDF
+              </button>
+              <a href="sertifikat/Oracle.pdf" download class="cert-dl-btn" title="Direct Download">
+                <i class="fas fa-download"></i>
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -206,106 +306,173 @@
 
     <div class="divider"></div>
 
-    <!-- SKILLS -->
+    <!-- SKILLS SECTION -->
     <section id="skill">
       <div class="container">
-        <div class="fade-in">
-          <p class="section-label">What I Know</p>
-          <h2 class="section-heading">My <span class="gold">Skills</span></h2>
+        <div class="fade-in section-header text-center">
+          <p class="section-label"><i class="fas fa-tools"></i> Technical Expertise</p>
+          <h2 class="section-heading">My <span class="gold-gradient">Skills</span> & Tools</h2>
           <p class="section-sub">
-            Technologies and tools I work with regularly.
+            Technologies and development tools I use to turn ideas into interactive digital reality.
           </p>
         </div>
-        <div class="skills-layout">
-          <div class="skills-panel fade-in">
-            <div class="skills-panel-title">
-              <i class="fas fa-star"></i> Primary Skills
+
+        <!-- SKILL CATEGORY TABS -->
+        <div class="skill-tabs fade-in">
+          <button class="skill-tab active" data-category="all"><i class="fas fa-border-all"></i> All Skills</button>
+          <button class="skill-tab" data-category="frontend"><i class="fas fa-laptop-code"></i> Front-End</button>
+          <button class="skill-tab" data-category="backend"><i class="fas fa-server"></i> Back-End & DB</button>
+          <button class="skill-tab" data-category="tools"><i class="fas fa-wrench"></i> Design & Tools</button>
+        </div>
+
+        <div class="skills-grid" id="skillsGrid">
+          <!-- SKILL CARD: HTML -->
+          <div class="skill-card fade-in" data-category="frontend" data-tilt>
+            <div class="skill-card-head">
+              <i class="fab fa-html5 skill-icon html-color"></i>
+              <div class="skill-info">
+                <h4>HTML5</h4>
+                <span>Semantic markup & SEO best practices</span>
+              </div>
+              <span class="skill-badge-pct">85%</span>
             </div>
-            <div class="skill-row">
-              <div class="skill-meta">
-                <span class="skill-name">HTML</span
-                ><span class="skill-pct">85%</span>
-              </div>
-              <div class="skill-bar-bg">
-                <div class="skill-bar-fill" data-width="85"></div>
-              </div>
-            </div>
-            <div class="skill-row">
-              <div class="skill-meta">
-                <span class="skill-name">CSS</span
-                ><span class="skill-pct">75%</span>
-              </div>
-              <div class="skill-bar-bg">
-                <div class="skill-bar-fill" data-width="75"></div>
-              </div>
-            </div>
-            <div class="skill-row">
-              <div class="skill-meta">
-                <span class="skill-name">JavaScript</span
-                ><span class="skill-pct">70%</span>
-              </div>
-              <div class="skill-bar-bg">
-                <div class="skill-bar-fill" data-width="70"></div>
-              </div>
-            </div>
-            <div class="skill-row">
-              <div class="skill-meta">
-                <span class="skill-name">PHP</span
-                ><span class="skill-pct">70%</span>
-              </div>
-              <div class="skill-bar-bg">
-                <div class="skill-bar-fill" data-width="70"></div>
-              </div>
-            </div>
-            <div class="skill-row">
-              <div class="skill-meta">
-                <span class="skill-name">SQL</span
-                ><span class="skill-pct">75%</span>
-              </div>
-              <div class="skill-bar-bg">
-                <div class="skill-bar-fill" data-width="75"></div>
-              </div>
+            <div class="skill-bar-bg">
+              <div class="skill-bar-fill" data-width="85"></div>
             </div>
           </div>
-          <div class="skills-panel fade-in">
-            <div class="skills-panel-title">
-              <i class="fas fa-code"></i> Other Skills
+
+          <!-- SKILL CARD: CSS -->
+          <div class="skill-card fade-in" data-category="frontend" data-tilt>
+            <div class="skill-card-head">
+              <i class="fab fa-css3-alt skill-icon css-color"></i>
+              <div class="skill-info">
+                <h4>CSS3 & Animations</h4>
+                <span>Responsive layouts, Flexbox, Grid, FX</span>
+              </div>
+              <span class="skill-badge-pct">80%</span>
             </div>
-            <div class="skill-row">
-              <div class="skill-meta">
-                <span class="skill-name">React</span
-                ><span class="skill-pct">60%</span>
-              </div>
-              <div class="skill-bar-bg">
-                <div class="skill-bar-fill" data-width="60"></div>
-              </div>
+            <div class="skill-bar-bg">
+              <div class="skill-bar-fill" data-width="80"></div>
             </div>
-            <div class="skill-row">
-              <div class="skill-meta">
-                <span class="skill-name">Node.js</span
-                ><span class="skill-pct">60%</span>
+          </div>
+
+          <!-- SKILL CARD: JAVASCRIPT -->
+          <div class="skill-card fade-in" data-category="frontend" data-tilt>
+            <div class="skill-card-head">
+              <i class="fab fa-js skill-icon js-color"></i>
+              <div class="skill-info">
+                <h4>JavaScript (ES6+)</h4>
+                <span>Async/Await, DOM, APIs, ES Modules</span>
               </div>
-              <div class="skill-bar-bg">
-                <div class="skill-bar-fill" data-width="60"></div>
-              </div>
+              <span class="skill-badge-pct">75%</span>
             </div>
-            <div class="skill-row">
-              <div class="skill-meta">
-                <span class="skill-name">Oracle</span
-                ><span class="skill-pct">60%</span>
-              </div>
-              <div class="skill-bar-bg">
-                <div class="skill-bar-fill" data-width="60"></div>
-              </div>
+            <div class="skill-bar-bg">
+              <div class="skill-bar-fill" data-width="75"></div>
             </div>
-            <div class="skill-row">
-              <div class="skill-meta">
-                <span class="skill-name">Python</span
-                ><span class="skill-pct">40%</span>
+          </div>
+
+          <!-- SKILL CARD: PHP -->
+          <div class="skill-card fade-in" data-category="backend" data-tilt>
+            <div class="skill-card-head">
+              <i class="fab fa-php skill-icon php-color"></i>
+              <div class="skill-info">
+                <h4>PHP</h4>
+                <span>Backend logic, web forms, CRUD API</span>
               </div>
-              <div class="skill-bar-bg">
-                <div class="skill-bar-fill" data-width="40"></div>
+              <span class="skill-badge-pct">75%</span>
+            </div>
+            <div class="skill-bar-bg">
+              <div class="skill-bar-fill" data-width="75"></div>
+            </div>
+          </div>
+
+          <!-- SKILL CARD: SQL & MYSQL -->
+          <div class="skill-card fade-in" data-category="backend" data-tilt>
+            <div class="skill-card-head">
+              <i class="fas fa-database skill-icon sql-color"></i>
+              <div class="skill-info">
+                <h4>SQL & MySQL</h4>
+                <span>Relational databases, joins, queries</span>
               </div>
+              <span class="skill-badge-pct">80%</span>
+            </div>
+            <div class="skill-bar-bg">
+              <div class="skill-bar-fill" data-width="80"></div>
+            </div>
+          </div>
+
+          <!-- SKILL CARD: REACT -->
+          <div class="skill-card fade-in" data-category="frontend" data-tilt>
+            <div class="skill-card-head">
+              <i class="fab fa-react skill-icon react-color"></i>
+              <div class="skill-info">
+                <h4>React.js</h4>
+                <span>Component-based UI development</span>
+              </div>
+              <span class="skill-badge-pct">65%</span>
+            </div>
+            <div class="skill-bar-bg">
+              <div class="skill-bar-fill" data-width="65"></div>
+            </div>
+          </div>
+
+          <!-- SKILL CARD: ORACLE -->
+          <div class="skill-card fade-in" data-category="backend" data-tilt>
+            <div class="skill-card-head">
+              <i class="fas fa-server skill-icon oracle-color"></i>
+              <div class="skill-info">
+                <h4>Oracle DBMS</h4>
+                <span>Database management & SQL logic</span>
+              </div>
+              <span class="skill-badge-pct">65%</span>
+            </div>
+            <div class="skill-bar-bg">
+              <div class="skill-bar-fill" data-width="65"></div>
+            </div>
+          </div>
+
+          <!-- SKILL CARD: NODE.JS -->
+          <div class="skill-card fade-in" data-category="backend" data-tilt>
+            <div class="skill-card-head">
+              <i class="fab fa-node-js skill-icon node-color"></i>
+              <div class="skill-info">
+                <h4>Node.js</h4>
+                <span>Server runtime & NPM environment</span>
+              </div>
+              <span class="skill-badge-pct">60%</span>
+            </div>
+            <div class="skill-bar-bg">
+              <div class="skill-bar-fill" data-width="60"></div>
+            </div>
+          </div>
+
+          <!-- SKILL CARD: TYPESCRIPT -->
+          <div class="skill-card fade-in" data-category="frontend" data-tilt>
+            <div class="skill-card-head">
+              <i class="fas fa-code skill-icon ts-color"></i>
+              <div class="skill-info">
+                <h4>TypeScript</h4>
+                <span>Basic type definitions & interfaces</span>
+              </div>
+              <span class="skill-badge-pct">40%</span>
+            </div>
+            <div class="skill-bar-bg">
+              <div class="skill-bar-fill" data-width="40"></div>
+            </div>
+          </div>
+
+          <!-- SKILL CARD: UI/UX DESIGN -->
+          <div class="skill-card fade-in" data-category="tools" data-tilt>
+            <div class="skill-card-head">
+              <i class="fas fa-figma skill-icon figma-color"></i>
+              <div class="skill-info">
+                <h4>UI/UX Prototyping</h4>
+                <span>Figma wireframing, user flows, design system</span>
+              </div>
+              <span class="skill-badge-pct">75%</span>
+            </div>
+            <div class="skill-bar-bg">
+              <div class="skill-bar-fill" data-width="75"></div>
             </div>
           </div>
         </div>
@@ -314,36 +481,63 @@
 
     <div class="divider"></div>
 
-    <!-- EXPERIENCE -->
+    <!-- EXPERIENCE SECTION -->
     <section id="experience">
       <div class="container">
-        <div class="fade-in">
-          <p class="section-label">My Background</p>
-          <h2 class="section-heading">Experience</h2>
+        <div class="fade-in section-header text-center">
+          <p class="section-label"><i class="fas fa-history"></i> Career Journey</p>
+          <h2 class="section-heading">Work <span class="gold-gradient">Experience</span></h2>
           <p class="section-sub">
-            Professional experience and practical involvement in various
-            projects and roles.
+            Practical roles, internships, and laboratory assistant responsibilities.
           </p>
         </div>
-        <div class="exp-grid">
-          <div class="exp-item fade-in">
-            <h3>Celerates – Web Development & UI/UX (MSIB)</h3>
-            <p>
-              Developed product catalog system with admin panel and integrated
-              ordering flow via WhatsApp to simplify transactions. Collaborated
-              with the team to design user interfaces and implement backend
-              logic for seamless e-commerce operations.
-            </p>
+
+        <div class="exp-timeline">
+          <!-- TIMELINE ITEM 1 -->
+          <div class="timeline-item fade-in">
+            <div class="timeline-marker">
+              <div class="marker-dot"></div>
+              <div class="marker-line"></div>
+            </div>
+            <div class="timeline-content" data-tilt>
+              <div class="timeline-header">
+                <span class="timeline-period"><i class="far fa-calendar-alt"></i> MSIB Batch Program</span>
+                <span class="timeline-badge">Web Dev & UI/UX</span>
+              </div>
+              <h3 class="timeline-title">Celerates — Web Development & UI/UX</h3>
+              <p class="timeline-desc">
+                Engineered a comprehensive product catalog system with admin panel controls and integrated direct WhatsApp ordering to streamline transaction flows. Collaborated in cross-functional teams to design intuitive UI components and backend database schemas.
+              </p>
+              <div class="timeline-tags">
+                <span>Web App</span>
+                <span>WhatsApp API</span>
+                <span>UI/UX Design</span>
+                <span>PHP/MySQL</span>
+              </div>
+            </div>
           </div>
 
-          <div class="exp-item fade-in">
-            <h3>Laboratory Assistant – Gunadarma University</h3>
-            <p>
-              Assisted students in programming logic, system flow, and debugging
-              while preparing structured learning materials. Provided mentorship
-              in problem-solving techniques and best practices in software
-              development and system design.
-            </p>
+          <!-- TIMELINE ITEM 2 -->
+          <div class="timeline-item fade-in">
+            <div class="timeline-marker">
+              <div class="marker-dot"></div>
+            </div>
+            <div class="timeline-content" data-tilt>
+              <div class="timeline-header">
+                <span class="timeline-period"><i class="far fa-calendar-alt"></i> Academic Period</span>
+                <span class="timeline-badge">Academic Role</span>
+              </div>
+              <h3 class="timeline-title">Laboratory Assistant — Gunadarma University</h3>
+              <p class="timeline-desc">
+                Guided computer science students through programming fundamentals, algorithm logic, database structures, and debugging techniques. Prepared structured teaching modules, conducted lab sessions, and evaluated student project deliverables.
+              </p>
+              <div class="timeline-tags">
+                <span>Programming Mentorship</span>
+                <span>Algorithm & Logic</span>
+                <span>Database Lab</span>
+                <span>Code Review</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -351,23 +545,40 @@
 
     <div class="divider"></div>
 
-    <!-- WORKS -->
+    <!-- WORKS / PORTFOLIO SECTION -->
     <section id="works">
       <div class="container">
-        <div class="fade-in">
-          <p class="section-label">My Portfolio</p>
-          <h2 class="section-heading">
-            Recent <span class="gold">Works</span>
-          </h2>
+        <div class="fade-in section-header text-center">
+          <p class="section-label"><i class="fas fa-folder-open"></i> Portfolio Showcase</p>
+          <h2 class="section-heading">Recent <span class="gold-gradient">Works</span></h2>
           <p class="section-sub">
-            A selection of projects I've built — from UI/UX designs to full web
-            applications.
+            Live repositories and featured projects auto-synced directly from GitHub (<a href="https://github.com/FdLann" target="_blank" class="text-gold">@FdLann</a>).
           </p>
         </div>
+
+        <div class="works-controls fade-in">
+          <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="repoSearch" placeholder="Search projects or technologies..." onkeyup="filterRepos()" />
+          </div>
+        </div>
+
         <div class="works-grid" id="githubProjects">
-          <!-- Projects akan dimuat dari GitHub API -->
-          <div style="grid-column: 1 / -1; text-align: center; padding: 3rem;">
-            <p style="color: var(--muted);">Loading projects...</p>
+          <!-- SKELETON LOADING STATE -->
+          <div class="skeleton-card">
+            <div class="skeleton-line title"></div>
+            <div class="skeleton-line text"></div>
+            <div class="skeleton-line text short"></div>
+          </div>
+          <div class="skeleton-card">
+            <div class="skeleton-line title"></div>
+            <div class="skeleton-line text"></div>
+            <div class="skeleton-line text short"></div>
+          </div>
+          <div class="skeleton-card">
+            <div class="skeleton-line title"></div>
+            <div class="skeleton-line text"></div>
+            <div class="skeleton-line text short"></div>
           </div>
         </div>
       </div>
@@ -375,66 +586,75 @@
 
     <div class="divider"></div>
 
-    <!-- CONTACT -->
+    <!-- CONTACT SECTION -->
     <section id="contact">
       <div class="container">
-        <div class="fade-in">
-          <p class="section-label">Get In Touch</p>
-          <h2 class="section-heading">Contact <span class="gold">Me</span></h2>
+        <div class="fade-in section-header text-center">
+          <p class="section-label"><i class="fas fa-comments"></i> Get In Touch</p>
+          <h2 class="section-heading">Let's Work <span class="gold-gradient">Together</span></h2>
           <p class="section-sub">
-            Currently open to new opportunities. Let's build something great
-            together.
+            Whether you have a full-time position, freelance project, or just want to connect — I am always open to chat!
           </p>
         </div>
-        <div class="contact-wrap">
-          <div class="contact-card fade-in">
-            <div class="contact-icon-wrap"><i class="fas fa-envelope"></i></div>
-            <p class="contact-label">Email</p>
-            <a href="mailto:muhamadfadlan.fa@gmail.com" class="contact-value"
-              >muhamadfadlan.fa@gmail.com</a
-            >
-            <a
-              href="mailto:muhamadfadlan.fa@gmail.com?subject=Interested%20in%20Discussing%20Opportunities&body=Hello%20Muhamad,%0A%0AI%20am%20interested%20in%20discussing%20potential%20opportunities%20with%20you.%0A%0APlease%20let%20me%20know%20your%20availability%20for%20an%20interview.%0A%0ABest%20regards"
-              class="btn btn-outline-gold"
-              style="margin: 0 auto; display: inline-flex"
-            >
-              <i class="fas fa-paper-plane"></i> Send Email
-            </a>
-          </div>
-          <div class="contact-card fade-in">
-            <div class="contact-icon-wrap">
-              <i class="fab fa-linkedin-in"></i>
+
+        <div class="contact-grid">
+          <!-- CONTACT METHOD CARDS -->
+          <div class="contact-methods">
+            <div class="contact-card fade-in" data-tilt>
+              <div class="contact-icon-box"><i class="fas fa-envelope"></i></div>
+              <div class="contact-details">
+                <span class="contact-label">Email Address</span>
+                <a href="mailto:muhamadfadlan.fa@gmail.com" class="contact-value">muhamadfadlan.fa@gmail.com</a>
+              </div>
+              <button onclick="copyEmail()" class="btn btn-outline-gold btn-sm">
+                <i class="fas fa-copy"></i> Copy
+              </button>
             </div>
-            <p class="contact-label">LinkedIn</p>
-            <a
-              href="https://www.linkedin.com/in/muhamad-fadlan-85b79716a/"
-              target="_blank"
-              class="contact-value"
-              >muhamad-fadlan</a
-            >
-            <a
-              href="https://www.linkedin.com/in/muhamad-fadlan-85b79716a/"
-              target="_blank"
-              class="btn btn-outline-gold"
-              style="margin: 0 auto; display: inline-flex"
-            >
-              <i class="fas fa-external-link-alt"></i> View Profile
-            </a>
+
+            <div class="contact-card fade-in" data-tilt>
+              <div class="contact-icon-box linkedin-bg"><i class="fab fa-linkedin-in"></i></div>
+              <div class="contact-details">
+                <span class="contact-label">LinkedIn Profile</span>
+                <a href="https://www.linkedin.com/in/muhamad-fadlan-85b79716a/" target="_blank" class="contact-value">muhamad-fadlan</a>
+              </div>
+              <a href="https://www.linkedin.com/in/muhamad-fadlan-85b79716a/" target="_blank" class="btn btn-outline-gold btn-sm">
+                <i class="fas fa-external-link-alt"></i> Visit
+              </a>
+            </div>
+
+            <div class="contact-card fade-in" data-tilt>
+              <div class="contact-icon-box github-bg"><i class="fab fa-github"></i></div>
+              <div class="contact-details">
+                <span class="contact-label">GitHub Profile</span>
+                <a href="https://github.com/FdLann" target="_blank" class="contact-value">github.com/FdLann</a>
+              </div>
+              <a href="https://github.com/FdLann" target="_blank" class="btn btn-outline-gold btn-sm">
+                <i class="fas fa-external-link-alt"></i> Visit
+              </a>
+            </div>
           </div>
-          <div class="contact-cta fade-in">
-            <h3>Let's Work <span class="gold">Together!</span></h3>
-            <p>
-              I'm currently looking for new opportunities. Whether you have a
-              project to discuss or just want to say hi — my inbox is always
-              open.
-            </p>
-            <a
-              href="mailto:muhamadfadlan.fa@gmail.com?subject=Interested%20in%20Discussing%20Opportunities&body=Hello%20Muhamad,%0A%0AI%20am%20interested%20in%20discussing%20potential%20opportunities%20with%20you.%0A%0APlease%20let%20me%20know%20your%20availability%20for%20an%20interview.%0A%0ABest%20regards"
-              class="btn btn-gold"
-              style="margin: 0 auto; display: inline-flex"
-            >
-              <i class="fas fa-paper-plane"></i> Send Me a Message
-            </a>
+
+          <!-- QUICK DIRECT EMAIL MESSAGE BOX -->
+          <div class="contact-form-box fade-in">
+            <h3><i class="fas fa-paper-plane"></i> Send Direct Email</h3>
+            <p>Fill in this quick template to launch your default mail app pre-filled.</p>
+            <form id="quickContactForm" onsubmit="handleContactSubmit(event)">
+              <div class="form-group">
+                <label for="senderName">Your Name</label>
+                <input type="text" id="senderName" placeholder="e.g. John Doe" required />
+              </div>
+              <div class="form-group">
+                <label for="senderSubject">Subject</label>
+                <input type="text" id="senderSubject" placeholder="Job Opportunity / Project Discussion" required />
+              </div>
+              <div class="form-group">
+                <label for="senderMessage">Message</label>
+                <textarea id="senderMessage" rows="4" placeholder="Hello Fadlan, I would like to discuss..." required></textarea>
+              </div>
+              <button type="submit" class="btn btn-gold btn-magnetic w-100">
+                <i class="fas fa-paper-plane"></i> Send Message Now
+              </button>
+            </form>
           </div>
         </div>
       </div>
@@ -443,64 +663,105 @@
     <!-- FOOTER -->
     <footer>
       <div class="container">
-        <div class="footer-logo">FADLAN</div>
-        <div class="footer-links">
-          <a
-            href="https://www.linkedin.com/in/muhamad-fadlan-85b79716a/"
-            target="_blank"
-            class="footer-link"
-            title="LinkedIn"
-          >
-            <i class="fab fa-linkedin-in"></i>
-          </a>
-          <a
-            href="mailto:muhamadfadlan.fa@gmail.com"
-            class="footer-link"
-            title="Email"
-          >
-            <i class="fas fa-envelope"></i>
-          </a>
-          <a
-            href="sertifikat/CV_MUHAMAD FADLAN.pdf"
-            target="_blank"
-            class="footer-link"
-            title="CV"
-          >
-            <i class="fas fa-file-alt"></i>
-          </a>
+        <div class="footer-content">
+          <div class="footer-logo">
+            <span class="logo-mark">&lt;/&gt;</span> FADLAN
+          </div>
+          <div class="footer-links">
+            <a href="https://www.linkedin.com/in/muhamad-fadlan-85b79716a/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="https://github.com/FdLann" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+            <a href="mailto:muhamadfadlan.fa@gmail.com" title="Email"><i class="fas fa-envelope"></i></a>
+            <a href="sertifikat/CV_Muhamad Fadlan.pdf" target="_blank" title="CV PDF"><i class="fas fa-file-pdf"></i></a>
+          </div>
+          <p class="footer-copy">
+            &copy; 2026 <strong>Muhamad Fadlan</strong>. Crafted with precision & passion.
+          </p>
         </div>
-        <p class="footer-copy">
-          &copy; 2024 Muhamad Fadlan. All rights reserved.
-        </p>
       </div>
     </footer>
 
-    <!-- BACK TO TOP -->
-    <a href="#home" class="btt" id="btt"><i class="fas fa-arrow-up"></i></a>
+    <!-- FLOATING MUSIC PLAYER WIDGET -->
+    <div class="music-player-widget collapsed" id="musicPlayerWidget">
+      <!-- Toggle Button -->
+      <button class="player-toggle" id="playerToggle" aria-label="Toggle music player">
+        <i class="fas fa-music" id="toggleIcon"></i>
+        <div class="toggle-equalizer" id="toggleEqualizer">
+          <span class="bar bar-1"></span>
+          <span class="bar bar-2"></span>
+          <span class="bar bar-3"></span>
+          <span class="bar bar-4"></span>
+          <span class="bar bar-5"></span>
+        </div>
+      </button>
 
-    <!-- MODAL -->
+      <div class="player-inner">
+        <div class="player-track-info">
+          <div class="album-art-wrap">
+            <img id="playerCover" src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=120" alt="Album Cover" />
+            <div class="vinyl-record" id="playerVinyl"></div>
+          </div>
+          <div class="track-details">
+            <span class="track-title" id="playerTitle">Loading Track...</span>
+            <span class="track-artist" id="playerArtist">Google Sheets Live Sync</span>
+          </div>
+        </div>
+
+        <div class="player-controls">
+          <button class="ctrl-btn" id="prevBtn" title="Previous Song"><i class="fas fa-backward"></i></button>
+          <button class="ctrl-btn play-btn" id="playBtn" title="Play / Pause"><i class="fas fa-play" id="playIcon"></i></button>
+          <button class="ctrl-btn" id="nextBtn" title="Next Song"><i class="fas fa-forward"></i></button>
+          <button class="ctrl-btn" id="muteBtn" title="Toggle Mute"><i class="fas fa-volume-up" id="muteIcon"></i></button>
+        </div>
+
+        <div class="player-progress-container">
+          <div class="progress-bar-bg" id="progressBarBg">
+            <div class="progress-bar-fill" id="progressBarFill"></div>
+          </div>
+          <div class="player-time">
+            <span id="currentTime">0:00</span>
+            <span id="totalTime">0:00</span>
+          </div>
+        </div>
+
+        <!-- Wave equalizer animation (active when playing) -->
+        <div class="wave-equalizer" id="equalizer">
+          <span class="bar bar-1"></span>
+          <span class="bar bar-2"></span>
+          <span class="bar bar-3"></span>
+          <span class="bar bar-4"></span>
+          <span class="bar bar-5"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- BACK TO TOP BUTTON -->
+    <a href="#home" class="btt" id="btt" aria-label="Back to Top"><i class="fas fa-arrow-up"></i></a>
+
+    <!-- PDF PREVIEW MODAL -->
     <div class="modal-overlay" id="modal">
       <div class="modal-box">
         <div class="modal-top">
           <h5 id="modalTitle">Certificate Preview</h5>
-          <button class="modal-close" onclick="closeModal()">
+          <button class="modal-close" onclick="closeModal()" aria-label="Close modal">
             <i class="fas fa-times"></i>
           </button>
         </div>
         <div class="modal-body">
-          <iframe id="modalFrame" src=""></iframe>
+          <iframe id="modalFrame" src="" title="PDF Document Viewer"></iframe>
         </div>
         <div class="modal-foot">
           <button class="btn btn-ghost" onclick="closeModal()">Close</button>
-          <a id="modalDownload" href="" target="_blank" class="btn btn-gold">
-            <i class="fas fa-download"></i> Download
+          <a id="modalDownload" href="" download class="btn btn-gold">
+            <i class="fas fa-download"></i> Download PDF
           </a>
         </div>
       </div>
     </div>
 
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Main JavaScript File -->
     <script src="script.js"></script>
-  
-    </script>
   </body>
 </html>
