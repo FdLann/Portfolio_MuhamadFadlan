@@ -1992,13 +1992,80 @@ footer {
 }
 
 @media (max-width: 480px) {
-  .music-player-widget {
-    bottom: 1.5rem;
-    left: 1.5rem;
+  /* Collapsed Floating Button */
+  .music-player-widget.collapsed {
+    width: 46px !important;
+    height: 46px !important;
+    bottom: 1.2rem !important;
+    left: 1.2rem !important;
+    transform: none !important;
   }
+  
+  .music-player-widget.collapsed .player-toggle {
+    width: 46px !important;
+    height: 46px !important;
+    left: 0 !important;
+    top: 0 !important;
+    font-size: 1rem !important;
+  }
+
+  /* Expanded Floating Card */
   .music-player-widget:not(.collapsed) {
-    width: 270px;
-    height: 120px;
+    width: calc(100% - 2.4rem) !important;
+    max-width: 320px !important;
+    height: 100px !important;
+    bottom: 1.2rem !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    padding: 0.6rem 0.8rem !important;
+    border-radius: var(--radius-md) !important;
+  }
+  
+  .music-player-widget:not(.collapsed) .player-toggle {
+    left: 0.6rem !important;
+    top: calc(50% - 18px) !important;
+    width: 36px !important;
+    height: 36px !important;
+    font-size: 0.85rem !important;
+  }
+  
+  .player-inner {
+    padding-left: 2.2rem !important;
+  }
+  
+  .album-art-wrap {
+    width: 32px !important;
+    height: 32px !important;
+  }
+  
+  .track-title {
+    font-size: 0.78rem !important;
+  }
+  
+  .track-artist {
+    font-size: 0.68rem !important;
+  }
+  
+  .ctrl-btn {
+    width: 22px !important;
+    height: 22px !important;
+    font-size: 0.75rem !important;
+  }
+  
+  .play-btn {
+    width: 28px !important;
+    height: 28px !important;
+    font-size: 0.8rem !important;
+  }
+  
+  .wave-equalizer {
+    top: 0.8rem !important;
+    right: 0.8rem !important;
+    height: 12px !important;
+  }
+  
+  .wave-equalizer .bar {
+    width: 1.5px !important;
   }
 }
 
