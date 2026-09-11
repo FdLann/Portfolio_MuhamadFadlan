@@ -399,76 +399,177 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") closeModal();
 });
 
-// ── GITHUB REPOSITORIES FETCH & FILTER ──
-let allRepos = [];
+// ── PROJECTS SHOWCASE & FILTER (FROM DATA-PROJEK.JSON) ──
+let allProjects = [];
 
-async function loadGithubProjects() {
-  const githubUsername = "FdLann";
-  const container = document.getElementById("githubProjects");
-
-  try {
-    const response = await fetch(
-      `https://api.github.com/users/${githubUsername}/repos?sort=updated&per_page=5`
-    );
-
-    if (!response.ok) throw new Error("GitHub API response not ok");
-
-    const repos = await response.json();
-
-    if (!Array.isArray(repos) || repos.length === 0) {
-      renderFallbackProjects(container);
-      return;
-    }
-
-    // Exclude portfolio repo itself
-    allRepos = repos.filter(
-      (repo) => repo.name !== "Portfolio_MuhamadFadlan"
-    );
-
-    renderRepoCards(allRepos);
-
-  } catch (error) {
-    console.warn("Using fallback portfolio project list due to API limit/error:", error);
-    renderFallbackProjects(container);
+const FALLBACK_PROJECTS = [
+  {
+    id_projek: "1",
+    gambar: "gambar/Projek1.png",
+    title: "Ultimate Football Manager",
+    deskripsi: "Permainan strategi bola sepak yang mengasah kemampuan taktik dan manajemen tim sebagai manager secara interaktif.",
+    link: "https://football-manager-idle.vercel.app/",
+    tag: "Web Game",
+    tech: ["HTML5", "JavaScript", "CSS3", "Vercel", "Idle Game"]
+  },
+  {
+    id_projek: "2",
+    gambar: "gambar/Projek2.png",
+    title: "EA FC Scouting Tool",
+    deskripsi: "Sebuah web yang didedikasikan untuk membantu para pemain EA FC mencari dan menganalisis potensi pemain dengan lebih efektif.",
+    link: "https://ea-fc24-scouting-tool.vercel.app/scouting",
+    tag: "Web App",
+    tech: ["React", "Analytics Tool", "REST API", "Vercel"]
+  },
+  {
+    id_projek: "3",
+    gambar: "",
+    title: "Secret Next Project 🚀",
+    deskripsi: "Projek selanjutnya yang masih dalam tahap perancangan rahasia & riset inovatif. Masih misterius tapi bakal seru banget! Tunggu tanggal mainnya! 🤫✨",
+    link: "#",
+    tag: "Coming Soon",
+    tech: ["Top Secret", "In Research", "Next Innovation"],
+    isComingSoon: true
   }
-}
+];
 
-function renderRepoCards(repos) {
-  const container = document.getElementById("githubProjects");
+async function loadProjects() {
+  const container = document.getElementById("githubProjects") || document.getElementById("worksGrid");
   if (!container) return;
 
-  if (repos.length === 0) {
-    container.innerHTML = `<p style="color: var(--muted); grid-column: 1 / -1; text-align: center; padding: 2rem;">No matching projects found.</p>`;
+  try {
+    const response = await fetch("data/data-projek.json");
+    if (!response.ok) throw new Error("Could not load data-projek.json");
+    const data = await response.json();
+
+    if (Array.isArray(data) && data.length > 0) {
+      allProjects = data.map(item => {
+        // Sanitize image path if needed (e.g. "../gambar/" -> "gambar/")
+        let cleanImg = item.gambar ? item.gambar.replace(/^(\.\.\/)+/, "") : "";
+        return {
+          ...item,
+          gambar: cleanImg,
+          tech: item.tech || ["Web Project", "Clean Architecture"],
+          tag: item.tag || (item.isComingSoon || item.title.toLowerCase().includes("coming") || item.title.toLowerCase().includes("secret") ? "Coming Soon" : "Featured Project"),
+          isComingSoon: item.isComingSoon || item.title.toLowerCase().includes("coming") || item.title.toLowerCase().includes("secret") || !cleanImg
+        };
+      });
+    } else {
+      allProjects = FALLBACK_PROJECTS;
+    }
+  } catch (err) {
+    console.info("Using embedded project dataset:", err.message);
+    allProjects = FALLBACK_PROJECTS;
+  }
+
+  renderProjectCards(allProjects);
+}
+
+function renderProjectCards(projects) {
+  const container = document.getElementById("githubProjects") || document.getElementById("worksGrid");
+  if (!container) return;
+
+  if (!projects || projects.length === 0) {
+    container.innerHTML = `
+      <div style="grid-column: 1 / -1; text-align: center; padding: 3rem; color: var(--muted);">
+        <i class="fas fa-search" style="font-size: 2rem; margin-bottom: 1rem; color: var(--gold); display: block;"></i>
+        <p style="font-size: 1.1rem; font-weight: 600; color: var(--white); margin-bottom: 0.5rem;">Tidak ada projek yang cocok</p>
+        <p style="font-size: 0.9rem;">Coba cari dengan kata kunci teknologi atau nama projek lain.</p>
+      </div>
+    `;
     return;
   }
 
-  const projectsHTML = repos
-    .map(
-      (repo) => `
-    <div class="repo-card fade-in" data-tilt>
-      <div class="repo-header">
-        <i class="fas fa-folder"></i>
-        <a href="${repo.html_url}" target="_blank" class="repo-name">${repo.name}</a>
-      </div>
-      <p class="repo-desc">${repo.description || "Interactive web project & code repository built with clean architecture."}</p>
-      <div class="repo-footer">
-        ${repo.language ? `<span class="repo-lang"><i class="fas fa-circle"></i> ${repo.language}</span>` : `<span class="repo-lang"><i class="fas fa-code"></i> Web System</span>`}
-        <span class="repo-stars"><i class="fas fa-star"></i> ${repo.stargazers_count || 0}</span>
-        <a href="${repo.html_url}" target="_blank" style="margin-left: auto; color: var(--gold); font-size: 0.9rem;" title="View Code">
-          <i class="fas fa-external-link-alt"></i>
-        </a>
-      </div>
-    </div>
-  `
-    )
-    .join("");
+  const html = projects.map(item => {
+    const isSoon = item.isComingSoon || item.tag === "Coming Soon";
+    const techPills = (item.tech || [])
+      .map(t => `<span class="project-tech-pill">${t}</span>`)
+      .join("");
 
-  container.innerHTML = projectsHTML;
+    if (isSoon) {
+      return `
+        <div class="project-card fade-in" data-tilt>
+          <div class="coming-soon-banner">
+            <span class="project-badge-tag badge-coming-soon">
+              <span class="pulse-beacon"></span> Next Project
+            </span>
+            <div class="coming-soon-icon-wrap">
+              <i class="fas fa-rocket"></i>
+            </div>
+            <span class="coming-soon-title-preview">Cooking in Progress...</span>
+          </div>
 
-  // Re-observe fade-in and re-apply tilt
-  document.querySelectorAll(".fade-in").forEach((el) => {
-    fadeObserver.observe(el);
-  });
+          <div class="project-content">
+            <h3 class="project-title">
+              <span>${item.title || "Secret Project 🚀"}</span>
+              <i class="fas fa-sparkles text-gold" style="font-size: 0.95rem;"></i>
+            </h3>
+            <p class="project-desc">${item.deskripsi || "Projek seru selanjutnya sedang dalam pengembangan. Stay tuned!"}</p>
+            
+            <div class="project-tech-pills">
+              ${techPills}
+            </div>
+
+            <div class="project-footer">
+              <span class="project-soon-btn">
+                <span class="pulse-beacon"></span> Stay Tuned ✨
+              </span>
+              <span style="font-size: 0.8rem; font-family: var(--font-mono); color: var(--muted);">
+                <i class="fas fa-lock"></i> Top Secret
+              </span>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Standard Project Card with Image
+    return `
+      <div class="project-card fade-in" data-tilt>
+        <div class="project-img-wrapper">
+          <span class="project-badge-tag">
+            <i class="fas fa-star" style="color: var(--gold);"></i> ${item.tag || "Featured"}
+          </span>
+          <img 
+            src="${item.gambar}" 
+            alt="${item.title}" 
+            class="project-img" 
+            loading="lazy"
+            onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600&auto=format&fit=crop&q=80';"
+          />
+          <div class="project-img-overlay"></div>
+        </div>
+
+        <div class="project-content">
+          <h3 class="project-title">
+            <span>${item.title}</span>
+          </h3>
+          <p class="project-desc">${item.deskripsi}</p>
+          
+          <div class="project-tech-pills">
+            ${techPills}
+          </div>
+
+          <div class="project-footer">
+            <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="project-live-btn">
+              <span>Live Demo</span>
+              <i class="fas fa-external-link-alt"></i>
+            </a>
+            <a href="${item.link}" target="_blank" rel="noopener noreferrer" style="color: var(--muted); font-size: 0.82rem; text-decoration: none; display: flex; align-items: center; gap: 0.35rem;" title="Visit Website">
+              <i class="fas fa-globe"></i> Visit Web
+            </a>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join("");
+
+  container.innerHTML = html;
+
+  // Re-observe animations
+  if (typeof fadeObserver !== "undefined") {
+    document.querySelectorAll(".fade-in").forEach(el => fadeObserver.observe(el));
+  }
 }
 
 function filterRepos() {
@@ -476,46 +577,24 @@ function filterRepos() {
   if (!searchInput) return;
   const query = searchInput.value.toLowerCase().trim();
 
-  const filtered = allRepos.filter((repo) => {
-    const nameMatch = repo.name.toLowerCase().includes(query);
-    const descMatch = (repo.description || "").toLowerCase().includes(query);
-    const langMatch = (repo.language || "").toLowerCase().includes(query);
-    return nameMatch || descMatch || langMatch;
+  if (!query) {
+    renderProjectCards(allProjects);
+    return;
+  }
+
+  const filtered = allProjects.filter(item => {
+    const titleMatch = (item.title || "").toLowerCase().includes(query);
+    const descMatch = (item.deskripsi || "").toLowerCase().includes(query);
+    const tagMatch = (item.tag || "").toLowerCase().includes(query);
+    const techMatch = Array.isArray(item.tech) && item.tech.some(t => t.toLowerCase().includes(query));
+    return titleMatch || descMatch || tagMatch || techMatch;
   });
 
-  renderRepoCards(filtered);
+  renderProjectCards(filtered);
 }
 
-function renderFallbackProjects(container) {
-  const fallbackData = [
-    {
-      name: "Product-Catalog-System",
-      html_url: "https://github.com/FdLann",
-      description: "E-Commerce product catalog system integrated with admin panel controls and automated WhatsApp ordering flow.",
-      language: "PHP / MySQL",
-      stargazers_count: 5
-    },
-    {
-      name: "UI-UX-Design-Prototypes",
-      html_url: "https://github.com/FdLann",
-      description: "Interactive Figma prototypes and design systems focused on user-centered web applications.",
-      language: "Figma / UIUX",
-      stargazers_count: 3
-    },
-    {
-      name: "Database-Management-Oracle",
-      html_url: "https://github.com/FdLann",
-      description: "Relational database schema designs, optimized SQL queries, and DBMS architecture implementations.",
-      language: "SQL / Oracle",
-      stargazers_count: 4
-    }
-  ];
-  allRepos = fallbackData;
-  renderRepoCards(fallbackData);
-}
-
-// Load GitHub projects when DOM is ready
-document.addEventListener("DOMContentLoaded", loadGithubProjects);
+// Load projects when DOM is ready
+document.addEventListener("DOMContentLoaded", loadProjects);
 
 // ── LIVE GOOGLE SHEETS MUSIC PLAYER ENGINE ──
 const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS4zPi5MZ7AMzcWLqthWALBXNcF9O687hLaYOf25OFXTJ1-xL7QofjHczxI-Z9F_mS1FaAoJ0ZxrU6D/pub?gid=0&single=true&output=csv";
@@ -551,7 +630,7 @@ if (playerToggle && playerWidget) {
   });
 }
 
-// Fetch Google Sheets Playlist
+// Fetch Google Sheets Playlist (NO autoplay - only loads metadata & waits for user play)
 async function fetchMusicPlaylist() {
   try {
     const response = await fetch(SHEET_CSV_URL);
@@ -570,26 +649,8 @@ async function fetchMusicPlaylist() {
   }
 
   if (playlist.length > 0) {
-    loadTrack(0);
-    enableAutoplayOnInteraction();
+    loadTrack(0); // Prepare track details without autoplaying
   }
-}
-
-// Autoplay on first user interaction (click, touch, keydown)
-function enableAutoplayOnInteraction() {
-  const startPlay = () => {
-    if (audio.paused) {
-      playTrack();
-    }
-    // Clean up listeners
-    document.removeEventListener("click", startPlay);
-    document.removeEventListener("touchstart", startPlay);
-    document.removeEventListener("keydown", startPlay);
-  };
-
-  document.addEventListener("click", startPlay);
-  document.addEventListener("touchstart", startPlay, { passive: true });
-  document.addEventListener("keydown", startPlay);
 }
 
 // Parse CSV Rows manually
@@ -685,9 +746,8 @@ function playTrack() {
       playIcon.className = "fas fa-play";
     }
 
-    // Distinguish between browser autoplay block and broken audio links
     if (err.name === "NotAllowedError") {
-      showToast("Click anywhere on the page first to enable audio.", "fas fa-volume-mute");
+      showToast("Click the Play button to start audio.", "fas fa-play");
     } else {
       const errCode = audio.error ? ` (Code: ${audio.error.code})` : "";
       showToast(`Failed to load audio${errCode}. Verify link in Google Sheets.`, "fas fa-exclamation-triangle");
