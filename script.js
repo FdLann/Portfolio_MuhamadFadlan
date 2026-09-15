@@ -574,16 +574,117 @@ function updateCardImageDOM(projectId, images, activeIdx) {
   }
 }
 
+// ── PROJECT IMAGE FULLSCREEN LIGHTBOX ──
+window.openLightbox = function(projectId) {
+  const project = allProjects.find(p => String(p.id_projek) === String(projectId));
+  if (!project) return;
+
+  const images = project.images && project.images.length > 0 ? project.images : (project.gambar ? [project.gambar] : []);
+  if (images.length === 0) return;
+
+  const currentIdx = cardImageIndices[projectId] || 0;
+  const activeImgSrc = images[currentIdx] || images[0];
+
+  const modal = document.getElementById("lightboxModal");
+  const modalImg = document.getElementById("lightboxImg");
+  const modalCaption = document.getElementById("lightboxCaption");
+
+  if (modal && modalImg) {
+    modalImg.src = activeImgSrc;
+    if (modalCaption) {
+      modalCaption.innerHTML = `<strong>${project.title}</strong> — <span style="color: var(--gold);">${project.tag || 'Project Preview'}</span> (${currentIdx + 1}/${images.length})`;
+    }
+    modal.classList.add("active");
+    document.body.style.overflow = "hidden";
+  }
+};
+
+window.closeLightbox = function(event) {
+  if (event && event.target && event.target.tagName === "IMG") {
+    return; // Don't close if clicking directly on the image
+  }
+  const modal = document.getElementById("lightboxModal");
+  if (modal) {
+    modal.classList.remove("active");
+    document.body.style.overflow = "";
+  }
+};
+
+// Close lightbox on Escape key
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    closeLightbox();
+  }
+});
+
+// ── CATEGORY FILTERING & SEARCH ──
+let activeCategoryFilter = "all";
+
+window.filterByCategory = function(category, btnElement) {
+  activeCategoryFilter = category;
+
+  // Update button active states
+  const allTabs = document.querySelectorAll(".cat-tab");
+  allTabs.forEach(tab => tab.classList.remove("active"));
+  if (btnElement) {
+    btnElement.classList.add("active");
+  }
+
+  applyCombinedProjectFilter();
+};
+
+function applyCombinedProjectFilter() {
+  const searchInput = document.getElementById("repoSearch");
+  const query = searchInput ? searchInput.value.toLowerCase().trim() : "";
+
+  let filtered = allProjects;
+
+  // 1. Filter by category
+  if (activeCategoryFilter !== "all") {
+    filtered = filtered.filter(item => {
+      const tag = (item.tag || "").toLowerCase();
+      const targetCat = activeCategoryFilter.toLowerCase();
+      return tag.includes(targetCat) || (item.tech && item.tech.some(t => t.toLowerCase().includes(targetCat)));
+    });
+  }
+
+  // 2. Filter by search query
+  if (query) {
+    filtered = filtered.filter(item => {
+      const titleMatch = (item.title || "").toLowerCase().includes(query);
+      const descMatch = (item.deskripsi || "").toLowerCase().includes(query);
+      const tagMatch = (item.tag || "").toLowerCase().includes(query);
+      const techMatch = Array.isArray(item.tech) && item.tech.some(t => t.toLowerCase().includes(query));
+      return titleMatch || descMatch || tagMatch || techMatch;
+    });
+  }
+
+  renderProjectCards(filtered);
+}
+
+function filterRepos() {
+  applyCombinedProjectFilter();
+}
+
 function renderProjectCards(projects) {
   const container = document.getElementById("githubProjects") || document.getElementById("worksGrid");
   if (!container) return;
 
+  // Update All Count badge if available
+  const countAllEl = document.getElementById("countAll");
+  if (countAllEl && allProjects.length > 0) {
+    countAllEl.textContent = `(${allProjects.length})`;
+  }
+
   if (!projects || projects.length === 0) {
     container.innerHTML = `
-      <div style="grid-column: 1 / -1; text-align: center; padding: 3rem; color: var(--muted);">
-        <i class="fas fa-search" style="font-size: 2rem; margin-bottom: 1rem; color: var(--gold); display: block;"></i>
-        <p style="font-size: 1.1rem; font-weight: 600; color: var(--white); margin-bottom: 0.5rem;">Tidak ada projek yang cocok</p>
-        <p style="font-size: 0.9rem;">Coba cari dengan kata kunci teknologi atau nama projek lain.</p>
+      <div style="grid-column: 1 / -1; text-align: center; padding: 3.5rem 1rem; color: var(--muted);">
+        <i class="fas fa-search" style="font-size: 2.2rem; margin-bottom: 1rem; color: var(--gold); display: block;"></i>
+        <p style="font-size: 1.15rem; font-weight: 700; color: var(--white); margin-bottom: 0.5rem;">Tidak ada projek yang cocok</p>
+        <p style="font-size: 0.9rem; margin-bottom: 1.5rem;">Coba cari dengan kata kunci teknologi lain atau reset filter kategori.</p>
+        <button onclick="filterByCategory('all', document.querySelector('.cat-tab[data-cat=all]'))" class="btn btn-outline-gold btn-sm">
+          <i class="fas fa-redo"></i> Reset Filter
+        </button>
       </div>
     `;
     return;
@@ -704,10 +805,10 @@ function renderProjectCards(projects) {
       `;
     }
 
-    // Standard Project Card with Image
+    // Standard Project Card with Clickable Image for Lightbox
     return `
       <div class="project-card fade-in" data-tilt>
-        <div class="project-img-wrapper">
+        <div class="project-img-wrapper" onclick="openLightbox('${item.id_projek}')" title="Klik untuk memperbesar gambar">
           <span class="project-badge-tag">
             <i class="fas ${item.tag === 'College Project' ? 'fa-graduation-cap' : 'fa-star'}" style="color: var(--gold);"></i> ${item.tag || "Featured"}
           </span>
@@ -748,27 +849,6 @@ function renderProjectCards(projects) {
   if (typeof fadeObserver !== "undefined") {
     document.querySelectorAll(".fade-in").forEach(el => fadeObserver.observe(el));
   }
-}
-
-function filterRepos() {
-  const searchInput = document.getElementById("repoSearch");
-  if (!searchInput) return;
-  const query = searchInput.value.toLowerCase().trim();
-
-  if (!query) {
-    renderProjectCards(allProjects);
-    return;
-  }
-
-  const filtered = allProjects.filter(item => {
-    const titleMatch = (item.title || "").toLowerCase().includes(query);
-    const descMatch = (item.deskripsi || "").toLowerCase().includes(query);
-    const tagMatch = (item.tag || "").toLowerCase().includes(query);
-    const techMatch = Array.isArray(item.tech) && item.tech.some(t => t.toLowerCase().includes(query));
-    return titleMatch || descMatch || tagMatch || techMatch;
-  });
-
-  renderProjectCards(filtered);
 }
 
 // Load projects when DOM is ready

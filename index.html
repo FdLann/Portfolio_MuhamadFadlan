@@ -145,6 +145,48 @@
 
     <div class="divider"></div>
 
+    <!-- TECH STACK INFINITE MARQUEE RIBBON -->
+    <section class="tech-marquee-section" aria-label="Technology Stack">
+      <div class="marquee-container">
+        <!-- Track 1 -->
+        <div class="marquee-track">
+          <div class="marquee-item"><i class="fab fa-html5"></i> HTML5</div>
+          <div class="marquee-item"><i class="fab fa-css3-alt"></i> CSS3</div>
+          <div class="marquee-item"><i class="fab fa-js"></i> JavaScript ES6+</div>
+          <div class="marquee-item"><i class="fab fa-php"></i> PHP</div>
+          <div class="marquee-item"><i class="fas fa-database"></i> MySQL</div>
+          <div class="marquee-item"><i class="fab fa-react"></i> React.js</div>
+          <div class="marquee-item"><i class="fab fa-node-js"></i> Node.js</div>
+          <div class="marquee-item"><i class="fas fa-server"></i> phpMyAdmin</div>
+          <div class="marquee-item"><i class="fab fa-git-alt"></i> Git & GitHub</div>
+          <div class="marquee-item"><i class="fab fa-figma"></i> Figma UI/UX</div>
+          <div class="marquee-item"><i class="fas fa-cloud"></i> Vercel Deployment</div>
+          <div class="marquee-item"><i class="fas fa-network-wired"></i> REST APIs</div>
+          <div class="marquee-item"><i class="fas fa-mobile-alt"></i> Responsive Design</div>
+          <div class="marquee-item"><i class="fab fa-bootstrap"></i> Bootstrap 5</div>
+        </div>
+        <!-- Track 2 (Duplicate for seamless loop) -->
+        <div class="marquee-track" aria-hidden="true">
+          <div class="marquee-item"><i class="fab fa-html5"></i> HTML5</div>
+          <div class="marquee-item"><i class="fab fa-css3-alt"></i> CSS3</div>
+          <div class="marquee-item"><i class="fab fa-js"></i> JavaScript ES6+</div>
+          <div class="marquee-item"><i class="fab fa-php"></i> PHP</div>
+          <div class="marquee-item"><i class="fas fa-database"></i> MySQL</div>
+          <div class="marquee-item"><i class="fab fa-react"></i> React.js</div>
+          <div class="marquee-item"><i class="fab fa-node-js"></i> Node.js</div>
+          <div class="marquee-item"><i class="fas fa-server"></i> phpMyAdmin</div>
+          <div class="marquee-item"><i class="fab fa-git-alt"></i> Git & GitHub</div>
+          <div class="marquee-item"><i class="fab fa-figma"></i> Figma UI/UX</div>
+          <div class="marquee-item"><i class="fas fa-cloud"></i> Vercel Deployment</div>
+          <div class="marquee-item"><i class="fas fa-network-wired"></i> REST APIs</div>
+          <div class="marquee-item"><i class="fas fa-mobile-alt"></i> Responsive Design</div>
+          <div class="marquee-item"><i class="fab fa-bootstrap"></i> Bootstrap 5</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
     <!-- ABOUT SECTION -->
     <section id="about">
       <div class="container">
@@ -557,6 +599,21 @@
         </div>
 
         <div class="works-controls fade-in">
+          <div class="category-filter-tabs" id="projectCategoryTabs">
+            <button class="cat-tab active" data-cat="all" onclick="filterByCategory('all', this)">
+              <i class="fas fa-layer-group"></i> All Projects <span class="cat-count" id="countAll">(5)</span>
+            </button>
+            <button class="cat-tab" data-cat="Web App" onclick="filterByCategory('Web App', this)">
+              <i class="fas fa-laptop-code"></i> Web App
+            </button>
+            <button class="cat-tab" data-cat="Web Game" onclick="filterByCategory('Web Game', this)">
+              <i class="fas fa-gamepad"></i> Web Game
+            </button>
+            <button class="cat-tab" data-cat="College Project" onclick="filterByCategory('College Project', this)">
+              <i class="fas fa-graduation-cap"></i> College Work
+            </button>
+          </div>
+
           <div class="search-box">
             <i class="fas fa-search"></i>
             <input type="text" id="repoSearch" placeholder="Search projects or technologies..." onkeyup="filterRepos()" />
@@ -660,21 +717,50 @@
       </div>
     </section>
 
-    <!-- FOOTER -->
-    <footer>
+    <!-- ENHANCED SITE FOOTER -->
+    <footer class="site-footer">
       <div class="container">
-        <div class="footer-content">
-          <div class="footer-logo">
-            <span class="logo-mark">&lt;/&gt;</span> FADLAN
+        <div class="footer-top">
+          <div class="footer-brand">
+            <a href="#home" class="nav-logo">
+              <span class="logo-mark">&lt;/&gt;</span> FADLAN
+            </a>
+            <p class="footer-desc">
+              Information Systems Graduate passionate about crafting robust web applications, scalable database systems, and interactive digital solutions.
+            </p>
           </div>
-          <div class="footer-links">
-            <a href="https://www.linkedin.com/in/muhamad-fadlan-85b79716a/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-            <a href="https://github.com/FdLann" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
-            <a href="mailto:muhamadfadlan.fa@gmail.com" title="Email"><i class="fas fa-envelope"></i></a>
-            <a href="sertifikat/CV_Muhamad Fadlan.pdf" target="_blank" title="CV PDF"><i class="fas fa-file-pdf"></i></a>
+
+          <div class="footer-nav">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><a href="#home"><i class="fas fa-chevron-right text-gold" style="font-size: 0.7rem; margin-right: 0.3rem;"></i> Home</a></li>
+              <li><a href="#about"><i class="fas fa-chevron-right text-gold" style="font-size: 0.7rem; margin-right: 0.3rem;"></i> About</a></li>
+              <li><a href="#certificate"><i class="fas fa-chevron-right text-gold" style="font-size: 0.7rem; margin-right: 0.3rem;"></i> Certificates</a></li>
+              <li><a href="#skill"><i class="fas fa-chevron-right text-gold" style="font-size: 0.7rem; margin-right: 0.3rem;"></i> Skills</a></li>
+              <li><a href="#experience"><i class="fas fa-chevron-right text-gold" style="font-size: 0.7rem; margin-right: 0.3rem;"></i> Experience</a></li>
+              <li><a href="#works"><i class="fas fa-chevron-right text-gold" style="font-size: 0.7rem; margin-right: 0.3rem;"></i> Works</a></li>
+              <li><a href="#contact"><i class="fas fa-chevron-right text-gold" style="font-size: 0.7rem; margin-right: 0.3rem;"></i> Contact</a></li>
+            </ul>
           </div>
-          <p class="footer-copy">
-            &copy; 2026 <strong>Muhamad Fadlan</strong>. Crafted with precision & passion.
+
+          <div class="footer-social">
+            <h4>Get In Touch</h4>
+            <div class="footer-social-links">
+              <a href="https://github.com/FdLann" target="_blank" rel="noopener noreferrer" title="GitHub Profile" aria-label="GitHub"><i class="fab fa-github"></i></a>
+              <a href="https://www.linkedin.com/in/muhamad-fadlan-85b79716a/" target="_blank" rel="noopener noreferrer" title="LinkedIn Profile" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+              <a href="mailto:muhamadfadlan.fa@gmail.com" title="Send Email" aria-label="Email"><i class="fas fa-envelope"></i></a>
+              <a href="sertifikat/CV_Muhamad Fadlan.pdf" target="_blank" title="View Full CV (PDF)" aria-label="Download CV"><i class="fas fa-file-pdf"></i></a>
+            </div>
+            <div class="footer-status">
+              <span class="dot-pulse"></span> Open for Full-Time & Freelance
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>&copy; 2026 <strong>Muhamad Fadlan</strong>. All rights reserved.</p>
+          <p class="built-with">
+            Designed & Built with <i class="fas fa-heart"></i> using Clean Vanilla JS & CSS
           </p>
         </div>
       </div>
@@ -755,6 +841,17 @@
             <i class="fas fa-download"></i> Download PDF
           </a>
         </div>
+      </div>
+    </div>
+
+    <!-- PROJECT IMAGE FULLSCREEN LIGHTBOX MODAL -->
+    <div class="lightbox-overlay" id="lightboxModal" onclick="closeLightbox(event)">
+      <div class="lightbox-content">
+        <button class="lightbox-close" onclick="closeLightbox()" aria-label="Close Fullscreen View">
+          <i class="fas fa-times"></i>
+        </button>
+        <img id="lightboxImg" class="lightbox-img" src="" alt="Project Full Preview" />
+        <div class="lightbox-caption" id="lightboxCaption"></div>
       </div>
     </div>
 
