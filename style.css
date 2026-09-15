@@ -1440,6 +1440,50 @@ nav.scrolled {
   transform: translateX(3px) translateY(-1px);
 }
 
+.project-github-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.55rem 1.2rem;
+  border-radius: var(--radius-full);
+  font-size: 0.84rem;
+  font-weight: 600;
+  font-family: var(--font-body);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--white);
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+  transition: all 0.25s ease;
+}
+
+.project-github-btn:hover {
+  background: #24292e;
+  border-color: var(--gold);
+  color: var(--gold-light);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(212, 175, 55, 0.3);
+}
+
+.project-github-btn i {
+  font-size: 0.95rem;
+}
+
+.project-archived-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1.1rem;
+  border-radius: var(--radius-full);
+  font-size: 0.82rem;
+  font-weight: 600;
+  font-family: var(--font-body);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px dashed rgba(255, 255, 255, 0.2);
+  color: var(--muted);
+  cursor: default;
+}
+
 .project-soon-btn {
   display: inline-flex;
   align-items: center;
@@ -1453,6 +1497,98 @@ nav.scrolled {
   border: 1px solid rgba(157, 78, 221, 0.35);
   color: #d8b4fe;
   cursor: default;
+}
+
+.project-sub-link {
+  color: var(--muted);
+  font-size: 0.82rem;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: color 0.2s ease;
+}
+
+.project-sub-link:hover {
+  color: var(--gold);
+}
+
+/* Image Slider / Multi-Photo Controls */
+.card-img-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(10, 10, 25, 0.75);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  cursor: pointer;
+  z-index: 5;
+  transition: all 0.25s ease;
+  opacity: 0.85;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+}
+
+.card-img-btn:hover {
+  opacity: 1;
+  background: var(--gold);
+  color: #000;
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
+}
+
+.card-img-prev { left: 0.8rem; }
+.card-img-next { right: 0.8rem; }
+
+.card-img-counter {
+  position: absolute;
+  bottom: 0.8rem;
+  right: 0.8rem;
+  z-index: 3;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-full);
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--gold-light);
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.card-img-dots {
+  position: absolute;
+  bottom: 0.8rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  display: flex;
+  gap: 0.35rem;
+}
+
+.card-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+.card-dot.active {
+  width: 16px;
+  border-radius: 4px;
+  background: var(--gold);
+  box-shadow: 0 0 8px var(--gold);
 }
 
 .pulse-beacon {

@@ -3,10 +3,16 @@
     "id_projek": "1",
     "gambar": "gambar/Projek1.png",
     "title": "Ultimate Football Manager",
-    "deskripsi": "Permainan strategi bola sepak yang mengasah kemampuan taktik dan manajemen tim sebagai manager.",
+    "deskripsi": "Permainan strategi bola sepak yang mengasah kemampuan taktik dan manajemen tim sebagai manager secara interaktif.",
     "link": "https://football-manager-idle.vercel.app/",
     "tag": "Web Game",
-    "tech": ["HTML5", "JavaScript", "CSS3", "Vercel", "Idle Game"]
+    "tech": [
+      "HTML5",
+      "JavaScript",
+      "CSS3",
+      "Vercel",
+      "Idle Game"
+    ]
   },
   {
     "id_projek": "2",
@@ -15,16 +21,61 @@
     "deskripsi": "Sebuah web yang didedikasikan untuk membantu para pemain EA FC mencari dan menganalisis potensi pemain dengan lebih efektif.",
     "link": "https://ea-fc24-scouting-tool.vercel.app/scouting",
     "tag": "Web App",
-    "tech": ["React", "Analytics Tool", "REST API", "Vercel"]
+    "tech": [
+      "React",
+      "Analytics Tool",
+      "REST API",
+      "Vercel"
+    ]
   },
   {
     "id_projek": "3",
+    "gambar": "gambar/Projek3.png",
+    "title": "Galeri Foto & Komunitas Chat",
+    "deskripsi": "Sebuah web yang menyimpan galeri foto dan komunitas chat hasil karya penulisan ilmiah masa perkuliahan.",
+    "link": "",
+    "tag": "College Project",
+    "tech": [
+      "PHP",
+      "HTML5",
+      "CSS3",
+      "MySQL",
+      "phpMyAdmin",
+      "JavaScript"
+    ],
+    "isExpired": true
+  },
+  {
+    "id_projek": "4",
+    "gambar": [
+      "gambar/Projek4.png",
+      "gambar/Projek4-a.png"
+    ],
+    "title": "Match Me - Outfit Matcher",
+    "deskripsi": "Sebuah web yang membantu mahasiswa/i untuk mencari rekomendasi kombinasi outfit yang serasi dan stylish.",
+    "link": "https://github.com/FdLann/Projek-MatchingBaju-PHP-NATIVE",
+    "tag": "College Project",
+    "tech": [
+      "PHP",
+      "HTML5",
+      "CSS3",
+      "MySQL",
+      "phpMyAdmin",
+      "JavaScript"
+    ]
+  },
+  {
+    "id_projek": "5",
     "gambar": "",
     "title": "Secret Next Project 🚀",
     "deskripsi": "Projek selanjutnya yang masih dalam tahap perancangan rahasia & riset inovatif. Masih misterius tapi bakal seru banget! Tunggu tanggal mainnya! 🤫✨",
     "link": "#",
     "tag": "Coming Soon",
-    "tech": ["Top Secret", "In Research", "Next Innovation"],
+    "tech": [
+      "Top Secret",
+      "In Research",
+      "Next Innovation"
+    ],
     "isComingSoon": true
   }
 ]

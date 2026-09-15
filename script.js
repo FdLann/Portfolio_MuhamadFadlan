@@ -401,11 +401,12 @@ document.addEventListener("keydown", (e) => {
 
 // ── PROJECTS SHOWCASE & FILTER (FROM DATA-PROJEK.JSON) ──
 let allProjects = [];
+const cardImageIndices = {};
 
 const FALLBACK_PROJECTS = [
   {
     id_projek: "1",
-    gambar: "gambar/Projek1.png",
+    gambar: ["gambar/Projek1.png"],
     title: "Ultimate Football Manager",
     deskripsi: "Permainan strategi bola sepak yang mengasah kemampuan taktik dan manajemen tim sebagai manager secara interaktif.",
     link: "https://football-manager-idle.vercel.app/",
@@ -414,7 +415,7 @@ const FALLBACK_PROJECTS = [
   },
   {
     id_projek: "2",
-    gambar: "gambar/Projek2.png",
+    gambar: ["gambar/Projek2.png"],
     title: "EA FC Scouting Tool",
     deskripsi: "Sebuah web yang didedikasikan untuk membantu para pemain EA FC mencari dan menganalisis potensi pemain dengan lebih efektif.",
     link: "https://ea-fc24-scouting-tool.vercel.app/scouting",
@@ -423,7 +424,26 @@ const FALLBACK_PROJECTS = [
   },
   {
     id_projek: "3",
-    gambar: "",
+    gambar: ["gambar/Projek3.png"],
+    title: "Galeri Foto & Komunitas Chat",
+    deskripsi: "Sebuah web yang menyimpan galeri foto dan komunitas chat hasil karya penulisan ilmiah masa perkuliahan.",
+    link: "",
+    tag: "College Project",
+    tech: ["PHP", "HTML5", "CSS3", "MySQL", "phpMyAdmin", "JavaScript"],
+    isExpired: true
+  },
+  {
+    id_projek: "4",
+    gambar: ["gambar/Projek4.png", "gambar/Projek4-a.png"],
+    title: "Match Me - Outfit Matcher",
+    deskripsi: "Sebuah web yang membantu mahasiswa/i untuk mencari rekomendasi kombinasi outfit yang serasi dan stylish.",
+    link: "https://github.com/FdLann/Projek-MatchingBaju-PHP-NATIVE",
+    tag: "College Project",
+    tech: ["PHP", "HTML5", "CSS3", "MySQL", "phpMyAdmin", "JavaScript"]
+  },
+  {
+    id_projek: "5",
+    gambar: [],
     title: "Secret Next Project 🚀",
     deskripsi: "Projek selanjutnya yang masih dalam tahap perancangan rahasia & riset inovatif. Masih misterius tapi bakal seru banget! Tunggu tanggal mainnya! 🤫✨",
     link: "#",
@@ -432,6 +452,17 @@ const FALLBACK_PROJECTS = [
     isComingSoon: true
   }
 ];
+
+function sanitizeImagePaths(rawGambar) {
+  if (!rawGambar) return [];
+  if (Array.isArray(rawGambar)) {
+    return rawGambar.filter(Boolean).map(img => img.replace(/^(\.\.\/)+/, ""));
+  }
+  if (typeof rawGambar === "string" && rawGambar.trim() !== "") {
+    return [rawGambar.replace(/^(\.\.\/)+/, "")];
+  }
+  return [];
+}
 
 async function loadProjects() {
   const container = document.getElementById("githubProjects") || document.getElementById("worksGrid");
@@ -444,25 +475,103 @@ async function loadProjects() {
 
     if (Array.isArray(data) && data.length > 0) {
       allProjects = data.map(item => {
-        // Sanitize image path if needed (e.g. "../gambar/" -> "gambar/")
-        let cleanImg = item.gambar ? item.gambar.replace(/^(\.\.\/)+/, "") : "";
+        const images = sanitizeImagePaths(item.gambar);
+        const isComingSoon = Boolean(
+          item.isComingSoon ||
+          (item.tag && item.tag.toLowerCase().includes("coming")) ||
+          (item.title && item.title.toLowerCase().includes("coming")) ||
+          (item.title && item.title.toLowerCase().includes("secret")) ||
+          images.length === 0
+        );
+
         return {
           ...item,
-          gambar: cleanImg,
+          images: images,
+          gambar: images.length > 0 ? images[0] : "",
           tech: item.tech || ["Web Project", "Clean Architecture"],
-          tag: item.tag || (item.isComingSoon || item.title.toLowerCase().includes("coming") || item.title.toLowerCase().includes("secret") ? "Coming Soon" : "Featured Project"),
-          isComingSoon: item.isComingSoon || item.title.toLowerCase().includes("coming") || item.title.toLowerCase().includes("secret") || !cleanImg
+          tag: item.tag || (isComingSoon ? "Coming Soon" : "Featured Project"),
+          isComingSoon: isComingSoon,
+          isExpired: Boolean(item.isExpired || (!item.link && !isComingSoon))
         };
       });
     } else {
-      allProjects = FALLBACK_PROJECTS;
+      allProjects = parseFallbackData();
     }
   } catch (err) {
     console.info("Using embedded project dataset:", err.message);
-    allProjects = FALLBACK_PROJECTS;
+    allProjects = parseFallbackData();
   }
 
   renderProjectCards(allProjects);
+}
+
+function parseFallbackData() {
+  return FALLBACK_PROJECTS.map(item => {
+    const images = sanitizeImagePaths(item.gambar);
+    return {
+      ...item,
+      images: images,
+      gambar: images.length > 0 ? images[0] : "",
+      isComingSoon: Boolean(item.isComingSoon),
+      isExpired: Boolean(item.isExpired)
+    };
+  });
+}
+
+// ── MULTI-PHOTO SLIDER CONTROLS ──
+window.slideCardImage = function(projectId, step, event) {
+  if (event) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
+  const project = allProjects.find(p => String(p.id_projek) === String(projectId));
+  if (!project || !project.images || project.images.length <= 1) return;
+
+  const total = project.images.length;
+  let currentIdx = cardImageIndices[projectId] || 0;
+  currentIdx = (currentIdx + step + total) % total;
+  cardImageIndices[projectId] = currentIdx;
+
+  updateCardImageDOM(projectId, project.images, currentIdx);
+};
+
+window.setCardImage = function(projectId, index, event) {
+  if (event) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
+  const project = allProjects.find(p => String(p.id_projek) === String(projectId));
+  if (!project || !project.images || index < 0 || index >= project.images.length) return;
+
+  cardImageIndices[projectId] = index;
+  updateCardImageDOM(projectId, project.images, index);
+};
+
+function updateCardImageDOM(projectId, images, activeIdx) {
+  const imgEl = document.getElementById(`projectImg-${projectId}`);
+  const counterEl = document.getElementById(`imgCounter-${projectId}`);
+  const dotsContainer = document.getElementById(`imgDots-${projectId}`);
+
+  if (imgEl) {
+    imgEl.style.opacity = "0.4";
+    setTimeout(() => {
+      imgEl.src = images[activeIdx];
+      imgEl.style.opacity = "1";
+    }, 150);
+  }
+
+  if (counterEl) {
+    counterEl.innerHTML = `<i class="fas fa-images"></i> <span class="cur-idx">${activeIdx + 1}</span>/<span class="total-idx">${images.length}</span>`;
+  }
+
+  if (dotsContainer) {
+    const dots = dotsContainer.querySelectorAll(".card-dot");
+    dots.forEach((dot, idx) => {
+      dot.classList.toggle("active", idx === activeIdx);
+    });
+  }
 }
 
 function renderProjectCards(projects) {
@@ -514,11 +623,83 @@ function renderProjectCards(projects) {
               <span class="project-soon-btn">
                 <span class="pulse-beacon"></span> Stay Tuned ✨
               </span>
-              <span style="font-size: 0.8rem; font-family: var(--font-mono); color: var(--muted);">
+              <span class="project-sub-link">
                 <i class="fas fa-lock"></i> Top Secret
               </span>
             </div>
           </div>
+        </div>
+      `;
+    }
+
+    // Determine Action Buttons & Secondary Link
+    const isGithub = item.link && item.link.includes("github.com");
+    const isExpired = !item.link || item.isExpired || item.link === "#";
+
+    let actionButtonHTML = "";
+    let subLinkHTML = "";
+
+    if (isExpired) {
+      actionButtonHTML = `
+        <span class="project-archived-btn" title="Deployment server expired / Projek masa kuliah">
+          <i class="fas fa-history"></i> Demo Expired
+        </span>
+      `;
+      subLinkHTML = `
+        <span class="project-sub-link" style="opacity: 0.75;" title="Karya Penulisan Ilmiah / Masa Kuliah">
+          <i class="fas fa-graduation-cap"></i> College Work
+        </span>
+      `;
+    } else if (isGithub) {
+      actionButtonHTML = `
+        <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="project-github-btn">
+          <i class="fab fa-github"></i>
+          <span>Repository</span>
+        </a>
+      `;
+      subLinkHTML = `
+        <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="project-sub-link" title="Open GitHub Repository">
+          <i class="fas fa-code-branch"></i> Source Code
+        </a>
+      `;
+    } else {
+      actionButtonHTML = `
+        <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="project-live-btn">
+          <span>Live Demo</span>
+          <i class="fas fa-external-link-alt"></i>
+        </a>
+      `;
+      subLinkHTML = `
+        <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="project-sub-link" title="Visit Live Application">
+          <i class="fas fa-globe"></i> Visit Web
+        </a>
+      `;
+    }
+
+    // Image & Slider Controls
+    const images = item.images && item.images.length > 0 ? item.images : (item.gambar ? [item.gambar] : []);
+    const initialImg = images.length > 0 ? images[0] : "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600";
+    const hasMultipleImages = images.length > 1;
+    const currentIdx = cardImageIndices[item.id_projek] || 0;
+
+    let sliderControlsHTML = "";
+    if (hasMultipleImages) {
+      const dotsHTML = images
+        .map((_, idx) => `<span class="card-dot ${idx === currentIdx ? 'active' : ''}" onclick="setCardImage('${item.id_projek}', ${idx}, event)"></span>`)
+        .join("");
+
+      sliderControlsHTML = `
+        <button class="card-img-btn card-img-prev" onclick="slideCardImage('${item.id_projek}', -1, event)" aria-label="Foto Sebelumnya" title="Foto Sebelumnya">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="card-img-btn card-img-next" onclick="slideCardImage('${item.id_projek}', 1, event)" aria-label="Foto Selanjutnya" title="Foto Selanjutnya">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+        <div class="card-img-counter" id="imgCounter-${item.id_projek}">
+          <i class="fas fa-images"></i> <span class="cur-idx">${currentIdx + 1}</span>/<span class="total-idx">${images.length}</span>
+        </div>
+        <div class="card-img-dots" id="imgDots-${item.id_projek}">
+          ${dotsHTML}
         </div>
       `;
     }
@@ -528,16 +709,18 @@ function renderProjectCards(projects) {
       <div class="project-card fade-in" data-tilt>
         <div class="project-img-wrapper">
           <span class="project-badge-tag">
-            <i class="fas fa-star" style="color: var(--gold);"></i> ${item.tag || "Featured"}
+            <i class="fas ${item.tag === 'College Project' ? 'fa-graduation-cap' : 'fa-star'}" style="color: var(--gold);"></i> ${item.tag || "Featured"}
           </span>
           <img 
-            src="${item.gambar}" 
+            id="projectImg-${item.id_projek}"
+            src="${initialImg}" 
             alt="${item.title}" 
             class="project-img" 
             loading="lazy"
             onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600&auto=format&fit=crop&q=80';"
           />
           <div class="project-img-overlay"></div>
+          ${sliderControlsHTML}
         </div>
 
         <div class="project-content">
@@ -551,13 +734,8 @@ function renderProjectCards(projects) {
           </div>
 
           <div class="project-footer">
-            <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="project-live-btn">
-              <span>Live Demo</span>
-              <i class="fas fa-external-link-alt"></i>
-            </a>
-            <a href="${item.link}" target="_blank" rel="noopener noreferrer" style="color: var(--muted); font-size: 0.82rem; text-decoration: none; display: flex; align-items: center; gap: 0.35rem;" title="Visit Website">
-              <i class="fas fa-globe"></i> Visit Web
-            </a>
+            ${actionButtonHTML}
+            ${subLinkHTML}
           </div>
         </div>
       </div>
