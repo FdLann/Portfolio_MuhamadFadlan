@@ -1413,6 +1413,18 @@ nav.scrolled {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
+.project-badge-tag.badge-personal {
+  border-color: rgba(212, 175, 55, 0.45);
+  color: var(--gold-light);
+  background: rgba(14, 14, 28, 0.88);
+}
+
+.project-badge-tag.badge-academic {
+  border-color: rgba(79, 142, 247, 0.45);
+  color: #93c5fd;
+  background: rgba(10, 20, 38, 0.88);
+}
+
 /* Coming Soon Special Visual Banner */
 .coming-soon-banner {
   position: relative;

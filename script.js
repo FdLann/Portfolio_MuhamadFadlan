@@ -410,6 +410,7 @@ const FALLBACK_PROJECTS = [
     title: "Ultimate Football Manager",
     deskripsi: "Permainan strategi bola sepak yang mengasah kemampuan taktik dan manajemen tim sebagai manager secara interaktif.",
     link: "https://football-manager-idle.vercel.app/",
+    kategori: "Personal",
     tag: "Web Game",
     tech: ["HTML5", "JavaScript", "CSS3", "Vercel", "Idle Game"]
   },
@@ -419,6 +420,7 @@ const FALLBACK_PROJECTS = [
     title: "EA FC Scouting Tool",
     deskripsi: "Sebuah web yang didedikasikan untuk membantu para pemain EA FC mencari dan menganalisis potensi pemain dengan lebih efektif.",
     link: "https://ea-fc24-scouting-tool.vercel.app/scouting",
+    kategori: "Personal",
     tag: "Web App",
     tech: ["React", "Analytics Tool", "REST API", "Vercel"]
   },
@@ -428,6 +430,7 @@ const FALLBACK_PROJECTS = [
     title: "Galeri Foto & Komunitas Chat",
     deskripsi: "Sebuah web yang menyimpan galeri foto dan komunitas chat hasil karya penulisan ilmiah masa perkuliahan.",
     link: "",
+    kategori: "Academic",
     tag: "College Project",
     tech: ["PHP", "HTML5", "CSS3", "MySQL", "phpMyAdmin", "JavaScript"],
     isExpired: true
@@ -438,15 +441,54 @@ const FALLBACK_PROJECTS = [
     title: "Match Me - Outfit Matcher",
     deskripsi: "Sebuah web yang membantu mahasiswa/i untuk mencari rekomendasi kombinasi outfit yang serasi dan stylish.",
     link: "https://github.com/FdLann/Projek-MatchingBaju-PHP-NATIVE",
+    kategori: "Academic",
     tag: "College Project",
     tech: ["PHP", "HTML5", "CSS3", "MySQL", "phpMyAdmin", "JavaScript"]
   },
   {
     id_projek: "5",
+    gambar: [
+      "gambar/Projek5-a.png",
+      "gambar/Projek5-b.png",
+      "gambar/Projek5-c.png"
+    ],
+    title: "Sistem Informasi Administrasi Akademik",
+    deskripsi: "Web Sistem Informasi Administrasi Akademik adalah sebuah website yang dirancang untuk mengelola data penulisan dan pengajuan surat magang bagi mahasiswa fakultas ilmu komputer dan Teknologi Informasi.",
+    link: "https://github.com/FdLann/sistem-administrasi-sistem-informasi",
+    kategori: "Academic",
+    tag: "College Project",
+    tech: ["PHP", "HTML5", "CSS3", "MySQL", "phpMyAdmin", "JavaScript"]
+  },
+  {
+    id_projek: "6",
+    gambar: [
+      "gambar/Projek6-a.png",
+      "gambar/Projek6-b.png",
+      "gambar/Projek6-c.png"
+    ],
+    title: "MedTrack - Portal Pasien",
+    deskripsi: "Aplikasi web health-tech untuk membantu pasien melihat hasil pemeriksaan medis dan rekam kesehatan tanpa harus kembali ke rumah sakit.",
+    link: "https://github.com/FdLann/medtrack-portal-pasien",
+    kategori: "Personal",
+    tag: "Web App",
+    tech: [
+      "React",
+      "Vite",
+      "Tailwind CSS",
+      "Express.js",
+      "PostgreSQL",
+      "REST API",
+      "JWT Auth",
+      "bcrypt"
+    ]
+  },
+  {
+    id_projek: "7",
     gambar: [],
     title: "Secret Next Project 🚀",
     deskripsi: "Projek selanjutnya yang masih dalam tahap perancangan rahasia & riset inovatif. Masih misterius tapi bakal seru banget! Tunggu tanggal mainnya! 🤫✨",
     link: "#",
+    kategori: "none",
     tag: "Coming Soon",
     tech: ["Top Secret", "In Research", "Next Innovation"],
     isComingSoon: true
@@ -484,10 +526,13 @@ async function loadProjects() {
           images.length === 0
         );
 
+        const category = item.kategori || (item.tag === "College Project" ? "Academic" : (isComingSoon ? "none" : "Personal"));
+
         return {
           ...item,
           images: images,
           gambar: images.length > 0 ? images[0] : "",
+          kategori: category,
           tech: item.tech || ["Web Project", "Clean Architecture"],
           tag: item.tag || (isComingSoon ? "Coming Soon" : "Featured Project"),
           isComingSoon: isComingSoon,
@@ -502,6 +547,7 @@ async function loadProjects() {
     allProjects = parseFallbackData();
   }
 
+  updateCategoryTabCounts();
   renderProjectCards(allProjects);
 }
 
@@ -512,10 +558,27 @@ function parseFallbackData() {
       ...item,
       images: images,
       gambar: images.length > 0 ? images[0] : "",
+      kategori: item.kategori || (item.tag === "College Project" ? "Academic" : (item.isComingSoon ? "none" : "Personal")),
       isComingSoon: Boolean(item.isComingSoon),
       isExpired: Boolean(item.isExpired)
     };
   });
+}
+
+function updateCategoryTabCounts() {
+  const countAllEl = document.getElementById("countAll");
+  const countPersonalEl = document.getElementById("countPersonal");
+  const countAcademicEl = document.getElementById("countAcademic");
+
+  if (allProjects && allProjects.length > 0) {
+    const personalCount = allProjects.filter(p => p.kategori && p.kategori.toLowerCase() === "personal").length;
+    const academicCount = allProjects.filter(p => p.kategori && p.kategori.toLowerCase() === "academic").length;
+    const allCount = personalCount + academicCount; // or allProjects.length
+
+    if (countAllEl) countAllEl.textContent = `(${allCount})`;
+    if (countPersonalEl) countPersonalEl.textContent = `(${personalCount})`;
+    if (countAcademicEl) countAcademicEl.textContent = `(${academicCount})`;
+  }
 }
 
 // ── MULTI-PHOTO SLIDER CONTROLS ──
@@ -642,9 +705,9 @@ function applyCombinedProjectFilter() {
   // 1. Filter by category
   if (activeCategoryFilter !== "all") {
     filtered = filtered.filter(item => {
-      const tag = (item.tag || "").toLowerCase();
+      const cat = (item.kategori || "").toLowerCase();
       const targetCat = activeCategoryFilter.toLowerCase();
-      return tag.includes(targetCat) || (item.tech && item.tech.some(t => t.toLowerCase().includes(targetCat)));
+      return cat === targetCat || (item.tag && item.tag.toLowerCase().includes(targetCat));
     });
   }
 
@@ -653,9 +716,10 @@ function applyCombinedProjectFilter() {
     filtered = filtered.filter(item => {
       const titleMatch = (item.title || "").toLowerCase().includes(query);
       const descMatch = (item.deskripsi || "").toLowerCase().includes(query);
+      const catMatch = (item.kategori || "").toLowerCase().includes(query);
       const tagMatch = (item.tag || "").toLowerCase().includes(query);
       const techMatch = Array.isArray(item.tech) && item.tech.some(t => t.toLowerCase().includes(query));
-      return titleMatch || descMatch || tagMatch || techMatch;
+      return titleMatch || descMatch || catMatch || tagMatch || techMatch;
     });
   }
 
@@ -670,18 +734,15 @@ function renderProjectCards(projects) {
   const container = document.getElementById("githubProjects") || document.getElementById("worksGrid");
   if (!container) return;
 
-  // Update All Count badge if available
-  const countAllEl = document.getElementById("countAll");
-  if (countAllEl && allProjects.length > 0) {
-    countAllEl.textContent = `(${allProjects.length})`;
-  }
+  // Update tab counts
+  updateCategoryTabCounts();
 
   if (!projects || projects.length === 0) {
     container.innerHTML = `
       <div style="grid-column: 1 / -1; text-align: center; padding: 3.5rem 1rem; color: var(--muted);">
         <i class="fas fa-search" style="font-size: 2.2rem; margin-bottom: 1rem; color: var(--gold); display: block;"></i>
         <p style="font-size: 1.15rem; font-weight: 700; color: var(--white); margin-bottom: 0.5rem;">Tidak ada projek yang cocok</p>
-        <p style="font-size: 0.9rem; margin-bottom: 1.5rem;">Coba cari dengan kata kunci teknologi lain atau reset filter kategori.</p>
+        <p style="font-size: 0.9rem; margin-bottom: 1.5rem;">Coba cari dengan kata kunci teknologi lain atau ganti filter kategori.</p>
         <button onclick="filterByCategory('all', document.querySelector('.cat-tab[data-cat=all]'))" class="btn btn-outline-gold btn-sm">
           <i class="fas fa-redo"></i> Reset Filter
         </button>
@@ -805,12 +866,18 @@ function renderProjectCards(projects) {
       `;
     }
 
+    // Badge configuration
+    const isAcademic = (item.kategori && item.kategori.toLowerCase() === "academic") || item.tag === "College Project";
+    const badgeClass = isAcademic ? "badge-academic" : "badge-personal";
+    const badgeIcon = isAcademic ? "fa-graduation-cap" : "fa-user-astronaut";
+    const badgeLabel = item.kategori ? item.kategori : (isAcademic ? "Academic" : "Personal");
+
     // Standard Project Card with Clickable Image for Lightbox
     return `
       <div class="project-card fade-in" data-tilt>
         <div class="project-img-wrapper" onclick="openLightbox('${item.id_projek}')" title="Klik untuk memperbesar gambar">
-          <span class="project-badge-tag">
-            <i class="fas ${item.tag === 'College Project' ? 'fa-graduation-cap' : 'fa-star'}" style="color: var(--gold);"></i> ${item.tag || "Featured"}
+          <span class="project-badge-tag ${badgeClass}">
+            <i class="fas ${badgeIcon}"></i> ${badgeLabel} • ${item.tag || "Project"}
           </span>
           <img 
             id="projectImg-${item.id_projek}"

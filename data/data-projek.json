@@ -5,6 +5,7 @@
     "title": "Ultimate Football Manager",
     "deskripsi": "Permainan strategi bola sepak yang mengasah kemampuan taktik dan manajemen tim sebagai manager secara interaktif.",
     "link": "https://football-manager-idle.vercel.app/",
+    "kategori": "Personal",
     "tag": "Web Game",
     "tech": [
       "HTML5",
@@ -20,6 +21,7 @@
     "title": "EA FC Scouting Tool",
     "deskripsi": "Sebuah web yang didedikasikan untuk membantu para pemain EA FC mencari dan menganalisis potensi pemain dengan lebih efektif.",
     "link": "https://ea-fc24-scouting-tool.vercel.app/scouting",
+    "kategori": "Personal",
     "tag": "Web App",
     "tech": [
       "React",
@@ -34,6 +36,7 @@
     "title": "Galeri Foto & Komunitas Chat",
     "deskripsi": "Sebuah web yang menyimpan galeri foto dan komunitas chat hasil karya penulisan ilmiah masa perkuliahan.",
     "link": "",
+    "kategori": "Academic",
     "tag": "College Project",
     "tech": [
       "PHP",
@@ -54,6 +57,7 @@
     "title": "Match Me - Outfit Matcher",
     "deskripsi": "Sebuah web yang membantu mahasiswa/i untuk mencari rekomendasi kombinasi outfit yang serasi dan stylish.",
     "link": "https://github.com/FdLann/Projek-MatchingBaju-PHP-NATIVE",
+    "kategori": "Academic",
     "tag": "College Project",
     "tech": [
       "PHP",
@@ -66,10 +70,55 @@
   },
   {
     "id_projek": "5",
+    "gambar": [
+      "gambar/Projek5-a.png",
+      "gambar/Projek5-b.png",
+      "gambar/Projek5-c.png"
+    ],
+    "title": "Sistem Informasi Administrasi Akademik",
+    "deskripsi": "Web Sistem Informasi Administrasi Akademik adalah sebuah website yang dirancang untuk mengelola data penulisan dan pengajuan surat magang bagi mahasiswa fakultas ilmu komputer dan Teknologi Informasi.",
+    "link": "https://github.com/FdLann/sistem-administrasi-sistem-informasi",
+    "kategori": "Academic",
+    "tag": "College Project",
+    "tech": [
+      "PHP",
+      "HTML5",
+      "CSS3",
+      "MySQL",
+      "phpMyAdmin",
+      "JavaScript"
+    ]
+  },
+  {
+    "id_projek": "6",
+    "gambar": [
+      "gambar/Projek6-a.png",
+      "gambar/Projek6-b.png",
+      "gambar/Projek6-c.png"
+    ],
+    "title": "MedTrack - Portal Pasien",
+    "deskripsi": "Aplikasi web health-tech untuk membantu pasien melihat hasil pemeriksaan medis dan rekam kesehatan tanpa harus kembali ke rumah sakit.",
+    "link": "https://github.com/FdLann/medtrack-portal-pasien",
+    "kategori": "Personal",
+    "tag": "Web App",
+    "tech": [
+      "React",
+      "Vite",
+      "Tailwind CSS",
+      "Express.js",
+      "PostgreSQL",
+      "REST API",
+      "JWT Auth",
+      "bcrypt"
+    ]
+  },
+  {
+    "id_projek": "7",
     "gambar": "",
     "title": "Secret Next Project 🚀",
     "deskripsi": "Projek selanjutnya yang masih dalam tahap perancangan rahasia & riset inovatif. Masih misterius tapi bakal seru banget! Tunggu tanggal mainnya! 🤫✨",
     "link": "#",
+    "kategori": "none",
     "tag": "Coming Soon",
     "tech": [
       "Top Secret",
