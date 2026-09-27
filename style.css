@@ -2773,10 +2773,40 @@ footer {
   font-size: 0.85rem;
   color: var(--muted);
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 1.2rem;
 }
 
-.built-with i {
+.visitor-counter-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.35rem 0.95rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  border-radius: var(--radius-full);
+  font-size: 0.82rem;
+  color: var(--muted);
+  backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
+  user-select: none;
+}
+
+.visitor-counter-badge:hover {
+  border-color: var(--gold);
+  background: rgba(212, 175, 55, 0.08);
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+  color: var(--white);
+}
+
+.visitor-counter-badge i {
   color: var(--gold);
+  font-size: 0.85rem;
+}
+
+.visitor-count-number {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--gold-light);
+  letter-spacing: 0.05em;
 }
 

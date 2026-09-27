@@ -1163,6 +1163,64 @@ function formatTime(secs) {
   return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
 }
 
-// Load music on DOM ready
-document.addEventListener("DOMContentLoaded", fetchMusicPlaylist);
+// ── LIVE VISITOR COUNTER ENGINE ──
+async function initVisitorCounter() {
+  const visitorCountEl = document.getElementById("visitorCount");
+  if (!visitorCountEl) return;
+
+  const STORAGE_KEY = "fdlann_portfolio_visits";
+  const BASE_VISITS = 1240; // baseline aesthetic counter
+
+  let localVisits = parseInt(localStorage.getItem(STORAGE_KEY) || "0", 10);
+  if (!sessionStorage.getItem("visited_this_session")) {
+    localVisits += 1;
+    localStorage.setItem(STORAGE_KEY, localVisits);
+    sessionStorage.setItem("visited_this_session", "true");
+  }
+
+  try {
+    const response = await fetch("https://api.counterapi.dev/v1/fdlann-portfolio/visits/up");
+    if (response.ok) {
+      const data = await response.json();
+      if (data && typeof data.count === "number") {
+        animateCounter(visitorCountEl, BASE_VISITS + data.count);
+        return;
+      }
+    }
+  } catch (err) {
+    console.info("Using local visitor count:", err.message);
+  }
+
+  animateCounter(visitorCountEl, BASE_VISITS + localVisits);
+}
+
+function animateCounter(element, target) {
+  const start = Math.max(0, target - 45);
+  const duration = 1200;
+  const startTime = performance.now();
+
+  function update(now) {
+    const elapsed = now - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    const easeProgress = 1 - Math.pow(1 - progress, 3);
+    const current = Math.floor(start + (target - start) * easeProgress);
+
+    element.textContent = current.toLocaleString("id-ID");
+
+    if (progress < 1) {
+      requestAnimationFrame(update);
+    } else {
+      element.textContent = target.toLocaleString("id-ID");
+    }
+  }
+
+  requestAnimationFrame(update);
+}
+
+// Initialize on DOM ready
+document.addEventListener("DOMContentLoaded", () => {
+  fetchMusicPlaylist();
+  initVisitorCounter();
+});
+
 
