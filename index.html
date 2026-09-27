@@ -611,9 +611,20 @@
             </button>
           </div>
 
-          <div class="search-box">
-            <i class="fas fa-search"></i>
-            <input type="text" id="repoSearch" placeholder="Search projects or technologies..." onkeyup="filterRepos()" />
+          <div class="works-action-bar">
+            <div class="search-box">
+              <i class="fas fa-search"></i>
+              <input type="text" id="repoSearch" placeholder="Search projects or technologies..." onkeyup="filterRepos()" />
+            </div>
+
+            <div class="view-switcher" id="viewSwitcher">
+              <button class="view-btn active" id="btnViewGrid" onclick="setProjectViewMode('grid')" title="Grid View">
+                <i class="fas fa-th-large"></i> <span>Grid</span>
+              </button>
+              <button class="view-btn" id="btnView3d" onclick="setProjectViewMode('3d')" title="3D Coverflow Showcase">
+                <i class="fas fa-cube"></i> <span>3D Stack</span>
+              </button>
+            </div>
           </div>
         </div>
 
@@ -634,6 +645,13 @@
             <div class="skeleton-line text"></div>
             <div class="skeleton-line text short"></div>
           </div>
+        </div>
+
+        <div class="works-load-more" id="worksLoadMoreWrapper" style="display: none;">
+          <button class="btn btn-outline-gold btn-magnetic" id="btnLoadMoreProjects" onclick="toggleLoadMoreProjects()">
+            <i class="fas fa-plus-circle" id="loadMoreIcon"></i>
+            <span id="loadMoreText">Muat Lebih Banyak Projek</span>
+          </button>
         </div>
       </div>
     </section>

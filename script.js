@@ -680,11 +680,34 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
-// ── CATEGORY FILTERING & SEARCH ──
+// ── CATEGORY FILTERING & VIEW SWITCHER ──
+const GRID_INITIAL_LIMIT = 6;
+let isGridExpanded = false;
 let activeCategoryFilter = "all";
+let currentViewMode = localStorage.getItem("fdlann_project_view_mode") || "grid";
+let activeCoverflowIndex = 0;
+let currentDisplayProjects = [];
+
+window.setProjectViewMode = function(mode) {
+  currentViewMode = mode;
+  isGridExpanded = false;
+  try {
+    localStorage.setItem("fdlann_project_view_mode", mode);
+  } catch (e) {
+    console.warn("Could not save view mode:", e);
+  }
+
+  const btnGrid = document.getElementById("btnViewGrid");
+  const btn3d = document.getElementById("btnView3d");
+  if (btnGrid) btnGrid.classList.toggle("active", mode === "grid");
+  if (btn3d) btn3d.classList.toggle("active", mode === "3d");
+
+  applyCombinedProjectFilter();
+};
 
 window.filterByCategory = function(category, btnElement) {
   activeCategoryFilter = category;
+  isGridExpanded = false;
 
   // Update button active states
   const allTabs = document.querySelectorAll(".cat-tab");
@@ -693,6 +716,7 @@ window.filterByCategory = function(category, btnElement) {
     btnElement.classList.add("active");
   }
 
+  activeCoverflowIndex = 0;
   applyCombinedProjectFilter();
 };
 
@@ -727,17 +751,199 @@ function applyCombinedProjectFilter() {
 }
 
 function filterRepos() {
+  activeCoverflowIndex = 0;
+  isGridExpanded = false;
   applyCombinedProjectFilter();
 }
 
+window.toggleLoadMoreProjects = function() {
+  isGridExpanded = !isGridExpanded;
+  renderProjectCards(currentDisplayProjects);
+
+  // If collapsing back, smoothly scroll to top of works section
+  if (!isGridExpanded) {
+    const worksSection = document.getElementById("works");
+    if (worksSection) {
+      worksSection.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }
+};
+
+// ── REUSABLE CARD INNER GENERATOR ──
+function generateCardInner(item) {
+  const isSoon = item.isComingSoon || item.tag === "Coming Soon";
+  const techPills = (item.tech || [])
+    .map(t => `<span class="project-tech-pill">${t}</span>`)
+    .join("");
+
+  if (isSoon) {
+    return `
+      <div class="coming-soon-banner">
+        <span class="project-badge-tag badge-coming-soon">
+          <span class="pulse-beacon"></span> Next Project
+        </span>
+        <div class="coming-soon-icon-wrap">
+          <i class="fas fa-rocket"></i>
+        </div>
+        <span class="coming-soon-title-preview">Cooking in Progress...</span>
+      </div>
+
+      <div class="project-content">
+        <h3 class="project-title">
+          <span>${item.title || "Secret Project 🚀"}</span>
+          <i class="fas fa-sparkles text-gold" style="font-size: 0.95rem;"></i>
+        </h3>
+        <p class="project-desc">${item.deskripsi || "Projek seru selanjutnya sedang dalam pengembangan. Stay tuned!"}</p>
+        
+        <div class="project-tech-pills">
+          ${techPills}
+        </div>
+
+        <div class="project-footer">
+          <span class="project-soon-btn">
+            <span class="pulse-beacon"></span> Stay Tuned ✨
+          </span>
+          <span class="project-sub-link">
+            <i class="fas fa-lock"></i> Top Secret
+          </span>
+        </div>
+      </div>
+    `;
+  }
+
+  // Determine Action Buttons & Secondary Link
+  const isGithub = item.link && item.link.includes("github.com");
+  const isExpired = !item.link || item.isExpired || item.link === "#";
+
+  let actionButtonHTML = "";
+  let subLinkHTML = "";
+
+  if (isExpired) {
+    actionButtonHTML = `
+      <span class="project-archived-btn" title="Deployment server expired / Projek masa kuliah">
+        <i class="fas fa-history"></i> Demo Expired
+      </span>
+    `;
+    subLinkHTML = `
+      <span class="project-sub-link" style="opacity: 0.75;" title="Karya Penulisan Ilmiah / Masa Kuliah">
+        <i class="fas fa-graduation-cap"></i> College Work
+      </span>
+    `;
+  } else if (isGithub) {
+    actionButtonHTML = `
+      <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="project-github-btn">
+        <i class="fab fa-github"></i>
+        <span>Repository</span>
+      </a>
+    `;
+    subLinkHTML = `
+      <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="project-sub-link" title="Open GitHub Repository">
+        <i class="fas fa-code-branch"></i> Source Code
+      </a>
+    `;
+  } else {
+    actionButtonHTML = `
+      <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="project-live-btn">
+        <span>Live Demo</span>
+        <i class="fas fa-external-link-alt"></i>
+      </a>
+    `;
+    subLinkHTML = `
+      <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="project-sub-link" title="Visit Live Application">
+        <i class="fas fa-globe"></i> Visit Web
+      </a>
+    `;
+  }
+
+  // Image & Slider Controls
+  const images = item.images && item.images.length > 0 ? item.images : (item.gambar ? [item.gambar] : []);
+  const initialImg = images.length > 0 ? images[0] : "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600";
+  const hasMultipleImages = images.length > 1;
+  const currentIdx = cardImageIndices[item.id_projek] || 0;
+
+  let sliderControlsHTML = "";
+  if (hasMultipleImages) {
+    const dotsHTML = images
+      .map((_, idx) => `<span class="card-dot ${idx === currentIdx ? 'active' : ''}" onclick="setCardImage('${item.id_projek}', ${idx}, event)"></span>`)
+      .join("");
+
+    sliderControlsHTML = `
+      <button class="card-img-btn card-img-prev" onclick="slideCardImage('${item.id_projek}', -1, event)" aria-label="Foto Sebelumnya" title="Foto Sebelumnya">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+      <button class="card-img-btn card-img-next" onclick="slideCardImage('${item.id_projek}', 1, event)" aria-label="Foto Selanjutnya" title="Foto Selanjutnya">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+      <div class="card-img-counter" id="imgCounter-${item.id_projek}">
+        <i class="fas fa-images"></i> <span class="cur-idx">${currentIdx + 1}</span>/<span class="total-idx">${images.length}</span>
+      </div>
+      <div class="card-img-dots" id="imgDots-${item.id_projek}">
+        ${dotsHTML}
+      </div>
+    `;
+  }
+
+  // Badge configuration
+  const isAcademic = (item.kategori && item.kategori.toLowerCase() === "academic") || item.tag === "College Project";
+  const badgeClass = isAcademic ? "badge-academic" : "badge-personal";
+  const badgeIcon = isAcademic ? "fa-graduation-cap" : "fa-user-astronaut";
+  const badgeLabel = item.kategori ? item.kategori : (isAcademic ? "Academic" : "Personal");
+
+  return `
+    <div class="project-img-wrapper" onclick="openLightbox('${item.id_projek}')" title="Klik untuk memperbesar gambar">
+      <span class="project-badge-tag ${badgeClass}">
+        <i class="fas ${badgeIcon}"></i> ${badgeLabel} • ${item.tag || "Project"}
+      </span>
+      <img 
+        id="projectImg-${item.id_projek}"
+        src="${initialImg}" 
+        alt="${item.title}" 
+        class="project-img" 
+        loading="lazy"
+        onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600&auto=format&fit=crop&q=80';"
+      />
+      <div class="project-img-overlay"></div>
+      ${sliderControlsHTML}
+    </div>
+
+    <div class="project-content">
+      <h3 class="project-title">
+        <span>${item.title}</span>
+      </h3>
+      <p class="project-desc">${item.deskripsi}</p>
+      
+      <div class="project-tech-pills">
+        ${techPills}
+      </div>
+
+      <div class="project-footer">
+        ${actionButtonHTML}
+        ${subLinkHTML}
+      </div>
+    </div>
+  `;
+}
+
+// ── PROJECT RENDERER (GRID VS 3D COVERFLOW) ──
 function renderProjectCards(projects) {
+  currentDisplayProjects = projects || [];
   const container = document.getElementById("githubProjects") || document.getElementById("worksGrid");
+  const loadMoreWrapper = document.getElementById("worksLoadMoreWrapper");
+  const loadMoreIcon = document.getElementById("loadMoreIcon");
+  const loadMoreText = document.getElementById("loadMoreText");
   if (!container) return;
 
-  // Update tab counts
+  // Update tab counts & active buttons
   updateCategoryTabCounts();
+  const btnGrid = document.getElementById("btnViewGrid");
+  const btn3d = document.getElementById("btnView3d");
+  if (btnGrid) btnGrid.classList.toggle("active", currentViewMode === "grid");
+  if (btn3d) btn3d.classList.toggle("active", currentViewMode === "3d");
 
+  // Empty state
   if (!projects || projects.length === 0) {
+    if (loadMoreWrapper) loadMoreWrapper.style.display = "none";
+    container.className = "works-grid";
     container.innerHTML = `
       <div style="grid-column: 1 / -1; text-align: center; padding: 3.5rem 1rem; color: var(--muted);">
         <i class="fas fa-search" style="font-size: 2.2rem; margin-bottom: 1rem; color: var(--gold); display: block;"></i>
@@ -751,171 +957,270 @@ function renderProjectCards(projects) {
     return;
   }
 
-  const html = projects.map(item => {
-    const isSoon = item.isComingSoon || item.tag === "Coming Soon";
-    const techPills = (item.tech || [])
-      .map(t => `<span class="project-tech-pill">${t}</span>`)
-      .join("");
+  // 3D Coverflow Mode
+  if (currentViewMode === "3d") {
+    if (loadMoreWrapper) loadMoreWrapper.style.display = "none";
+    render3DCoverflow(projects);
+    return;
+  }
 
-    if (isSoon) {
-      return `
-        <div class="project-card fade-in" data-tilt>
-          <div class="coming-soon-banner">
-            <span class="project-badge-tag badge-coming-soon">
-              <span class="pulse-beacon"></span> Next Project
-            </span>
-            <div class="coming-soon-icon-wrap">
-              <i class="fas fa-rocket"></i>
-            </div>
-            <span class="coming-soon-title-preview">Cooking in Progress...</span>
-          </div>
+  // Standard Grid Mode
+  container.className = "works-grid";
+  const shouldLimit = projects.length > GRID_INITIAL_LIMIT;
+  const visibleProjects = (shouldLimit && !isGridExpanded)
+    ? projects.slice(0, GRID_INITIAL_LIMIT)
+    : projects;
 
-          <div class="project-content">
-            <h3 class="project-title">
-              <span>${item.title || "Secret Project 🚀"}</span>
-              <i class="fas fa-sparkles text-gold" style="font-size: 0.95rem;"></i>
-            </h3>
-            <p class="project-desc">${item.deskripsi || "Projek seru selanjutnya sedang dalam pengembangan. Stay tuned!"}</p>
-            
-            <div class="project-tech-pills">
-              ${techPills}
-            </div>
+  const html = visibleProjects.map(item => `
+    <div class="project-card fade-in" data-tilt>
+      ${generateCardInner(item)}
+    </div>
+  `).join("");
 
-            <div class="project-footer">
-              <span class="project-soon-btn">
-                <span class="pulse-beacon"></span> Stay Tuned ✨
-              </span>
-              <span class="project-sub-link">
-                <i class="fas fa-lock"></i> Top Secret
-              </span>
-            </div>
-          </div>
-        </div>
-      `;
-    }
+  container.innerHTML = html;
 
-    // Determine Action Buttons & Secondary Link
-    const isGithub = item.link && item.link.includes("github.com");
-    const isExpired = !item.link || item.isExpired || item.link === "#";
-
-    let actionButtonHTML = "";
-    let subLinkHTML = "";
-
-    if (isExpired) {
-      actionButtonHTML = `
-        <span class="project-archived-btn" title="Deployment server expired / Projek masa kuliah">
-          <i class="fas fa-history"></i> Demo Expired
-        </span>
-      `;
-      subLinkHTML = `
-        <span class="project-sub-link" style="opacity: 0.75;" title="Karya Penulisan Ilmiah / Masa Kuliah">
-          <i class="fas fa-graduation-cap"></i> College Work
-        </span>
-      `;
-    } else if (isGithub) {
-      actionButtonHTML = `
-        <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="project-github-btn">
-          <i class="fab fa-github"></i>
-          <span>Repository</span>
-        </a>
-      `;
-      subLinkHTML = `
-        <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="project-sub-link" title="Open GitHub Repository">
-          <i class="fas fa-code-branch"></i> Source Code
-        </a>
-      `;
+  // Update Load More Button State
+  if (loadMoreWrapper) {
+    if (shouldLimit) {
+      loadMoreWrapper.style.display = "flex";
+      if (isGridExpanded) {
+        if (loadMoreIcon) loadMoreIcon.className = "fas fa-chevron-up";
+        if (loadMoreText) loadMoreText.textContent = "Tampilkan Lebih Sedikit";
+      } else {
+        const remainingCount = projects.length - GRID_INITIAL_LIMIT;
+        if (loadMoreIcon) loadMoreIcon.className = "fas fa-plus-circle";
+        if (loadMoreText) loadMoreText.textContent = `Muat Lebih Banyak (${remainingCount} Projek Lagi)`;
+      }
     } else {
-      actionButtonHTML = `
-        <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="project-live-btn">
-          <span>Live Demo</span>
-          <i class="fas fa-external-link-alt"></i>
-        </a>
-      `;
-      subLinkHTML = `
-        <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="project-sub-link" title="Visit Live Application">
-          <i class="fas fa-globe"></i> Visit Web
-        </a>
-      `;
+      loadMoreWrapper.style.display = "none";
     }
+  }
 
-    // Image & Slider Controls
-    const images = item.images && item.images.length > 0 ? item.images : (item.gambar ? [item.gambar] : []);
-    const initialImg = images.length > 0 ? images[0] : "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600";
-    const hasMultipleImages = images.length > 1;
-    const currentIdx = cardImageIndices[item.id_projek] || 0;
+  // Re-observe animations & 3D tilt
+  if (typeof fadeObserver !== "undefined") {
+    document.querySelectorAll(".fade-in").forEach(el => fadeObserver.observe(el));
+  }
+  attachTiltEffect();
+}
 
-    let sliderControlsHTML = "";
-    if (hasMultipleImages) {
-      const dotsHTML = images
-        .map((_, idx) => `<span class="card-dot ${idx === currentIdx ? 'active' : ''}" onclick="setCardImage('${item.id_projek}', ${idx}, event)"></span>`)
-        .join("");
+// ── 3D COVERFLOW ENGINE ──
+function render3DCoverflow(projects) {
+  const container = document.getElementById("githubProjects") || document.getElementById("worksGrid");
+  if (!container) return;
 
-      sliderControlsHTML = `
-        <button class="card-img-btn card-img-prev" onclick="slideCardImage('${item.id_projek}', -1, event)" aria-label="Foto Sebelumnya" title="Foto Sebelumnya">
-          <i class="fas fa-chevron-left"></i>
-        </button>
-        <button class="card-img-btn card-img-next" onclick="slideCardImage('${item.id_projek}', 1, event)" aria-label="Foto Selanjutnya" title="Foto Selanjutnya">
-          <i class="fas fa-chevron-right"></i>
-        </button>
-        <div class="card-img-counter" id="imgCounter-${item.id_projek}">
-          <i class="fas fa-images"></i> <span class="cur-idx">${currentIdx + 1}</span>/<span class="total-idx">${images.length}</span>
-        </div>
-        <div class="card-img-dots" id="imgDots-${item.id_projek}">
-          ${dotsHTML}
-        </div>
-      `;
-    }
+  container.className = "coverflow-wrapper-full";
 
-    // Badge configuration
-    const isAcademic = (item.kategori && item.kategori.toLowerCase() === "academic") || item.tag === "College Project";
-    const badgeClass = isAcademic ? "badge-academic" : "badge-personal";
-    const badgeIcon = isAcademic ? "fa-graduation-cap" : "fa-user-astronaut";
-    const badgeLabel = item.kategori ? item.kategori : (isAcademic ? "Academic" : "Personal");
+  if (activeCoverflowIndex >= projects.length) {
+    activeCoverflowIndex = Math.max(0, projects.length - 1);
+  }
 
-    // Standard Project Card with Clickable Image for Lightbox
+  const itemsHTML = projects.map((item, idx) => {
     return `
-      <div class="project-card fade-in" data-tilt>
-        <div class="project-img-wrapper" onclick="openLightbox('${item.id_projek}')" title="Klik untuk memperbesar gambar">
-          <span class="project-badge-tag ${badgeClass}">
-            <i class="fas ${badgeIcon}"></i> ${badgeLabel} • ${item.tag || "Project"}
-          </span>
-          <img 
-            id="projectImg-${item.id_projek}"
-            src="${initialImg}" 
-            alt="${item.title}" 
-            class="project-img" 
-            loading="lazy"
-            onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600&auto=format&fit=crop&q=80';"
-          />
-          <div class="project-img-overlay"></div>
-          ${sliderControlsHTML}
-        </div>
-
-        <div class="project-content">
-          <h3 class="project-title">
-            <span>${item.title}</span>
-          </h3>
-          <p class="project-desc">${item.deskripsi}</p>
-          
-          <div class="project-tech-pills">
-            ${techPills}
-          </div>
-
-          <div class="project-footer">
-            ${actionButtonHTML}
-            ${subLinkHTML}
-          </div>
+      <div class="coverflow-item" id="cfItem-${idx}" onclick="handleCoverflowItemClick(${idx})">
+        <div class="project-card">
+          ${generateCardInner(item)}
         </div>
       </div>
     `;
   }).join("");
 
-  container.innerHTML = html;
+  const dotsHTML = projects.map((_, idx) => `
+    <span class="coverflow-dot ${idx === activeCoverflowIndex ? 'active' : ''}" onclick="setCoverflowIndex(${idx})" title="Lihat Projek ${idx + 1}"></span>
+  `).join("");
 
-  // Re-observe animations
-  if (typeof fadeObserver !== "undefined") {
-    document.querySelectorAll(".fade-in").forEach(el => fadeObserver.observe(el));
+  const stageHTML = `
+    <div class="coverflow-stage" id="coverflowStage">
+      <button class="coverflow-nav-btn coverflow-nav-prev" onclick="navCoverflow(-1)" aria-label="Previous Project" title="Projek Sebelumnya">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+      
+      <div class="coverflow-track" id="coverflowTrack">
+        ${itemsHTML}
+      </div>
+
+      <button class="coverflow-nav-btn coverflow-nav-next" onclick="navCoverflow(1)" aria-label="Next Project" title="Projek Selanjutnya">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+
+      <div class="coverflow-controls">
+        <div class="coverflow-pagination" id="cfPagination">
+          ${dotsHTML}
+        </div>
+        <div class="coverflow-badge-info">
+          <span class="badge-counter" id="cfBadgeCounter">
+            <i class="fas fa-cube"></i> Projek ${activeCoverflowIndex + 1} dari ${projects.length}
+          </span>
+          <span class="badge-hint">
+            <i class="fas fa-arrows-alt-h"></i> Geser / Klik kartu untuk navigasi
+          </span>
+        </div>
+      </div>
+    </div>
+  `;
+
+  container.innerHTML = stageHTML;
+  updateCoverflowPositions();
+  bindCoverflowGestures();
+}
+
+function updateCoverflowPositions() {
+  const total = currentDisplayProjects.length;
+  if (total === 0) return;
+
+  for (let i = 0; i < total; i++) {
+    const el = document.getElementById(`cfItem-${i}`);
+    if (!el) continue;
+
+    el.classList.remove(
+      "is-active",
+      "is-left-1",
+      "is-left-2",
+      "is-left-3",
+      "is-right-1",
+      "is-right-2",
+      "is-right-3",
+      "is-hidden"
+    );
+
+    const diff = i - activeCoverflowIndex;
+
+    if (diff === 0) {
+      el.classList.add("is-active");
+    } else if (diff === -1) {
+      el.classList.add("is-left-1");
+    } else if (diff === -2) {
+      el.classList.add("is-left-2");
+    } else if (diff <= -3) {
+      el.classList.add("is-left-3", "is-hidden");
+    } else if (diff === 1) {
+      el.classList.add("is-right-1");
+    } else if (diff === 2) {
+      el.classList.add("is-right-2");
+    } else if (diff >= 3) {
+      el.classList.add("is-right-3", "is-hidden");
+    }
   }
+
+  // Update dots
+  const dotsContainer = document.getElementById("cfPagination");
+  if (dotsContainer) {
+    const dots = dotsContainer.querySelectorAll(".coverflow-dot");
+    dots.forEach((dot, idx) => {
+      dot.classList.toggle("active", idx === activeCoverflowIndex);
+    });
+  }
+
+  // Update counter badge
+  const badgeCounter = document.getElementById("cfBadgeCounter");
+  if (badgeCounter) {
+    badgeCounter.innerHTML = `<i class="fas fa-cube"></i> Projek ${activeCoverflowIndex + 1} dari ${total}`;
+  }
+}
+
+window.navCoverflow = function(step) {
+  if (!currentDisplayProjects || currentDisplayProjects.length === 0) return;
+  const total = currentDisplayProjects.length;
+  activeCoverflowIndex = (activeCoverflowIndex + step + total) % total;
+  updateCoverflowPositions();
+};
+
+window.setCoverflowIndex = function(index) {
+  if (index < 0 || index >= currentDisplayProjects.length) return;
+  activeCoverflowIndex = index;
+  updateCoverflowPositions();
+};
+
+window.handleCoverflowItemClick = function(index) {
+  if (index !== activeCoverflowIndex) {
+    setCoverflowIndex(index);
+  }
+};
+
+// ── TOUCH SWIPE & MOUSE DRAG GESTURES FOR COVERFLOW ──
+function bindCoverflowGestures() {
+  const stage = document.getElementById("coverflowStage");
+  if (!stage) return;
+
+  let startX = 0;
+  let endX = 0;
+  let isDragging = false;
+
+  stage.addEventListener("touchstart", (e) => {
+    startX = e.changedTouches[0].screenX;
+  }, { passive: true });
+
+  stage.addEventListener("touchend", (e) => {
+    endX = e.changedTouches[0].screenX;
+    handleSwipe();
+  }, { passive: true });
+
+  stage.addEventListener("mousedown", (e) => {
+    // Avoid triggering drag on interactive buttons/links
+    if (e.target.closest("button") || e.target.closest("a") || e.target.closest(".card-dot")) return;
+    startX = e.screenX;
+    isDragging = true;
+  });
+
+  stage.addEventListener("mouseup", (e) => {
+    if (!isDragging) return;
+    isDragging = false;
+    endX = e.screenX;
+    handleSwipe();
+  });
+
+  stage.addEventListener("mouseleave", () => {
+    isDragging = false;
+  });
+
+  function handleSwipe() {
+    const threshold = 40;
+    const diff = endX - startX;
+    if (Math.abs(diff) > threshold) {
+      if (diff < 0) {
+        navCoverflow(1); // Swipe left -> Next
+      } else {
+        navCoverflow(-1); // Swipe right -> Prev
+      }
+    }
+  }
+}
+
+// Global keyboard arrow controls for 3D Coverflow
+document.addEventListener("keydown", (e) => {
+  if (currentViewMode !== "3d") return;
+  
+  // Ignore if user is currently typing in an input or textarea
+  if (["INPUT", "TEXTAREA"].includes(document.activeElement?.tagName)) return;
+  
+  // Ignore if modal is open
+  const modal = document.getElementById("modal");
+  const lightbox = document.getElementById("lightboxModal");
+  if ((modal && modal.classList.contains("open")) || (lightbox && lightbox.classList.contains("active"))) return;
+
+  if (e.key === "ArrowLeft") {
+    navCoverflow(-1);
+  } else if (e.key === "ArrowRight") {
+    navCoverflow(1);
+  }
+});
+
+function attachTiltEffect() {
+  const tiltCards = document.querySelectorAll("[data-tilt]");
+  tiltCards.forEach((card) => {
+    card.onmousemove = (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      const rotateX = (y - centerY) / 12;
+      const rotateY = (centerX - x) / 12;
+      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+    };
+    card.onmouseleave = () => {
+      card.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)";
+    };
+  });
 }
 
 // Load projects when DOM is ready

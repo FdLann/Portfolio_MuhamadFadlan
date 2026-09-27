@@ -1298,6 +1298,57 @@ nav.scrolled {
   opacity: 0.85;
 }
 
+.works-action-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.view-switcher {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px;
+  background: rgba(18, 18, 35, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.view-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.5rem 1.1rem;
+  border-radius: var(--radius-full);
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.view-btn:hover {
+  color: var(--white);
+}
+
+.view-btn.active {
+  background: var(--gold-gradient);
+  color: #07070e;
+  font-weight: 700;
+  box-shadow: 0 2px 10px rgba(212, 175, 55, 0.35);
+}
+
+.view-btn.active i {
+  color: #07070e;
+}
+
 .search-box {
   position: relative;
   display: flex;
@@ -1342,6 +1393,300 @@ nav.scrolled {
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }
+}
+
+/* ── LOAD MORE BUTTON WRAPPER ── */
+.works-load-more {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 3rem;
+  width: 100%;
+}
+
+.works-load-more .btn {
+  padding: 0.85rem 2.2rem;
+  font-size: 0.92rem;
+  font-weight: 600;
+  border-radius: var(--radius-full);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  background: rgba(18, 18, 35, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border-gold);
+  color: var(--gold-light);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.works-load-more .btn:hover {
+  background: var(--gold-gradient);
+  color: #07070e;
+  border-color: transparent;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(212, 175, 55, 0.35);
+}
+
+.works-load-more .btn:hover i {
+  color: #07070e;
+}
+
+/* ── 3D COVERFLOW SHOWCASE ── */
+.coverflow-stage {
+  position: relative;
+  width: 100%;
+  min-height: 600px;
+  perspective: 1200px;
+  perspective-origin: center center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 2.5rem 0 1.5rem;
+  user-select: none;
+}
+
+.coverflow-track {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  height: 520px;
+  transform-style: preserve-3d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.coverflow-item {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.55s cubic-bezier(0.2, 0.85, 0.32, 1.2),
+              opacity 0.45s ease,
+              filter 0.45s ease,
+              box-shadow 0.45s ease;
+  transform-style: preserve-3d;
+  will-change: transform, opacity, filter;
+  cursor: pointer;
+}
+
+.coverflow-item .project-card {
+  height: 100%;
+  margin: 0;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+  background: rgba(14, 14, 28, 0.94);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+
+/* Active center card */
+.coverflow-item.is-active {
+  transform: translateX(0) translateZ(80px) rotateY(0deg) scale(1.02);
+  z-index: 20;
+  opacity: 1;
+  filter: none;
+  cursor: default;
+}
+
+.coverflow-item.is-active .project-card {
+  border-color: rgba(212, 175, 55, 0.6);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 35px rgba(212, 175, 55, 0.25);
+}
+
+/* Left side cards */
+.coverflow-item.is-left-1 {
+  transform: translateX(-240px) translateZ(-60px) rotateY(32deg) scale(0.88);
+  z-index: 15;
+  opacity: 0.8;
+  filter: brightness(0.65) blur(0.3px);
+}
+
+.coverflow-item.is-left-2 {
+  transform: translateX(-400px) translateZ(-160px) rotateY(45deg) scale(0.76);
+  z-index: 10;
+  opacity: 0.45;
+  filter: brightness(0.4) blur(1px);
+}
+
+.coverflow-item.is-left-3 {
+  transform: translateX(-520px) translateZ(-240px) rotateY(55deg) scale(0.65);
+  z-index: 5;
+  opacity: 0.2;
+  filter: brightness(0.25) blur(2px);
+}
+
+/* Right side cards */
+.coverflow-item.is-right-1 {
+  transform: translateX(240px) translateZ(-60px) rotateY(-32deg) scale(0.88);
+  z-index: 15;
+  opacity: 0.8;
+  filter: brightness(0.65) blur(0.3px);
+}
+
+.coverflow-item.is-right-2 {
+  transform: translateX(400px) translateZ(-160px) rotateY(-45deg) scale(0.76);
+  z-index: 10;
+  opacity: 0.45;
+  filter: brightness(0.4) blur(1px);
+}
+
+.coverflow-item.is-right-3 {
+  transform: translateX(520px) translateZ(-240px) rotateY(-55deg) scale(0.65);
+  z-index: 5;
+  opacity: 0.2;
+  filter: brightness(0.25) blur(2px);
+}
+
+/* Off-screen hidden cards */
+.coverflow-item.is-hidden {
+  transform: translateX(0) translateZ(-400px) scale(0.5);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Hover on side cards */
+.coverflow-item:not(.is-active):hover {
+  filter: brightness(0.9);
+  opacity: 0.95;
+}
+
+/* Navigation Buttons Floating on Sides */
+.coverflow-nav-btn {
+  position: absolute;
+  top: calc(50% - 25px);
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(14, 14, 30, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border-gold);
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  cursor: pointer;
+  z-index: 30;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 15px rgba(212, 175, 55, 0.2);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.coverflow-nav-btn:hover {
+  background: var(--gold-gradient);
+  color: #07070e;
+  transform: scale(1.1);
+  box-shadow: 0 15px 35px rgba(212, 175, 55, 0.4);
+}
+
+.coverflow-nav-prev {
+  left: 2rem;
+}
+
+.coverflow-nav-next {
+  right: 2rem;
+}
+
+/* Bottom Controls: Dots & Badge */
+.coverflow-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+  z-index: 25;
+}
+
+.coverflow-pagination {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.coverflow-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.coverflow-dot:hover {
+  background: rgba(212, 175, 55, 0.5);
+  transform: scale(1.2);
+}
+
+.coverflow-dot.active {
+  width: 28px;
+  border-radius: 6px;
+  background: var(--gold-gradient);
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.6);
+}
+
+.coverflow-badge-info {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.coverflow-badge-info .badge-counter {
+  background: rgba(212, 175, 55, 0.1);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  color: var(--gold-light);
+  padding: 0.25rem 0.7rem;
+  border-radius: var(--radius-full);
+  font-weight: 600;
+}
+
+.coverflow-badge-info .badge-hint {
+  font-size: 0.75rem;
+  opacity: 0.7;
+}
+
+/* Responsive Coverflow for Mobile & Tablet */
+@media (max-width: 900px) {
+  .coverflow-item.is-left-1 { transform: translateX(-170px) translateZ(-50px) rotateY(28deg) scale(0.88); }
+  .coverflow-item.is-left-2 { transform: translateX(-280px) translateZ(-120px) rotateY(38deg) scale(0.76); }
+  .coverflow-item.is-right-1 { transform: translateX(170px) translateZ(-50px) rotateY(-28deg) scale(0.88); }
+  .coverflow-item.is-right-2 { transform: translateX(280px) translateZ(-120px) rotateY(-38deg) scale(0.76); }
+  .coverflow-nav-prev { left: 0.5rem; }
+  .coverflow-nav-next { right: 0.5rem; }
+}
+
+@media (max-width: 640px) {
+  .coverflow-stage {
+    min-height: 540px;
+    padding: 1.5rem 0 1rem;
+  }
+  .coverflow-track {
+    max-width: 320px;
+    height: 480px;
+  }
+  .coverflow-item.is-left-1 { transform: translateX(-110px) translateZ(-40px) rotateY(24deg) scale(0.85); opacity: 0.6; }
+  .coverflow-item.is-left-2 { transform: translateX(-190px) translateZ(-90px) rotateY(32deg) scale(0.72); opacity: 0.3; }
+  .coverflow-item.is-right-1 { transform: translateX(110px) translateZ(-40px) rotateY(-24deg) scale(0.85); opacity: 0.6; }
+  .coverflow-item.is-right-2 { transform: translateX(190px) translateZ(-90px) rotateY(-32deg) scale(0.72); opacity: 0.3; }
+  .coverflow-nav-btn {
+    width: 42px;
+    height: 42px;
+    font-size: 1rem;
+  }
+  .coverflow-nav-prev { left: 0.2rem; }
+  .coverflow-nav-next { right: 0.2rem; }
+  .coverflow-badge-info .badge-hint { display: none; }
 }
 
 /* ── MODERN PROJECT CARD ── */
