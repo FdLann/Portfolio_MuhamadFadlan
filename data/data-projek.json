@@ -3,7 +3,8 @@
     "id_projek": "1",
     "gambar": "gambar/Projek1.png",
     "title": "Ultimate Football Manager",
-    "deskripsi": "Permainan strategi bola sepak yang mengasah kemampuan taktik dan manajemen tim sebagai manager secara interaktif.",
+    "deskripsi": "Permainan strategi sepak bola berbasis web yang mengasah kemampuan taktik, formasi, dan manajemen tim secara interaktif.",
+    "deskripsi_en": "An interactive web-based football strategy game that tests tactical decision-making, squad formation, and club management.",
     "link": "https://football-manager-idle.vercel.app/",
     "kategori": "Personal",
     "tag": "Web Game",
@@ -13,13 +14,36 @@
       "CSS3",
       "Vercel",
       "Idle Game"
-    ]
+    ],
+    "caseStudy": {
+      "role": "Lead Game Logic & Front-End Developer",
+      "problem_id": "Banyak game simulasi manajer sepak bola memerlukan instalasi berat. Projek ini menghadirkan simulasi taktik dan manajemen klub yang ringan dan langsung dapat dimainkan di browser.",
+      "problem_en": "Many football management games require heavy installations. This project delivers a lightweight, browser-ready tactical and club management simulation.",
+      "features_id": [
+        "Simulasi pertandingan real-time berbasis algoritma statistik pemain",
+        "Manajemen formasi taktikal, rotasi skuad, dan bursa transfer",
+        "Penyimpanan progres otomatis (State Persistence via LocalStorage)"
+      ],
+      "features_en": [
+        "Real-time match simulation driven by player attribute algorithms",
+        "Tactical formation management, squad rotation, and transfer market",
+        "Automatic progress persistence via LocalStorage state engine"
+      ],
+      "architecture": [
+        "UI Layer (DOM & CSS Grid)",
+        "Game State Engine (JS)",
+        "Match Simulation Algorithm",
+        "LocalStorage Persistence"
+      ],
+      "dbEntities": "Club -> Squad_Players -> Match_Engine -> League_Standings"
+    }
   },
   {
     "id_projek": "2",
     "gambar": "gambar/Projek2.png",
     "title": "EA FC Scouting Tool",
-    "deskripsi": "Sebuah web yang didedikasikan untuk membantu para pemain EA FC mencari dan menganalisis potensi pemain dengan lebih efektif.",
+    "deskripsi": "Aplikasi analitik untuk membantu pemain EA FC mencari, memfilter, dan menganalisis potensi pemain secara efektif.",
+    "deskripsi_en": "An analytics web app designed to help EA FC players search, filter, and evaluate player potential and career mode value.",
     "link": "https://ea-fc24-scouting-tool.vercel.app/scouting",
     "kategori": "Personal",
     "tag": "Web App",
@@ -28,13 +52,36 @@
       "Analytics Tool",
       "REST API",
       "Vercel"
-    ]
+    ],
+    "caseStudy": {
+      "role": "Front-End Engineer & Data Analyst",
+      "problem_id": "Pemain Career Mode sering kesulitan membandingkan atribut ribuan pemain muda (wonderkid) sesuai budget transfer dan gaya bermain.",
+      "problem_en": "Career Mode players often struggle to filter and compare thousands of wonderkids matching specific transfer budgets and tactical roles.",
+      "features_id": [
+        "Pencarian multi-filter berdasarkan usia, rating, potensi, dan posisi",
+        "Kalkulasi rasio efisiensi harga transfer terhadap potensi perkembangan",
+        "Antarmuka reaktif dengan pembaruan data instan berbasis React"
+      ],
+      "features_en": [
+        "Multi-attribute filtering by age, overall rating, potential, and position",
+        "Value-for-money ratio calculation against growth potential",
+        "Reactive UI with instant client-side filtering built in React"
+      ],
+      "architecture": [
+        "React Component UI",
+        "Multi-Parameter Filter Hook",
+        "Player Dataset API",
+        "Analytics & Rating Calculator"
+      ],
+      "dbEntities": "Players (ID, OVR, POT, Age, Value) -> Positions -> Club_Attributes"
+    }
   },
   {
     "id_projek": "3",
     "gambar": "gambar/Projek3.png",
     "title": "Galeri Foto & Komunitas Chat",
-    "deskripsi": "Sebuah web yang menyimpan galeri foto dan komunitas chat hasil karya penulisan ilmiah masa perkuliahan.",
+    "deskripsi": "Platform web penyimpanan galeri foto dan ruang diskusi komunitas hasil karya Penulisan Ilmiah masa perkuliahan.",
+    "deskripsi_en": "A web platform featuring photo gallery management and community chat rooms developed as an undergraduate scientific research project.",
     "link": "",
     "kategori": "Academic",
     "tag": "College Project",
@@ -46,7 +93,29 @@
       "phpMyAdmin",
       "JavaScript"
     ],
-    "isExpired": true
+    "isExpired": true,
+    "caseStudy": {
+      "role": "Full-Stack Developer & System Analyst (Penulisan Ilmiah)",
+      "problem_id": "Dibutuhkan wadah terpusat bagi komunitas fotografi kampus untuk mengunggah karya beresolusi tinggi sekaligus berdiskusi secara langsung.",
+      "problem_en": "Campus photography communities needed a centralized hub to showcase high-resolution portfolios and engage in topic-based discussions.",
+      "features_id": [
+        "Autentikasi pengguna multi-level dan manajemen profil kreator",
+        "Unggah foto dengan kategorisasi album dan validasi ukuran file",
+        "Fitur ruang obrolan komunitas dan komentar interaktif berbasis MySQL"
+      ],
+      "features_en": [
+        "Multi-level user authentication and creator profile management",
+        "Photo upload pipeline with album categorization and file validation",
+        "Interactive community chat rooms and comment threads powered by MySQL"
+      ],
+      "architecture": [
+        "Client Browser (HTML/CSS/JS)",
+        "PHP Native Controller",
+        "File Upload & Auth Middleware",
+        "MySQL Relational DB"
+      ],
+      "dbEntities": "Users (1:N) -> Albums (1:N) -> Photos (1:N) -> Chat_Messages"
+    }
   },
   {
     "id_projek": "4",
@@ -55,7 +124,8 @@
       "gambar/Projek4-a.png"
     ],
     "title": "Match Me - Outfit Matcher",
-    "deskripsi": "Sebuah web yang membantu mahasiswa/i untuk mencari rekomendasi kombinasi outfit yang serasi dan stylish.",
+    "deskripsi": "Aplikasi web rekomendasi kombinasi outfit yang membantu mahasiswa/i memadupadankan pakaian yang serasi dan stylish.",
+    "deskripsi_en": "An outfit recommendation web app that helps university students mix and match harmonious, stylish daily wear.",
     "link": "https://github.com/FdLann/Projek-MatchingBaju-PHP-NATIVE",
     "kategori": "Academic",
     "tag": "College Project",
@@ -65,8 +135,31 @@
       "CSS3",
       "MySQL",
       "phpMyAdmin",
-      "JavaScript"
-    ]
+      "JavaScript",
+      "UI/UX Design"
+    ],
+    "caseStudy": {
+      "role": "System Analyst, UI/UX Designer & Backend Developer",
+      "problem_id": "Mahasiswa sering menghabiskan banyak waktu memilih kombinasi warna dan jenis pakaian yang cocok untuk kegiatan kuliah formal maupun kasual.",
+      "problem_en": "Students often spend excessive time choosing matching color palettes and outfit styles for formal or casual campus activities.",
+      "features_id": [
+        "Pencocokan otomatis atasan, bawahan, dan warna berdasarkan kategori acara",
+        "Katalog digital interaktif dengan preview pasangan pakaian",
+        "Panel manajemen data katalog pakaian berbasis PHP & MySQL"
+      ],
+      "features_en": [
+        "Automated matching of tops, bottoms, and color palettes by occasion",
+        "Interactive digital wardrobe catalog with visual outfit pairing preview",
+        "Full CRUD catalog management panel built with PHP & MySQL"
+      ],
+      "architecture": [
+        "UI/UX Wireframe & Prototype",
+        "Outfit Matching Logic (PHP)",
+        "Catalog CRUD Module",
+        "MySQL Database Schema"
+      ],
+      "dbEntities": "Categories (1:N) -> Apparel_Items (N:M) -> Outfit_Combinations"
+    }
   },
   {
     "id_projek": "5",
@@ -76,7 +169,8 @@
       "gambar/Projek5-c.png"
     ],
     "title": "Sistem Informasi Administrasi Akademik",
-    "deskripsi": "Web Sistem Informasi Administrasi Akademik adalah sebuah website yang dirancang untuk mengelola data penulisan dan pengajuan surat magang bagi mahasiswa fakultas ilmu komputer dan Teknologi Informasi.",
+    "deskripsi": "Sistem informasi berbasis web untuk mengelola data penulisan ilmiah dan pengajuan surat magang mahasiswa FIKTI secara terstruktur.",
+    "deskripsi_en": "A web-based academic administration system engineered to streamline scientific writing submissions and internship letter requests for FIKTI students.",
     "link": "https://github.com/FdLann/sistem-administrasi-sistem-informasi",
     "kategori": "Academic",
     "tag": "College Project",
@@ -87,7 +181,29 @@
       "MySQL",
       "phpMyAdmin",
       "JavaScript"
-    ]
+    ],
+    "caseStudy": {
+      "role": "System Analyst & Full-Stack Web Developer",
+      "problem_id": "Proses pengajuan surat pengantar magang dan pendataan penulisan ilmiah secara manual memakan waktu lama dan rawan kesalahan pencatatan status.",
+      "problem_en": "Manual processing of internship cover letters and academic research registrations caused long queues and status tracking errors.",
+      "features_id": [
+        "Alur pengajuan mandiri oleh mahasiswa dengan pelacakan status real-time",
+        "Dashboard verifikasi admin jurusan untuk persetujuan dokumen",
+        "Otomatisasi rekapitulasi laporan dan cetak surat pengantar"
+      ],
+      "features_en": [
+        "Self-service student submission workflow with real-time status tracking",
+        "Department admin verification dashboard for document approvals",
+        "Automated reporting and printable cover letter generation"
+      ],
+      "architecture": [
+        "Mahasiswa Portal UI",
+        "Role-Based Auth (PHP)",
+        "Admin Approval Workflow",
+        "MySQL Academic DB"
+      ],
+      "dbEntities": "Mahasiswa (1:N) -> Pengajuan_Surat (N:1) -> Admin_Verifikasi"
+    }
   },
   {
     "id_projek": "6",
@@ -97,7 +213,8 @@
       "gambar/Projek6-c.png"
     ],
     "title": "MedTrack - Portal Pasien",
-    "deskripsi": "Aplikasi web health-tech untuk membantu pasien melihat hasil pemeriksaan medis dan rekam kesehatan tanpa harus kembali ke rumah sakit.",
+    "deskripsi": "Aplikasi web health-tech untuk membantu pasien mengakses hasil pemeriksaan medis dan rekam kesehatan secara aman dari mana saja.",
+    "deskripsi_en": "A health-tech patient portal enabling patients to securely access lab results, prescriptions, and medical records remotely.",
     "link": "https://github.com/FdLann/medtrack-portal-pasien",
     "kategori": "Personal",
     "tag": "Web App",
@@ -110,13 +227,80 @@
       "REST API",
       "JWT Auth",
       "bcrypt"
-    ]
+    ],
+    "caseStudy": {
+      "role": "Full-Stack Developer & Database Architect",
+      "problem_id": "Pasien sering harus mengantre kembali di rumah sakit hanya untuk mengambil lembar hasil laboratorium atau melihat riwayat resep dokter.",
+      "problem_en": "Patients frequently have to queue at hospitals just to pick up printed lab results or check past prescription records.",
+      "features_id": [
+        "Keamanan akses berlapis menggunakan JWT Authentication & enkripsi bcrypt",
+        "Dashboard riwayat pemeriksaan medis, hasil lab, dan jadwal kontrol",
+        "RESTful API terstruktur dengan Express.js dan database relasional PostgreSQL"
+      ],
+      "features_en": [
+        "Multi-layer security using JWT Authentication & bcrypt password hashing",
+        "Comprehensive dashboard for medical checkups, lab results, and appointments",
+        "Structured RESTful API built with Express.js and PostgreSQL relational schema"
+      ],
+      "architecture": [
+        "React + Tailwind SPA",
+        "JWT Auth Middleware",
+        "Express.js REST API",
+        "PostgreSQL Medical DB"
+      ],
+      "dbEntities": "Patients (1:N) -> Medical_Records (1:N) -> Lab_Results & Prescriptions"
+    }
   },
   {
     "id_projek": "7",
+    "gambar": [
+      "gambar/Projek7-sdd.svg"
+    ],
+    "title": "SDD — Sistem Repositori PI & Tugas Akhir",
+    "deskripsi": "Dokumen Rancangan Perangkat Lunak (SDD) lengkap untuk Sistem Repositori Penulisan Ilmiah & Tugas Akhir Jurusan Sistem Informasi Universitas Gunadarma.",
+    "deskripsi_en": "Comprehensive Software Design Document (SDD) & System Analysis for the Scientific Research & Thesis Repository System at Gunadarma University.",
+    "link": "",
+    "pdfDoc": "gambar/DESIGN PROJEK.pdf",
+    "kategori": "Academic",
+    "tag": "System Design (SDD)",
+    "tech": [
+      "System Analysis",
+      "SDD",
+      "BPMN",
+      "UML Class Diagram",
+      "UI/UX Wireframe",
+      "RDBMS",
+      "SRS Matrix"
+    ],
+    "caseStudy": {
+      "role": "System Analyst & Software Architect (Kelompok 1 - PPSI)",
+      "problem_id": "Pengunggahan Penulisan Ilmiah (PI) dan Tugas Akhir (TA) di jurusan Sistem Informasi sebelumnya masih dilakukan manual melalui email ke staf, sehingga memperlambat validasi dan pencarian referensi akademik.",
+      "problem_en": "Submitting Scientific Research (PI) and Final Theses (TA) in the Information Systems department was previously handled manually via email to staff, slowing down validation and reference discovery.",
+      "features_id": [
+        "Arsitektur Tiga-Lapis (Web Browser, Modul Login & Validasi KTM/KRS, serta RDBMS)",
+        "Pemodelan proses bisnis lengkap dengan BPMN User (Mahasiswa/Dosen) & BPMN Admin",
+        "Rancangan Class Diagram, Kamus Data, Pseudocode Validasi File, Struktur Navigasi, dan Wireframe UI"
+      ],
+      "features_en": [
+        "Three-Tier Architecture (Web Browser Client, Auth & Student ID Validation, and RDBMS)",
+        "Complete Business Process Model & Notation (BPMN) for Students, Lecturers, and Admins",
+        "Relational Class Diagram, Data Dictionary, File Validation Pseudocode, Navigation Map, and UI Wireframes"
+      ],
+      "architecture": [
+        "Web Browser Client",
+        "Login & KTM Verification",
+        "Directory PI & TA Manager",
+        "RDBMS Central Storage"
+      ],
+      "dbEntities": "Student & Dosen (1:N) -> Repositori_PI & Repositori_TA <- (1:N) Admin & Berita_Repository"
+    }
+  },
+  {
+    "id_projek": "8",
     "gambar": "",
     "title": "Secret Next Project 🚀",
     "deskripsi": "Projek selanjutnya yang masih dalam tahap perancangan rahasia & riset inovatif. Masih misterius tapi bakal seru banget! Tunggu tanggal mainnya! 🤫✨",
+    "deskripsi_en": "An upcoming project currently in stealth system design & R&D phase. Stay tuned for the next big innovation! 🤫✨",
     "link": "#",
     "kategori": "none",
     "tag": "Coming Soon",

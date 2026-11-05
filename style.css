@@ -3155,3 +3155,319 @@ footer {
   letter-spacing: 0.05em;
 }
 
+/* ── LANGUAGE SWITCHER (ID / EN) ── */
+.lang-switcher {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(18, 18, 35, 0.85);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  padding: 3px;
+  gap: 2px;
+}
+
+.lang-btn {
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.3rem 0.6rem;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.lang-btn:hover {
+  color: var(--white);
+}
+
+.lang-btn.active {
+  background: var(--gold-gradient);
+  color: #07070e;
+  box-shadow: 0 2px 8px rgba(212, 175, 55, 0.35);
+}
+
+/* ── CONTACT FORM 2-COLUMN ROW ── */
+.form-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 640px) {
+  .form-row-2 {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}
+
+/* ── PROJECT CASE STUDY BUTTON & MODAL ── */
+.project-actions-left {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+}
+
+.project-cs-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.95rem;
+  border-radius: var(--radius-full);
+  font-size: 0.78rem;
+  font-weight: 600;
+  font-family: var(--font-body);
+  background: rgba(212, 175, 55, 0.1);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  color: var(--gold-light);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.project-cs-btn:hover {
+  background: var(--gold-gradient);
+  color: #07070e;
+  border-color: transparent;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(212, 175, 55, 0.35);
+}
+
+.case-study-box {
+  max-width: 760px;
+  width: 92%;
+  max-height: 86vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.cs-modal-head {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.cs-badge {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.cs-modal-body {
+  padding: 1.6rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  height: auto;
+}
+
+.cs-role-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  padding: 0.9rem 1.2rem;
+  background: rgba(212, 175, 55, 0.07);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  border-radius: var(--radius-md);
+}
+
+.cs-role-item {
+  font-size: 0.86rem;
+  color: var(--white);
+}
+
+.cs-role-item strong {
+  color: var(--gold-light);
+  margin-right: 0.4rem;
+}
+
+.cs-section h6 {
+  font-family: var(--font-display);
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--gold-light);
+  margin-bottom: 0.55rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.cs-section p {
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.cs-feature-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.cs-feature-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-size: 0.88rem;
+  color: var(--white);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  padding: 0.65rem 0.95rem;
+  border-radius: var(--radius-sm);
+}
+
+.cs-feature-list li i {
+  color: var(--gold);
+  margin-top: 0.2rem;
+}
+
+.cs-arch-flow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 1rem;
+  background: rgba(10, 10, 22, 0.75);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.cs-arch-step {
+  padding: 0.45rem 0.85rem;
+  background: rgba(212, 175, 55, 0.1);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  color: var(--gold-light);
+}
+
+.cs-arch-arrow {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.cs-db-box {
+  margin-top: 0.65rem;
+  padding: 0.75rem 1rem;
+  background: rgba(79, 142, 247, 0.08);
+  border: 1px solid rgba(79, 142, 247, 0.28);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: #93c5fd;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+/* ── ENHANCED PROJECT CARD UI POLISH & PDF SDD BUTTON ── */
+.project-card {
+  position: relative;
+  background: linear-gradient(165deg, rgba(20, 20, 38, 0.88) 0%, rgba(11, 11, 22, 0.95) 100%);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.project-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), var(--gold-light), transparent);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.project-card:hover::before {
+  opacity: 1;
+}
+
+.project-pdf-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.52rem 1.05rem;
+  border-radius: var(--radius-full);
+  font-size: 0.78rem;
+  font-weight: 700;
+  font-family: var(--font-body);
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.22), rgba(245, 215, 127, 0.12));
+  border: 1px solid rgba(212, 175, 55, 0.55);
+  color: var(--gold-light);
+  cursor: pointer;
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.15);
+}
+
+.project-pdf-btn i {
+  color: #f87171;
+  transition: color 0.25s ease;
+}
+
+.project-pdf-btn:hover {
+  background: var(--gold-gradient);
+  color: #07070e;
+  border-color: transparent;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(212, 175, 55, 0.4);
+}
+
+.project-pdf-btn:hover i {
+  color: #07070e;
+}
+
+.project-zoom-hint {
+  position: absolute;
+  bottom: 0.75rem;
+  right: 0.75rem;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(7, 7, 14, 0.78);
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  color: var(--gold-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.78rem;
+  opacity: 0;
+  transform: translateY(6px) scale(0.9);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+  z-index: 4;
+  backdrop-filter: blur(8px);
+}
+
+.project-card:hover .project-zoom-hint,
+.cf-card.active:hover .project-zoom-hint {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.project-tech span {
+  transition: all 0.22s ease;
+}
+
+.project-tech span:hover {
+  border-color: rgba(212, 175, 55, 0.5);
+  color: var(--gold-light);
+  background: rgba(212, 175, 55, 0.1);
+  transform: translateY(-1px);
+}
+
+
+

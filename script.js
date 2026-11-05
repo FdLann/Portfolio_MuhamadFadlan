@@ -341,29 +341,277 @@ function showToast(message, icon = "fas fa-check-circle") {
   }, 3500);
 }
 
+// ── BILINGUAL LANGUAGE ENGINE (ID / EN) ──
+let currentLang = localStorage.getItem("fdlann_lang") || "en";
+
+const I18N_DICT = {
+  en: {
+    nav_home: "Home",
+    nav_about: "About",
+    nav_cert: "Certificates",
+    nav_skill: "Skills",
+    nav_exp: "Experience",
+    nav_works: "Works",
+    nav_contact: "Contact",
+    btn_copy_email: "Copy Email",
+    hero_status: "Open for Opportunities",
+    hero_role_prefix: "I am a",
+    hero_desc: "Fresh graduate in Information Systems with experience in building end-to-end web applications, designing database architectures, and analyzing business processes into scalable digital solutions.",
+    hero_btn_works: "View My Works",
+    hero_btn_cv: "Download CV",
+    stat_cert: "Certifications",
+    stat_repos: "GitHub Repos",
+    stat_dedication: "Dedication",
+    hero_major: "Information Systems",
+    hero_avail: "Available for Hire",
+    about_badge_title: "Web & System",
+    about_badge_sub: "Development Focus",
+    about_label: "Get To Know Me",
+    about_heading: 'About <span class="gold-gradient">Me</span>',
+    about_p1: 'Hi, I\'m <strong>Muhamad Fadlan</strong> — a passionate Information Systems graduate from <strong>Gunadarma University</strong> with a focus on web development, database management, and business process automation.',
+    about_p2: "I specialize in bridging business needs with technical solutions: designing relational database models, developing robust backend logic, and engineering clean, user-centric web interfaces.",
+    about_hl1_title: "Full-Stack Foundation",
+    about_hl1_desc: "HTML, CSS, JavaScript, PHP, MySQL & React ecosystem",
+    about_hl2_title: "System & Data Focus",
+    about_hl2_desc: "Database design, workflow optimization & data structuring",
+    about_btn_cv: "View Full CV (PDF)",
+    about_btn_contact: "Quick Contact",
+    cert_label: "Verified Credentials",
+    cert_heading: 'Professional <span class="gold-gradient">Certificates</span>',
+    cert_sub: "Certifications earned through rigorous training in Web Programming, UI/UX Design, JavaScript, and DBMS.",
+    cert1_title: "UI/UX Design Certificate",
+    cert1_desc: "Professional training program in user research, wireframing, interactive prototyping, and visual design principles.",
+    cert2_title: "JavaScript Certificate",
+    cert2_desc: "Comprehensive JavaScript course covering core logic, asynchronous JS, DOM manipulation, and modern ES6+ standards.",
+    cert3_title: "BNSP – Junior Web Programmer",
+    cert3_desc: "National certification standard for web programming: structured code implementation, security basics, and software testing.",
+    cert4_title: "DBMS & Oracle Database",
+    cert4_desc: "Database management fundamentals, relational design, complex SQL query structures, and Oracle database architecture.",
+    btn_preview_pdf: "Preview PDF",
+    skill_label: "Technical Expertise",
+    skill_heading: 'My <span class="gold-gradient">Skills</span> & Tools',
+    skill_sub: "Technologies and development tools I use to turn ideas into interactive digital reality.",
+    skill_tab_all: "All Skills",
+    skill_tab_tools: "Design & Tools",
+    exp_label: "Career Journey",
+    exp_heading: 'Work <span class="gold-gradient">Experience</span>',
+    exp_sub: "Practical roles, internships, and laboratory assistant responsibilities.",
+    exp1_desc: "Engineered a comprehensive product catalog system with admin panel controls and integrated direct WhatsApp ordering to streamline transaction flows. Collaborated in cross-functional teams to design intuitive UI components and backend database schemas.",
+    exp2_period: "Academic Period",
+    exp2_badge: "Academic Role",
+    exp2_title: "Laboratory Assistant — Gunadarma University",
+    exp2_desc: "Guided computer science students through programming fundamentals, algorithm logic, database structures, and debugging techniques. Prepared structured teaching modules, conducted lab sessions, and evaluated student project deliverables.",
+    works_label: "Portfolio Showcase",
+    works_heading: 'Recent <span class="gold-gradient">Works</span>',
+    works_sub: 'Selected web projects, system analysis case studies, and interactive digital solutions (<a href="https://github.com/FdLann" target="_blank" class="text-gold">@FdLann</a>).',
+    works_tab_all: "All Projects",
+    works_search_placeholder: "Search projects or technologies...",
+    contact_label: "Get In Touch",
+    contact_heading: 'Let\'s Work <span class="gold-gradient">Together</span>',
+    contact_sub: "Whether you have a full-time position, freelance project, or just want to connect — I am always open to chat!",
+    contact_email_label: "Email Address",
+    btn_copy: "Copy",
+    btn_visit: "Visit",
+    form_title: "Send Direct Message",
+    form_desc: "Send a message directly to my inbox — no external mail app setup required.",
+    form_name_label: "Your Name",
+    form_email_label: "Your Email",
+    form_subject_label: "Subject",
+    form_msg_label: "Message",
+    form_btn_send: "Send Message Now",
+    footer_desc: "Information Systems Graduate passionate about crafting robust web applications, scalable database systems, and interactive digital solutions.",
+    footer_links_title: "Quick Links",
+    footer_status: "Open for Full-Time & Freelance",
+    footer_visits: "Total Visits:",
+    btn_close: "Close",
+    btn_download_pdf: "Download PDF"
+  },
+  id: {
+    nav_home: "Beranda",
+    nav_about: "Tentang",
+    nav_cert: "Sertifikat",
+    nav_skill: "Keahlian",
+    nav_exp: "Pengalaman",
+    nav_works: "Projek",
+    nav_contact: "Kontak",
+    btn_copy_email: "Salin Email",
+    hero_status: "Terbuka untuk Peluang Kerja",
+    hero_role_prefix: "Saya seorang",
+    hero_desc: "Lulusan baru Sistem Informasi yang berpengalaman membangun aplikasi web end-to-end, merancang arsitektur database relasional, dan menganalisis proses bisnis menjadi solusi digital yang terukur.",
+    hero_btn_works: "Lihat Projek Saya",
+    hero_btn_cv: "Unduh CV",
+    stat_cert: "Sertifikasi",
+    stat_repos: "Repo GitHub",
+    stat_dedication: "Dedikasi",
+    hero_major: "Sistem Informasi",
+    hero_avail: "Siap Bekerja",
+    about_badge_title: "Web & Sistem",
+    about_badge_sub: "Fokus Pengembangan",
+    about_label: "Kenali Saya Lebih Dekat",
+    about_heading: 'Tentang <span class="gold-gradient">Saya</span>',
+    about_p1: 'Halo, saya <strong>Muhamad Fadlan</strong> — lulusan Sistem Informasi dari <strong>Universitas Gunadarma</strong> yang berfokus pada pengembangan web, manajemen database, dan otomatisasi proses bisnis.',
+    about_p2: "Saya berfokus menjembatani kebutuhan bisnis dengan solusi teknis: merancang model database relasional (ERD), membangun logika backend yang tangguh, serta mendesain antarmuka web yang bersih dan ramah pengguna.",
+    about_hl1_title: "Fondasi Full-Stack",
+    about_hl1_desc: "Ekosistem HTML, CSS, JavaScript, PHP, MySQL & React",
+    about_hl2_title: "Fokus Sistem & Data",
+    about_hl2_desc: "Perancangan database, optimasi alur kerja & struktur data",
+    about_btn_cv: "Lihat CV Lengkap (PDF)",
+    about_btn_contact: "Kontak Cepat",
+    cert_label: "Kredensial Terverifikasi",
+    cert_heading: '<span class="gold-gradient">Sertifikat</span> Profesional',
+    cert_sub: "Sertifikasi kompetensi yang diraih melalui pelatihan intensif Pemrograman Web, UI/UX Design, JavaScript, dan DBMS.",
+    cert1_title: "Sertifikat Desain UI/UX",
+    cert1_desc: "Program pelatihan profesional dalam riset pengguna, wireframing, prototyping interaktif, dan prinsip desain visual.",
+    cert2_title: "Sertifikat JavaScript",
+    cert2_desc: "Kursus komprehensif JavaScript mencakup logika inti, asynchronous JS, manipulasi DOM, dan standar ES6+ modern.",
+    cert3_title: "BNSP – Junior Web Programmer",
+    cert3_desc: "Sertifikasi standar nasional pemrograman web: implementasi kode terstruktur, dasar keamanan, dan pengujian perangkat lunak.",
+    cert4_title: "DBMS & Database Oracle",
+    cert4_desc: "Fundamental manajemen database, desain relasional, struktur query SQL kompleks, dan arsitektur database Oracle.",
+    btn_preview_pdf: "Lihat PDF",
+    skill_label: "Keahlian Teknis",
+    skill_heading: '<span class="gold-gradient">Keahlian</span> & Tools',
+    skill_sub: "Teknologi dan perangkat pengembangan yang saya gunakan untuk mewujudkan ide menjadi solusi digital interaktif.",
+    skill_tab_all: "Semua Keahlian",
+    skill_tab_tools: "Desain & Tools",
+    exp_label: "Perjalanan Karier",
+    exp_heading: 'Pengalaman <span class="gold-gradient">Kerja</span>',
+    exp_sub: "Peran praktis, program magang MSIB, dan tanggung jawab asisten laboratorium.",
+    exp1_desc: "Merancang bangun sistem katalog produk komprehensif dengan panel admin serta integrasi pemesanan langsung ke WhatsApp untuk mempercepat alur transaksi. Berkolaborasi lintas divisi dalam merancang komponen UI dan skema database backend.",
+    exp2_period: "Masa Perkuliahan",
+    exp2_badge: "Peran Akademik",
+    exp2_title: "Asisten Laboratorium — Universitas Gunadarma",
+    exp2_desc: "Membimbing mahasiswa ilmu komputer dalam dasar pemrograman, logika algoritma, struktur database, dan teknik debugging. Menyusun modul praktikum, memandu sesi laboratorium, dan mengevaluasi hasil projek mahasiswa.",
+    works_label: "Portofolio Karya",
+    works_heading: 'Projek <span class="gold-gradient">Terbaru</span>',
+    works_sub: 'Koleksi projek web terpilih, studi kasus analisis sistem, dan inovasi yang sedang dikembangkan (<a href="https://github.com/FdLann" target="_blank" class="text-gold">@FdLann</a>).',
+    works_tab_all: "Semua Projek",
+    works_search_placeholder: "Cari projek atau teknologi...",
+    contact_label: "Hubungi Saya",
+    contact_heading: 'Mari <span class="gold-gradient">Berkolaborasi</span>',
+    contact_sub: "Baik untuk posisi full-time, projek freelance, maupun diskusi seputar teknologi — saya selalu terbuka untuk berbincang!",
+    contact_email_label: "Alamat Email",
+    btn_copy: "Salin",
+    btn_visit: "Kunjungi",
+    form_title: "Kirim Pesan Langsung",
+    form_desc: "Kirim pesan langsung ke email saya dari halaman ini — tanpa perlu membuka aplikasi email tambahan.",
+    form_name_label: "Nama Anda",
+    form_email_label: "Email Anda",
+    form_subject_label: "Subjek",
+    form_msg_label: "Pesan",
+    form_btn_send: "Kirim Pesan Sekarang",
+    footer_desc: "Lulusan Sistem Informasi yang antusias merancang aplikasi web handal, sistem database terukur, dan solusi digital interaktif.",
+    footer_links_title: "Navigasi Cepat",
+    footer_status: "Terbuka untuk Full-Time & Freelance",
+    footer_visits: "Total Kunjungan:",
+    btn_close: "Tutup",
+    btn_download_pdf: "Unduh PDF"
+  }
+};
+
+window.setLanguage = function(lang) {
+  currentLang = lang === "id" ? "id" : "en";
+  try {
+    localStorage.setItem("fdlann_lang", currentLang);
+  } catch (e) {}
+
+  const btnId = document.getElementById("langBtnId");
+  const btnEn = document.getElementById("langBtnEn");
+  if (btnId) btnId.classList.toggle("active", currentLang === "id");
+  if (btnEn) btnEn.classList.toggle("active", currentLang === "en");
+
+  const dict = I18N_DICT[currentLang];
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const key = el.getAttribute("data-i18n");
+    if (dict[key]) {
+      el.innerHTML = dict[key];
+    }
+  });
+
+  document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
+    const key = el.getAttribute("data-i18n-placeholder");
+    if (dict[key]) {
+      el.setAttribute("placeholder", dict[key]);
+    }
+  });
+
+  if (allProjects && allProjects.length > 0) {
+    applyCombinedProjectFilter();
+  }
+};
+
 // ── COPY EMAIL TO CLIPBOARD ──
 function copyEmail() {
-  const email = "muhamadfadlan.fa@gmail.com";
+  const email = "muhamadfadlan2804@gmail.com";
   navigator.clipboard.writeText(email).then(() => {
-    showToast("Email address copied to clipboard!");
+    const msg = currentLang === "id"
+      ? "Alamat email muhamadfadlan2804@gmail.com berhasil disalin!"
+      : "Email muhamadfadlan2804@gmail.com copied to clipboard!";
+    showToast(msg);
   }).catch(() => {
     showToast("Failed to copy email.", "fas fa-exclamation-triangle");
   });
 }
 
-// ── DIRECT QUICK EMAIL CONTACT ──
-function handleContactSubmit(event) {
+// ── DIRECT AJAX EMAIL CONTACT (WITH GRACEFUL FALLBACK) ──
+async function handleContactSubmit(event) {
   event.preventDefault();
-  const name = document.getElementById("senderName").value;
-  const subject = document.getElementById("senderSubject").value;
-  const message = document.getElementById("senderMessage").value;
+  const name = document.getElementById("senderName")?.value.trim() || "";
+  const email = document.getElementById("senderEmail")?.value.trim() || "";
+  const subject = document.getElementById("senderSubject")?.value.trim() || "Portfolio Contact";
+  const message = document.getElementById("senderMessage")?.value.trim() || "";
+  const submitBtn = document.getElementById("contactSubmitBtn");
 
-  const mailtoUrl = `mailto:muhamadfadlan.fa@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent("Name: " + name + "\n\nMessage:\n" + message)}`;
+  const originalBtnHTML = submitBtn ? submitBtn.innerHTML : "";
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> <span>${currentLang === "id" ? "Mengirim Pesan..." : "Sending Message..."}</span>`;
+  }
 
-  showToast("Opening default mail application...", "fas fa-paper-plane");
-  setTimeout(() => {
-    window.location.href = mailtoUrl;
-  }, 800);
+  try {
+    const response = await fetch("https://formsubmit.co/ajax/muhamadfadlan2804@gmail.com", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({
+        name: name,
+        email: email,
+        _subject: `[Portfolio] ${subject}`,
+        message: message
+      })
+    });
+
+    const result = await response.json();
+    if (response.ok && (result.success === "true" || result.success === true)) {
+      showToast(
+        currentLang === "id"
+          ? "Pesan berhasil dikirim ke muhamadfadlan2804@gmail.com!"
+          : "Message sent directly to muhamadfadlan2804@gmail.com!",
+        "fas fa-check-circle"
+      );
+      document.getElementById("quickContactForm")?.reset();
+    } else {
+      throw new Error("FormSubmit requires initial activation or fallback");
+    }
+  } catch (err) {
+    const mailtoUrl = `mailto:muhamadfadlan2804@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent("Name: " + name + "\nEmail: " + email + "\n\nMessage:\n" + message)}`;
+    showToast(
+      currentLang === "id"
+        ? "Membuka pengiriman email langsung ke muhamadfadlan2804@gmail.com..."
+        : "Opening direct email to muhamadfadlan2804@gmail.com...",
+      "fas fa-paper-plane"
+    );
+    setTimeout(() => {
+      window.location.href = mailtoUrl;
+    }, 600);
+  } finally {
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = originalBtnHTML;
+    }
+  }
 }
 
 // ── CERTIFICATE PDF MODAL ──
@@ -396,7 +644,10 @@ if (modal) {
 }
 
 document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") closeModal();
+  if (e.key === "Escape") {
+    closeModal();
+    closeCaseStudyModal();
+  }
 });
 
 // ── PROJECTS SHOWCASE & FILTER (FROM DATA-PROJEK.JSON) ──
@@ -408,42 +659,114 @@ const FALLBACK_PROJECTS = [
     id_projek: "1",
     gambar: ["gambar/Projek1.png"],
     title: "Ultimate Football Manager",
-    deskripsi: "Permainan strategi bola sepak yang mengasah kemampuan taktik dan manajemen tim sebagai manager secara interaktif.",
+    deskripsi: "Permainan strategi sepak bola berbasis web yang mengasah kemampuan taktik, formasi, dan manajemen tim secara interaktif.",
+    deskripsi_en: "An interactive web-based football strategy game that tests tactical decision-making, squad formation, and club management.",
     link: "https://football-manager-idle.vercel.app/",
     kategori: "Personal",
     tag: "Web Game",
-    tech: ["HTML5", "JavaScript", "CSS3", "Vercel", "Idle Game"]
+    tech: ["HTML5", "JavaScript", "CSS3", "Vercel", "Idle Game"],
+    caseStudy: {
+      role: "Lead Game Logic & Front-End Developer",
+      problem_id: "Banyak game simulasi manajer sepak bola memerlukan instalasi berat. Projek ini menghadirkan simulasi taktik dan manajemen klub yang ringan dan langsung dapat dimainkan di browser.",
+      problem_en: "Many football management games require heavy installations. This project delivers a lightweight, browser-ready tactical and club management simulation.",
+      features_id: [
+        "Simulasi pertandingan real-time berbasis algoritma statistik pemain",
+        "Manajemen formasi taktikal, rotasi skuad, dan bursa transfer",
+        "Penyimpanan progres otomatis (State Persistence via LocalStorage)"
+      ],
+      features_en: [
+        "Real-time match simulation driven by player attribute algorithms",
+        "Tactical formation management, squad rotation, and transfer market",
+        "Automatic progress persistence via LocalStorage state engine"
+      ],
+      architecture: ["UI Layer (DOM & CSS Grid)", "Game State Engine (JS)", "Match Simulation Algorithm", "LocalStorage Persistence"],
+      dbEntities: "Club -> Squad_Players -> Match_Engine -> League_Standings"
+    }
   },
   {
     id_projek: "2",
     gambar: ["gambar/Projek2.png"],
     title: "EA FC Scouting Tool",
-    deskripsi: "Sebuah web yang didedikasikan untuk membantu para pemain EA FC mencari dan menganalisis potensi pemain dengan lebih efektif.",
+    deskripsi: "Aplikasi analitik untuk membantu pemain EA FC mencari, memfilter, dan menganalisis potensi pemain secara efektif.",
+    deskripsi_en: "An analytics web app designed to help EA FC players search, filter, and evaluate player potential and career mode value.",
     link: "https://ea-fc24-scouting-tool.vercel.app/scouting",
     kategori: "Personal",
     tag: "Web App",
-    tech: ["React", "Analytics Tool", "REST API", "Vercel"]
+    tech: ["React", "Analytics Tool", "REST API", "Vercel"],
+    caseStudy: {
+      role: "Front-End Engineer & Data Analyst",
+      problem_id: "Pemain Career Mode sering kesulitan membandingkan atribut ribuan pemain muda (wonderkid) sesuai budget transfer dan gaya bermain.",
+      problem_en: "Career Mode players often struggle to filter and compare thousands of wonderkids matching specific transfer budgets and tactical roles.",
+      features_id: [
+        "Pencarian multi-filter berdasarkan usia, rating, potensi, dan posisi",
+        "Kalkulasi rasio efisiensi harga transfer terhadap potensi perkembangan",
+        "Antarmuka reaktif dengan pembaruan data instan berbasis React"
+      ],
+      features_en: [
+        "Multi-attribute filtering by age, overall rating, potential, and position",
+        "Value-for-money ratio calculation against growth potential",
+        "Reactive UI with instant client-side filtering built in React"
+      ],
+      architecture: ["React Component UI", "Multi-Parameter Filter Hook", "Player Dataset API", "Analytics & Rating Calculator"],
+      dbEntities: "Players (ID, OVR, POT, Age, Value) -> Positions -> Club_Attributes"
+    }
   },
   {
     id_projek: "3",
     gambar: ["gambar/Projek3.png"],
     title: "Galeri Foto & Komunitas Chat",
-    deskripsi: "Sebuah web yang menyimpan galeri foto dan komunitas chat hasil karya penulisan ilmiah masa perkuliahan.",
+    deskripsi: "Platform web penyimpanan galeri foto dan ruang diskusi komunitas hasil karya Penulisan Ilmiah masa perkuliahan.",
+    deskripsi_en: "A web platform featuring photo gallery management and community chat rooms developed as an undergraduate scientific research project.",
     link: "",
     kategori: "Academic",
     tag: "College Project",
     tech: ["PHP", "HTML5", "CSS3", "MySQL", "phpMyAdmin", "JavaScript"],
-    isExpired: true
+    isExpired: true,
+    caseStudy: {
+      role: "Full-Stack Developer & System Analyst (Penulisan Ilmiah)",
+      problem_id: "Dibutuhkan wadah terpusat bagi komunitas fotografi kampus untuk mengunggah karya beresolusi tinggi sekaligus berdiskusi secara langsung.",
+      problem_en: "Campus photography communities needed a centralized hub to showcase high-resolution portfolios and engage in topic-based discussions.",
+      features_id: [
+        "Autentikasi pengguna multi-level dan manajemen profil kreator",
+        "Unggah foto dengan kategorisasi album dan validasi ukuran file",
+        "Fitur ruang obrolan komunitas dan komentar interaktif berbasis MySQL"
+      ],
+      features_en: [
+        "Multi-level user authentication and creator profile management",
+        "Photo upload pipeline with album categorization and file validation",
+        "Interactive community chat rooms and comment threads powered by MySQL"
+      ],
+      architecture: ["Client Browser (HTML/CSS/JS)", "PHP Native Controller", "File Upload & Auth Middleware", "MySQL Relational DB"],
+      dbEntities: "Users (1:N) -> Albums (1:N) -> Photos (1:N) -> Chat_Messages"
+    }
   },
   {
     id_projek: "4",
     gambar: ["gambar/Projek4.png", "gambar/Projek4-a.png"],
     title: "Match Me - Outfit Matcher",
-    deskripsi: "Sebuah web yang membantu mahasiswa/i untuk mencari rekomendasi kombinasi outfit yang serasi dan stylish.",
+    deskripsi: "Aplikasi web rekomendasi kombinasi outfit yang membantu mahasiswa/i memadupadankan pakaian yang serasi dan stylish.",
+    deskripsi_en: "An outfit recommendation web app that helps university students mix and match harmonious, stylish daily wear.",
     link: "https://github.com/FdLann/Projek-MatchingBaju-PHP-NATIVE",
     kategori: "Academic",
     tag: "College Project",
-    tech: ["PHP", "HTML5", "CSS3", "MySQL", "phpMyAdmin", "JavaScript"]
+    tech: ["PHP", "HTML5", "CSS3", "MySQL", "phpMyAdmin", "JavaScript", "UI/UX Design"],
+    caseStudy: {
+      role: "System Analyst, UI/UX Designer & Backend Developer",
+      problem_id: "Mahasiswa sering menghabiskan banyak waktu memilih kombinasi warna dan jenis pakaian yang cocok untuk kegiatan kuliah formal maupun kasual.",
+      problem_en: "Students often spend excessive time choosing matching color palettes and outfit styles for formal or casual campus activities.",
+      features_id: [
+        "Pencocokan otomatis atasan, bawahan, dan warna berdasarkan kategori acara",
+        "Katalog digital interaktif dengan preview pasangan pakaian",
+        "Panel manajemen data katalog pakaian berbasis PHP & MySQL"
+      ],
+      features_en: [
+        "Automated matching of tops, bottoms, and color palettes by occasion",
+        "Interactive digital wardrobe catalog with visual outfit pairing preview",
+        "Full CRUD catalog management panel built with PHP & MySQL"
+      ],
+      architecture: ["UI/UX Wireframe & Prototype", "Outfit Matching Logic (PHP)", "Catalog CRUD Module", "MySQL Database Schema"],
+      dbEntities: "Categories (1:N) -> Apparel_Items (N:M) -> Outfit_Combinations"
+    }
   },
   {
     id_projek: "5",
@@ -453,11 +776,29 @@ const FALLBACK_PROJECTS = [
       "gambar/Projek5-c.png"
     ],
     title: "Sistem Informasi Administrasi Akademik",
-    deskripsi: "Web Sistem Informasi Administrasi Akademik adalah sebuah website yang dirancang untuk mengelola data penulisan dan pengajuan surat magang bagi mahasiswa fakultas ilmu komputer dan Teknologi Informasi.",
+    deskripsi: "Sistem informasi berbasis web untuk mengelola data penulisan ilmiah dan pengajuan surat magang mahasiswa FIKTI secara terstruktur.",
+    deskripsi_en: "A web-based academic administration system engineered to streamline scientific writing submissions and internship letter requests for FIKTI students.",
     link: "https://github.com/FdLann/sistem-administrasi-sistem-informasi",
     kategori: "Academic",
     tag: "College Project",
-    tech: ["PHP", "HTML5", "CSS3", "MySQL", "phpMyAdmin", "JavaScript"]
+    tech: ["PHP", "HTML5", "CSS3", "MySQL", "phpMyAdmin", "JavaScript"],
+    caseStudy: {
+      role: "System Analyst & Full-Stack Web Developer",
+      problem_id: "Proses pengajuan surat pengantar magang dan pendataan penulisan ilmiah secara manual memakan waktu lama dan rawan kesalahan pencatatan status.",
+      problem_en: "Manual processing of internship cover letters and academic research registrations caused long queues and status tracking errors.",
+      features_id: [
+        "Alur pengajuan mandiri oleh mahasiswa dengan pelacakan status real-time",
+        "Dashboard verifikasi admin jurusan untuk persetujuan dokumen",
+        "Otomatisasi rekapitulasi laporan dan cetak surat pengantar"
+      ],
+      features_en: [
+        "Self-service student submission workflow with real-time status tracking",
+        "Department admin verification dashboard for document approvals",
+        "Automated reporting and printable cover letter generation"
+      ],
+      architecture: ["Mahasiswa Portal UI", "Role-Based Auth (PHP)", "Admin Approval Workflow", "MySQL Academic DB"],
+      dbEntities: "Mahasiswa (1:N) -> Pengajuan_Surat (N:1) -> Admin_Verifikasi"
+    }
   },
   {
     id_projek: "6",
@@ -467,7 +808,8 @@ const FALLBACK_PROJECTS = [
       "gambar/Projek6-c.png"
     ],
     title: "MedTrack - Portal Pasien",
-    deskripsi: "Aplikasi web health-tech untuk membantu pasien melihat hasil pemeriksaan medis dan rekam kesehatan tanpa harus kembali ke rumah sakit.",
+    deskripsi: "Aplikasi web health-tech untuk membantu pasien mengakses hasil pemeriksaan medis dan rekam kesehatan secara aman dari mana saja.",
+    deskripsi_en: "A health-tech patient portal enabling patients to securely access lab results, prescriptions, and medical records remotely.",
     link: "https://github.com/FdLann/medtrack-portal-pasien",
     kategori: "Personal",
     tag: "Web App",
@@ -480,13 +822,73 @@ const FALLBACK_PROJECTS = [
       "REST API",
       "JWT Auth",
       "bcrypt"
-    ]
+    ],
+    caseStudy: {
+      role: "Full-Stack Developer & Database Architect",
+      problem_id: "Pasien sering harus mengantre kembali di rumah sakit hanya untuk mengambil lembar hasil laboratorium atau melihat riwayat resep dokter.",
+      problem_en: "Patients frequently have to queue at hospitals just to pick up printed lab results or check past prescription records.",
+      features_id: [
+        "Keamanan akses berlapis menggunakan JWT Authentication & enkripsi bcrypt",
+        "Dashboard riwayat pemeriksaan medis, hasil lab, dan jadwal kontrol",
+        "RESTful API terstruktur dengan Express.js dan database relasional PostgreSQL"
+      ],
+      features_en: [
+        "Multi-layer security using JWT Authentication & bcrypt password hashing",
+        "Comprehensive dashboard for medical checkups, lab results, and appointments",
+        "Structured RESTful API built with Express.js and PostgreSQL relational schema"
+      ],
+      architecture: ["React + Tailwind SPA", "JWT Auth Middleware", "Express.js REST API", "PostgreSQL Medical DB"],
+      dbEntities: "Patients (1:N) -> Medical_Records (1:N) -> Lab_Results & Prescriptions"
+    }
   },
   {
     id_projek: "7",
+    gambar: ["gambar/Projek7-sdd.svg"],
+    title: "SDD — Sistem Repositori PI & Tugas Akhir",
+    deskripsi: "Dokumen Rancangan Perangkat Lunak (SDD) lengkap untuk Sistem Repositori Penulisan Ilmiah & Tugas Akhir Jurusan Sistem Informasi Universitas Gunadarma.",
+    deskripsi_en: "Comprehensive Software Design Document (SDD) & System Analysis for the Scientific Research & Thesis Repository System at Gunadarma University.",
+    link: "",
+    pdfDoc: "gambar/DESIGN PROJEK.pdf",
+    kategori: "Academic",
+    tag: "System Design (SDD)",
+    tech: [
+      "System Analysis",
+      "SDD",
+      "BPMN",
+      "UML Class Diagram",
+      "UI/UX Wireframe",
+      "RDBMS",
+      "SRS Matrix"
+    ],
+    caseStudy: {
+      role: "System Analyst & Software Architect (Kelompok 1 - PPSI)",
+      problem_id: "Pengunggahan Penulisan Ilmiah (PI) dan Tugas Akhir (TA) di jurusan Sistem Informasi sebelumnya masih dilakukan manual melalui email ke staf, sehingga memperlambat validasi dan pencarian referensi akademik.",
+      problem_en: "Submitting Scientific Research (PI) and Final Theses (TA) in the Information Systems department was previously handled manually via email to staff, slowing down validation and reference discovery.",
+      features_id: [
+        "Arsitektur Tiga-Lapis (Web Browser, Modul Login & Validasi KTM/KRS, serta RDBMS)",
+        "Pemodelan proses bisnis lengkap dengan BPMN User (Mahasiswa/Dosen) & BPMN Admin",
+        "Rancangan Class Diagram, Kamus Data, Pseudocode Validasi File, Struktur Navigasi, dan Wireframe UI"
+      ],
+      features_en: [
+        "Three-Tier Architecture (Web Browser Client, Auth & Student ID Validation, and RDBMS)",
+        "Complete Business Process Model & Notation (BPMN) for Students, Lecturers, and Admins",
+        "Relational Class Diagram, Data Dictionary, File Validation Pseudocode, Navigation Map, and UI Wireframes"
+      ],
+      architecture: [
+        "Web Browser Client",
+        "Login & KTM Verification",
+        "Directory PI & TA Manager",
+        "RDBMS Central Storage"
+      ],
+      dbEntities: "Student & Dosen (1:N) -> Repositori_PI & Repositori_TA <- (1:N) Admin & Berita_Repository"
+    }
+  },
+  {
+    id_projek: "8",
     gambar: [],
     title: "Secret Next Project 🚀",
     deskripsi: "Projek selanjutnya yang masih dalam tahap perancangan rahasia & riset inovatif. Masih misterius tapi bakal seru banget! Tunggu tanggal mainnya! 🤫✨",
+    deskripsi_en: "An upcoming project currently in stealth system design & R&D phase. Stay tuned for the next big innovation! 🤫✨",
     link: "#",
     kategori: "none",
     tag: "Coming Soon",
@@ -536,7 +938,7 @@ async function loadProjects() {
           tech: item.tech || ["Web Project", "Clean Architecture"],
           tag: item.tag || (isComingSoon ? "Coming Soon" : "Featured Project"),
           isComingSoon: isComingSoon,
-          isExpired: Boolean(item.isExpired || (!item.link && !isComingSoon))
+          isExpired: Boolean(item.isExpired || (!item.link && !item.pdfDoc && !isComingSoon))
         };
       });
     } else {
@@ -776,6 +1178,10 @@ function generateCardInner(item) {
     .map(t => `<span class="project-tech-pill">${t}</span>`)
     .join("");
 
+  const localizedDesc = (currentLang === "en" && item.deskripsi_en)
+    ? item.deskripsi_en
+    : (item.deskripsi || "");
+
   if (isSoon) {
     return `
       <div class="coming-soon-banner">
@@ -793,7 +1199,7 @@ function generateCardInner(item) {
           <span>${item.title || "Secret Project 🚀"}</span>
           <i class="fas fa-sparkles text-gold" style="font-size: 0.95rem;"></i>
         </h3>
-        <p class="project-desc">${item.deskripsi || "Projek seru selanjutnya sedang dalam pengembangan. Stay tuned!"}</p>
+        <p class="project-desc">${localizedDesc || "Projek seru selanjutnya sedang dalam pengembangan. Stay tuned!"}</p>
         
         <div class="project-tech-pills">
           ${techPills}
@@ -812,16 +1218,30 @@ function generateCardInner(item) {
   }
 
   // Determine Action Buttons & Secondary Link
+  const hasPdfDoc = Boolean(item.pdfDoc);
   const isGithub = item.link && item.link.includes("github.com");
-  const isExpired = !item.link || item.isExpired || item.link === "#";
+  const isExpired = (!item.link && !hasPdfDoc) || item.isExpired || item.link === "#";
 
   let actionButtonHTML = "";
   let subLinkHTML = "";
 
-  if (isExpired) {
+  if (hasPdfDoc) {
+    const safeTitle = (item.title || "SDD Document").replace(/'/g, "\\'");
+    actionButtonHTML = `
+      <button type="button" class="project-pdf-btn" onclick="openModal('${item.pdfDoc}', '${safeTitle}'); event.stopPropagation();" title="${currentLang === "id" ? "Baca Dokumen SDD Lengkap (PDF)" : "Preview Full SDD Document (PDF)"}">
+        <i class="fas fa-file-pdf"></i>
+        <span>${currentLang === "id" ? "Lihat SDD (PDF)" : "View SDD (PDF)"}</span>
+      </button>
+    `;
+    subLinkHTML = `
+      <a href="${item.pdfDoc}" download class="project-sub-link" onclick="event.stopPropagation();" title="${currentLang === "id" ? "Unduh Dokumen Rancangan (PDF)" : "Download SDD PDF"}">
+        <i class="fas fa-download"></i> ${currentLang === "id" ? "Unduh SDD" : "Download"}
+      </a>
+    `;
+  } else if (isExpired) {
     actionButtonHTML = `
       <span class="project-archived-btn" title="Deployment server expired / Projek masa kuliah">
-        <i class="fas fa-history"></i> Demo Expired
+        <i class="fas fa-history"></i> ${currentLang === "id" ? "Demo Berakhir" : "Demo Expired"}
       </span>
     `;
     subLinkHTML = `
@@ -854,6 +1274,13 @@ function generateCardInner(item) {
       </a>
     `;
   }
+
+  const caseStudyBtnHTML = item.caseStudy ? `
+    <button type="button" class="project-cs-btn" onclick="openCaseStudyModal('${item.id_projek}', event)" title="${currentLang === "id" ? "Lihat Analisis Sistem & Studi Kasus" : "View System Analysis & Case Study"}">
+      <i class="fas fa-sitemap"></i>
+      <span>${currentLang === "id" ? "Detail Sistem" : "Case Study"}</span>
+    </button>
+  ` : "";
 
   // Image & Slider Controls
   const images = item.images && item.images.length > 0 ? item.images : (item.gambar ? [item.gambar] : []);
@@ -890,9 +1317,12 @@ function generateCardInner(item) {
   const badgeLabel = item.kategori ? item.kategori : (isAcademic ? "Academic" : "Personal");
 
   return `
-    <div class="project-img-wrapper" onclick="openLightbox('${item.id_projek}')" title="Klik untuk memperbesar gambar">
+    <div class="project-img-wrapper" onclick="openLightbox('${item.id_projek}')" title="${currentLang === "id" ? "Klik untuk memperbesar gambar" : "Click to enlarge image"}">
       <span class="project-badge-tag ${badgeClass}">
         <i class="fas ${badgeIcon}"></i> ${badgeLabel} • ${item.tag || "Project"}
+      </span>
+      <span class="project-zoom-hint">
+        <i class="fas fa-search-plus"></i> ${currentLang === "id" ? "Perbesar" : "Zoom"}
       </span>
       <img 
         id="projectImg-${item.id_projek}"
@@ -910,19 +1340,144 @@ function generateCardInner(item) {
       <h3 class="project-title">
         <span>${item.title}</span>
       </h3>
-      <p class="project-desc">${item.deskripsi}</p>
+      <p class="project-desc">${localizedDesc}</p>
       
       <div class="project-tech-pills">
         ${techPills}
       </div>
 
       <div class="project-footer">
-        ${actionButtonHTML}
+        <div class="project-actions-left">
+          ${actionButtonHTML}
+          ${caseStudyBtnHTML}
+        </div>
         ${subLinkHTML}
       </div>
     </div>
   `;
 }
+
+// ── PROJECT CASE STUDY & SYSTEM ARCHITECTURE MODAL ──
+window.openCaseStudyModal = function(projectId, event) {
+  if (event) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+  const project = allProjects.find(p => String(p.id_projek) === String(projectId));
+  if (!project || !project.caseStudy) return;
+
+  const cs = project.caseStudy;
+  const isId = currentLang === "id";
+  const modal = document.getElementById("caseStudyModal");
+  const titleEl = document.getElementById("csTitle");
+  const badgeEl = document.getElementById("csBadge");
+  const bodyEl = document.getElementById("csModalBody");
+  const footEl = document.getElementById("csModalFoot");
+
+  if (!modal || !bodyEl) return;
+
+  if (titleEl) titleEl.textContent = project.title;
+  if (badgeEl) {
+    badgeEl.textContent = isId
+      ? `${project.kategori || "Projek"} • Analisis Sistem & Studi Kasus`
+      : `${project.kategori || "Project"} • System Analysis & Case Study`;
+  }
+
+  const problemText = isId ? (cs.problem_id || cs.problem_en) : (cs.problem_en || cs.problem_id);
+  const featuresList = isId ? (cs.features_id || cs.features_en || []) : (cs.features_en || cs.features_id || []);
+
+  const featuresHTML = featuresList
+    .map(f => `<li><i class="fas fa-check-circle"></i> <span>${f}</span></li>`)
+    .join("");
+
+  const archStepsHTML = (cs.architecture || [])
+    .map((step, idx, arr) => `
+      <span class="cs-arch-step">${step}</span>
+      ${idx < arr.length - 1 ? '<i class="fas fa-arrow-right cs-arch-arrow"></i>' : ''}
+    `)
+    .join("");
+
+  const techBadges = (project.tech || [])
+    .map(t => `<span class="project-tech-pill">${t}</span>`)
+    .join("");
+
+  bodyEl.innerHTML = `
+    <div class="cs-role-banner">
+      <div class="cs-role-item">
+        <strong><i class="fas fa-user-cog"></i> ${isId ? "Peran:" : "Role:"}</strong> ${cs.role || "Full-Stack Developer & System Analyst"}
+      </div>
+      <div class="cs-role-item">
+        <strong><i class="fas fa-tag"></i> ${isId ? "Kategori:" : "Category:"}</strong> ${project.tag || "Web Application"}
+      </div>
+    </div>
+
+    <div class="cs-section">
+      <h6><i class="fas fa-bullseye"></i> ${isId ? "Latar Belakang Masalah (Problem Statement)" : "Problem Statement & Business Need"}</h6>
+      <p>${problemText}</p>
+    </div>
+
+    <div class="cs-section">
+      <h6><i class="fas fa-star"></i> ${isId ? "Fitur Utama & Solusi Sistem" : "Key Features & Solution"}</h6>
+      <ul class="cs-feature-list">
+        ${featuresHTML}
+      </ul>
+    </div>
+
+    <div class="cs-section">
+      <h6><i class="fas fa-project-diagram"></i> ${isId ? "Arsitektur Sistem & Skema Relasi Data (ERD)" : "System Architecture & Database Schema (ERD)"}</h6>
+      <div class="cs-arch-flow">
+        ${archStepsHTML}
+      </div>
+      ${cs.dbEntities ? `
+        <div class="cs-db-box">
+          <i class="fas fa-database"></i>
+          <strong>${isId ? "Relasi Entitas:" : "Entity Flow:"}</strong>
+          <span>${cs.dbEntities}</span>
+        </div>
+      ` : ""}
+    </div>
+
+    <div class="cs-section">
+      <h6><i class="fas fa-code"></i> ${isId ? "Teknologi & Metodologi" : "Tech Stack & Methodology"}</h6>
+      <div class="project-tech-pills" style="margin-bottom:0;">
+        ${techBadges}
+      </div>
+    </div>
+  `;
+
+  if (footEl) {
+    const hasLink = project.link && project.link !== "#" && !project.isExpired;
+    const isGithub = hasLink && project.link.includes("github.com");
+    const safeTitle = (project.title || "SDD Document").replace(/'/g, "\\'");
+    footEl.innerHTML = `
+      <button type="button" class="btn btn-ghost" onclick="closeCaseStudyModal()">${isId ? "Tutup" : "Close"}</button>
+      ${project.pdfDoc ? `
+        <button type="button" class="btn btn-gold" onclick="closeCaseStudyModal(); openModal('${project.pdfDoc}', '${safeTitle}');">
+          <i class="fas fa-file-pdf"></i>
+          <span>${isId ? "Buka Dokumen SDD Lengkap (PDF)" : "Open Full SDD Document (PDF)"}</span>
+        </button>
+      ` : ""}
+      ${hasLink ? `
+        <a href="${project.link}" target="_blank" rel="noopener noreferrer" class="btn btn-gold">
+          <i class="${isGithub ? 'fab fa-github' : 'fas fa-external-link-alt'}"></i>
+          <span>${isGithub ? (isId ? "Buka Repository" : "Open Repository") : (isId ? "Buka Live Demo" : "Open Live Demo")}</span>
+        </a>
+      ` : ""}
+    `;
+  }
+
+  modal.classList.add("open");
+  document.body.style.overflow = "hidden";
+};
+
+window.closeCaseStudyModal = function(event) {
+  if (event && event.target && event.target.id !== "caseStudyModal") return;
+  const modal = document.getElementById("caseStudyModal");
+  if (modal) {
+    modal.classList.remove("open");
+    document.body.style.overflow = "";
+  }
+};
 
 // ── PROJECT RENDERER (GRID VS 3D COVERFLOW) ──
 function renderProjectCards(projects) {
@@ -947,8 +1502,8 @@ function renderProjectCards(projects) {
     container.innerHTML = `
       <div style="grid-column: 1 / -1; text-align: center; padding: 3.5rem 1rem; color: var(--muted);">
         <i class="fas fa-search" style="font-size: 2.2rem; margin-bottom: 1rem; color: var(--gold); display: block;"></i>
-        <p style="font-size: 1.15rem; font-weight: 700; color: var(--white); margin-bottom: 0.5rem;">Tidak ada projek yang cocok</p>
-        <p style="font-size: 0.9rem; margin-bottom: 1.5rem;">Coba cari dengan kata kunci teknologi lain atau ganti filter kategori.</p>
+        <p style="font-size: 1.15rem; font-weight: 700; color: var(--white); margin-bottom: 0.5rem;">${currentLang === "id" ? "Tidak ada projek yang cocok" : "No matching projects found"}</p>
+        <p style="font-size: 0.9rem; margin-bottom: 1.5rem;">${currentLang === "id" ? "Coba cari dengan kata kunci teknologi lain atau ganti filter kategori." : "Try searching with another technology keyword or switch category filters."}</p>
         <button onclick="filterByCategory('all', document.querySelector('.cat-tab[data-cat=all]'))" class="btn btn-outline-gold btn-sm">
           <i class="fas fa-redo"></i> Reset Filter
         </button>
@@ -985,11 +1540,15 @@ function renderProjectCards(projects) {
       loadMoreWrapper.style.display = "flex";
       if (isGridExpanded) {
         if (loadMoreIcon) loadMoreIcon.className = "fas fa-chevron-up";
-        if (loadMoreText) loadMoreText.textContent = "Tampilkan Lebih Sedikit";
+        if (loadMoreText) loadMoreText.textContent = currentLang === "id" ? "Tampilkan Lebih Sedikit" : "Show Less Projects";
       } else {
         const remainingCount = projects.length - GRID_INITIAL_LIMIT;
         if (loadMoreIcon) loadMoreIcon.className = "fas fa-plus-circle";
-        if (loadMoreText) loadMoreText.textContent = `Muat Lebih Banyak (${remainingCount} Projek Lagi)`;
+        if (loadMoreText) {
+          loadMoreText.textContent = currentLang === "id"
+            ? `Muat Lebih Banyak (${remainingCount} Projek Lagi)`
+            : `Load More (${remainingCount} More Project${remainingCount > 1 ? 's' : ''})`;
+        }
       }
     } else {
       loadMoreWrapper.style.display = "none";
@@ -1223,8 +1782,11 @@ function attachTiltEffect() {
   });
 }
 
-// Load projects when DOM is ready
-document.addEventListener("DOMContentLoaded", loadProjects);
+// Load projects & language when DOM is ready
+document.addEventListener("DOMContentLoaded", () => {
+  setLanguage(currentLang);
+  loadProjects();
+});
 
 // ── LIVE GOOGLE SHEETS MUSIC PLAYER ENGINE ──
 const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS4zPi5MZ7AMzcWLqthWALBXNcF9O687hLaYOf25OFXTJ1-xL7QofjHczxI-Z9F_mS1FaAoJ0ZxrU6D/pub?gid=0&single=true&output=csv";
